@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>Banner详细设置</title>
+<script th:inline="javascript">
+	var homePageModuleAttached = '[[${homePageModuleAttached}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+</script>
+</head>
+<body>
+	<div class="layer-form edit-form">
+		<form class="layui-form" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="id" /> 
+			<input type="hidden" name="moduleId" th:value="${homePageModule.id}" />
+			<input type="hidden" name="createTime" th:value="${homePageModuleAttached.createTime}==null?'':${homePageModuleAttached.createTime}" />
+			<input type="hidden" name="createAdmin" th:value="${homePageModuleAttached.createAdmin}==null?'':${homePageModuleAttached.createAdmin}" />
+			<div class="layui-form-item" style="margin-left: -20px;margin-top: 15px;">
+				<div class="layui-inline">
+					<label class="layui-form-label">模块名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="bannerName" style="width:190px;"
+							th:value="${homePageModule.moduleName}" disabled="disabled" maxlength="20">
+					</div>
+				</div>
+			</div>
+		<div class="layui-form-item" style="width:530px;margin-left: -20px;">
+				<div class="layui-inline" style="width:475px;">
+					<label class="layui-form-label">logo图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal"
+							id="logoFile">上传图片(宽:164*高:110)</button>
+						<a target="_blank" id="checkBigImg" href=""><img type=""
+							class="layui-upload-img" id="imgDisplay" style="display: none;width:105px;"></a>
+							<a style="margin-top: 10px;margin-left: -5px;display: none" class="layui-btn layui-btn-xs layui-btn-sm"  id="cleanLogoImg">清空</a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="logoURL" id="logoURL" readonly="readonly">
+			</div>
+				</div>
+			
+			</div>
+			<div class="layui-form-item" style="display: none">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+					<textarea name="logoURLTarget" style="height: 60px;width:200px;margin-left: 17px;" id="logoURLTarget" 
+							 autocomplete="off"
+							placeholder="logo图片链接跳转" class="layui-input"></textarea>
+					</div>
+				</div>
+			</div>
+		<div class="layui-form-item" style="width:550px;margin-left: -20px;">
+				<div class="layui-inline" style="width:480px;">
+					<label class="layui-form-label">banner图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal"
+							id="logoBannerFile">上传图片(宽:750*高:350)</button>
+						<a target="_blank" id="bannerCheckBigImg" href=""><img type=""
+							class="layui-upload-img" id="logoBannerImgDisplay"
+							style="display: none;width:105px;"></a>
+									<a style="margin-top: 10px;margin-left: -5px;display: none" class="layui-btn layui-btn-xs layui-btn-sm"  id="cleanBannerImg">清空</a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="logoBannerURL" id="logoBannerURL" readonly="readonly">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item" style="display: none">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<textarea name="logoBannerURLTarget" style="height: 60px;width:200px;margin-left: 17px;" id="logoBannerURLTarget"
+							 autocomplete="off"
+							placeholder="Banner图片链接跳转" class="layui-input"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item" style="width:550px;margin-left: -20px;">
+				<div class="layui-inline" style="width:480px;">
+					<label class="layui-form-label">活动图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal"
+							id="activeBannerFile">上传图片(宽:750*高:488)</button>
+						<a target="_blank" id="activityCheckBigImg" href=""><img
+							type="" class="layui-upload-img" id="activeBannerImgDisplay"
+							style="display: none;width:105px;"></a>
+									<a style="margin-top: 10px;margin-left: -5px;display: none" class="layui-btn layui-btn-xs layui-btn-sm"  id="cleanActivityImg">清空</a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="activeBannerURL" id="activeBannerURL" readonly="readonly">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item" style="display: none">
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<textarea name="activeBannerURLTarget" style="height: 60px;width:200px;margin-left: 17px;" id="activeBannerURLTarget"
+							 autocomplete="off"
+							placeholder="活动图片链接跳转" class="layui-input"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item center" style="margin-top: 40px;margin-left: -20px;">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+</body>
+</html>

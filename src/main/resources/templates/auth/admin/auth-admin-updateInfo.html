@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>修改用户信息</title>
+<style type="text/css">
+
+</style>
+<script type="text/html" >
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+
+		<div class="edit-form">
+			<form class="layui-form">
+				<input type="hidden" name="id" />
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">用户名：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="name" 	th:value="${adminDto.name}"
+								lay-verify="required|normal|space" disabled="disabled" readonly="readonly" 
+								maxlength="20" placeholder="用户名长度小于20个字符" autocomplete="off"
+								class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">登录密码：</label>
+						<div class="layui-input-inline">
+							<input type="password" id="adminPwd" name="pwd" maxlength="20" 
+								placeholder="请输入6-32位密码" autocomplete="off"
+								lay-verify="required|pwd|space" class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">确认登录密码：</label>
+						<div class="layui-input-inline">
+							<input type="password" id="pwdConfirm" name="pwdConfirm" maxlength="20"
+								placeholder="请再次输入密码" autocomplete="off"
+								lay-verify="required|pwd|space" class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">真实姓名：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="realName" autocomplete="off" 	th:value="${adminDto.realName}"
+								maxlength="20" lay-verify="required|normal|space"
+								class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">手机号码：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="phone" lay-verify="required|phone" 	th:value="${adminDto.phone}"
+								autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item center">
+					<div class="layui-inline">
+						<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+			</form>
+		</div>
+</body>
+</html>

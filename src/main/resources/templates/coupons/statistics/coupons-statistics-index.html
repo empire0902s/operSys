@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>优惠券统计</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+
+.layui-col-xs4 {
+	width: 22%;
+}
+.layadmin-backlog
+.layadmin-backlog-body {
+    display: block;
+    padding: 5px 15px;
+    background-color: #f8f8f8;
+    color: #999;
+    border-radius: 2px;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.layadmin-carousel .layui-col-space10 {
+    margin: 0;
+}
+
+.layadmin-carousel .layui-carousel, .layadmin-carousel>[carousel-item]>* {
+    background-color: #fff;
+}
+.layadmin-backlog-body p cite {
+    font-style: normal;
+    font-size: 30px;
+    font-weight: 300;
+    color: #009688;
+}
+</style>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+	<div style="margin: 10px;">
+		<!-- <fieldset class="layui-elem-field"> -->
+			<div class="layui-carousel layadmin-carousel layadmin-backlog" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 170px;">
+                  <div carousel-item="">
+                    
+					<ul class="layui-row layui-col-space10 layui-this">
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>昨日发放数量</h3>
+								<p>
+									<cite>
+										<span th:text="${couponsUseNumsByYesterday.totalSendNums}!=null?${couponsUseNumsByYesterday.totalSendNums}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>昨日使用数量</h3>
+								<p>
+									<cite>
+										<span th:text="${couponsUseNumsByYesterday.totalUseCounts}!=null?${couponsUseNumsByYesterday.totalUseCounts}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>昨日订单总金额</h3>
+								<p>
+									<cite>
+										<span th:text="${couponsUseNumsByYesterday.totalOrderMoney}!=null?${couponsUseNumsByYesterday.totalOrderMoney}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>昨日优惠总金额</h3>
+								<p>
+									<cite>
+										<span th:text="${couponsUseNumsByYesterday.totalSpendMoney}!=null?${couponsUseNumsByYesterday.totalSpendMoney}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>总发放数量</h3>
+								<p>
+									<cite>
+										<span th:text="${totalCouponsUseNums.totalSendNums}!=null?${totalCouponsUseNums.totalSendNums}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>总使用数量</h3>
+								<p>
+									<cite>
+										<span th:text="${totalCouponsUseNums.totalUseCounts}!=null?${totalCouponsUseNums.totalUseCounts}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>总订单总金额</h3>
+								<p>
+									<cite>
+										<span th:text="${totalCouponsUseNums.totalOrderMoney}!=null?${totalCouponsUseNums.totalOrderMoney}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						<li class="layui-col-xs3"><a
+							 href="javascript:;" class="layadmin-backlog-body">
+								<h3>总优惠总金额</h3>
+								<p>
+									<cite>
+										<span th:text="${totalCouponsUseNums.totalSpendMoney}!=null?${totalCouponsUseNums.totalSpendMoney}:'0'"></span>
+									</cite>
+								</p>
+						</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		<!-- </fieldset> -->
+		<fieldset class="layui-elem-field">
+			<form class="layui-form data-list-form">
+				<div class="layui-form-item" style="margin-top: 15px;">
+					<div class="layui-inline">
+						<label class="layui-form-label">时间范围:</label>
+						<div class="layui-input-inline">
+							<input type="text" name="timeRange" class="layui-input" readonly="readonly"
+								id="timeRange" placeholder="请选择时间范围">
+								<input type="hidden" name="timeTemp" readonly="readonly" id="timeTemp">
+						</div>
+					</div>
+					<div class="layui-inline" style="margin-left: -20px;">
+						<label class="layui-form-label">活动:</label>
+						<div class="layui-input-inline">
+						<input type="text" name="showName" readonly="readonly"  id="activity"
+						placeholder="点击选择活动" class="layui-input" />
+						<input type="hidden"name="activityId" id="activityId">
+						</div>
+							<div class="layui-input-inline" >
+							<a style="margin-top: 10px;" class="layui-btn layui-btn-xs layui-btn-sm"  id="cleanActivity">清空</a>
+							</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">优惠券类型:</label>
+						<div class="layui-input-inline">
+							<select name="couponsType">
+								<option value="" selected="selected">请选择</option>
+								<option th:each="typeStatus: ${couponsTypeList}"
+									th:text="${typeStatus.key}" th:value="${typeStatus.value}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<div class="layui-inline">
+							<div class="layui-input-block">
+								<a class="layui-btn" data-type="reload" id="reload">查询</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</fieldset>
+		<table lay-size="sm" class="layui-hide data-list"
+			lay-filter="data-list"></table>
+	</div>
+</body>
+</html>

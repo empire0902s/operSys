@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.DictMapper">
+
+
+    <select id="queryLikeDict" resultType="dict">
+        select * from t_dict
+        <where>
+            <if test="isDisabled != null">
+                and is_disabled = #{isDisabled}
+            </if>
+            <if test="dictKey != null and dictKey != ''">
+                and dict_key LIKE concat('%',#{dictKey},'%')
+            </if>
+            <if test="createAdmin != null and createAdmin!='' ">
+                and create_admin = #{createAdmin}
+            </if>
+            <if test="updateAdmin != null and updateAdmin != '' ">
+                and update_admin = #{updateAdmin}
+            </if>
+            <if test="code != null and code != '' ">
+                and code = #{code}
+            </if>
+        </where>
+        order by id DESC
+    </select>
+     <select id="queryIndexBannerOfDict" resultType="dict">
+		select *
+		from t_dict
+		where parent_id is null
+     </select>
+     <update id="updateDict" >
+     	UPDATE t_dict 
+     	SET 
+     	<if test="updateTime != null">
+     	  	update_time = #{updateTime} ,
+        </if>
+   		<if test="updateAdmin != null and updateAdmin != '' ">
+     	  	update_admin = #{updateAdmin} ,
+        </if>
+         <if test="isDisabled != null and isDisabled != '' ">
+     	  	is_disabled = #{isDisabled} ,
+        </if>
+         <if test="name != null and name != '' ">
+     	  	name = #{name} ,
+        </if>
+        <if test="code != null and code != '' ">
+     		code = #{code} ,
+     	</if>
+     	<if test="dictKey != null and dictKey != '' ">
+     		dict_key = #{dictKey} ,
+     	</if>
+     	<if test="dictValue != null and dictValue != '' ">
+     		dict_value = #{dictValue} ,
+     	</if>
+     	 <if test="sort != null and sort != '' ">
+     		sort = #{sort} ,
+     	</if>
+     	 <if test="type != null and type != '' ">
+     		type = #{type} ,
+     	</if>
+     		parent_id = #{parentId} 
+     	
+     	 WHERE id = #{id} 
+     </update>
+</mapper>

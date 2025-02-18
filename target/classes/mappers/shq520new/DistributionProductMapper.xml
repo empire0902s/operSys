@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.shq520new.DistributionProductMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.shq520new.DistributionProduct">
+    <!-- WARNING - @mbg.generated -->
+    <id column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="Product_Code" jdbcType="NVARCHAR" property="productCode" />
+    <result column="Product_Name" jdbcType="VARCHAR" property="productName" />
+    <result column="InvoiceName" jdbcType="NVARCHAR" property="invoicename" />
+    <result column="CategoryId" jdbcType="INTEGER" property="categoryid" />
+    <result column="GenreId" jdbcType="INTEGER" property="genreid" />
+    <result column="ThreeId" jdbcType="INTEGER" property="threeid" />
+    <result column="FourId" jdbcType="INTEGER" property="fourid" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="WeightType" jdbcType="VARCHAR" property="weighttype" />
+    <result column="Weight" jdbcType="VARCHAR" property="weight" />
+    <result column="Volume" jdbcType="VARCHAR" property="volume" />
+    <result column="Distance" jdbcType="DOUBLE" property="distance" />
+    <result column="Keywords" jdbcType="NVARCHAR" property="keywords" />
+    <result column="Crime" jdbcType="NVARCHAR" property="crime" />
+    <result column="Package" jdbcType="NVARCHAR" property="package" />
+    <result column="LogisticsiBlling" jdbcType="INTEGER" property="logisticsiblling" />
+    <result column="IsProductRegion" jdbcType="INTEGER" property="isproductregion" />
+    <result column="Isstandard" jdbcType="INTEGER" property="isstandard" />
+    <result column="Iscommoditynature" jdbcType="INTEGER" property="iscommoditynature" />
+    <result column="company" jdbcType="NVARCHAR" property="company" />
+    <result column="company_name" jdbcType="NVARCHAR" property="companyName" />
+    <result column="LogisticsType" jdbcType="NVARCHAR" property="logisticstype" />
+    <result column="LogisticsExpenses" jdbcType="DECIMAL" property="logisticsexpenses" />
+    <result column="product_unit" jdbcType="NVARCHAR" property="productUnit" />
+    <result column="product_details" jdbcType="NVARCHAR" property="productDetails" />
+    <result column="Label" jdbcType="INTEGER" property="label" />
+    <result column="ExhibitCount" jdbcType="INTEGER" property="exhibitcount" />
+    <result column="Visitors" jdbcType="INTEGER" property="visitors" />
+    <result column="BuyNumber" jdbcType="INTEGER" property="buynumber" />
+    <result column="IsEditor" jdbcType="INTEGER" property="iseditor" />
+    <result column="IsEditorAuditor" jdbcType="VARCHAR" property="iseditorauditor" />
+    <result column="IsEditorAuditorTime" jdbcType="TIMESTAMP" property="iseditorauditortime" />
+    <result column="IsOriginal" jdbcType="INTEGER" property="isoriginal" />
+    <result column="IsOriginalAuditor" jdbcType="VARCHAR" property="isoriginalauditor" />
+    <result column="IsOriginalAuditorTime" jdbcType="TIMESTAMP" property="isoriginalauditortime" />
+    <result column="FinancialAudit" jdbcType="INTEGER" property="financialaudit" />
+    <result column="FinancialAuditor" jdbcType="VARCHAR" property="financialauditor" />
+    <result column="FinancialAuditTime" jdbcType="TIMESTAMP" property="financialaudittime" />
+    <result column="FinancialAuditRemark" jdbcType="NVARCHAR" property="financialauditremark" />
+    <result column="MarketAudit" jdbcType="INTEGER" property="marketaudit" />
+    <result column="MarketAuditor" jdbcType="VARCHAR" property="marketauditor" />
+    <result column="MarketAuditTime" jdbcType="TIMESTAMP" property="marketaudittime" />
+    <result column="MarketAuditRemark" jdbcType="NVARCHAR" property="marketauditremark" />
+    <result column="is_sale" jdbcType="INTEGER" property="isSale" />
+    <result column="is_sale_date" jdbcType="TIMESTAMP" property="isSaleDate" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="SelfConfessed" jdbcType="INTEGER" property="selfconfessed" />
+    <result column="ActivityState" jdbcType="INTEGER" property="activitystate" />
+    <result column="FinanceState" jdbcType="INTEGER" property="financestate" />
+    <result column="ActivityEstablishTime" jdbcType="TIMESTAMP" property="activityestablishtime" />
+    <result column="ActivityEstablishUser" jdbcType="NVARCHAR" property="activityestablishuser" />
+    <result column="ActivityFinanceTime" jdbcType="TIMESTAMP" property="activityfinancetime" />
+    <result column="ActivityFinanceUser" jdbcType="NVARCHAR" property="activityfinanceuser" />
+    <result column="ActivitySXJUser" jdbcType="NVARCHAR" property="activitysxjuser" />
+    <result column="ActivitySXJTime" jdbcType="TIMESTAMP" property="activitysxjtime" />
+    <result column="ActivityCode" jdbcType="NVARCHAR" property="activitycode" />
+    <result column="YsType" jdbcType="INTEGER" property="ystype" />
+    <result column="YsDay" jdbcType="NVARCHAR" property="ysday" />
+    <result column="YsStartTime" jdbcType="TIMESTAMP" property="ysstarttime" />
+    <result column="YsEndTime" jdbcType="TIMESTAMP" property="ysendtime" />
+    <result column="CommodityStartTime" jdbcType="TIMESTAMP" property="commoditystarttime" />
+    <result column="CommodityFinishTime" jdbcType="TIMESTAMP" property="commodityfinishtime" />
+    <result column="Submit" jdbcType="INTEGER" property="submit" />
+    <result column="addCartCount" jdbcType="INTEGER" property="addcartcount" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    p_id, Product_Code, Product_Name, InvoiceName, CategoryId, GenreId, ThreeId, FourId, Sort, WeightType, Weight, Volume, Distance, Keywords, Crime, Package, LogisticsiBlling, IsProductRegion, Isstandard, Iscommoditynature, company, company_name, LogisticsType, LogisticsExpenses, product_unit, product_details, Label, ExhibitCount, Visitors, BuyNumber, IsEditor, IsEditorAuditor, IsEditorAuditorTime, IsOriginal, IsOriginalAuditor, IsOriginalAuditorTime, FinancialAudit, FinancialAuditor, FinancialAuditTime, FinancialAuditRemark, MarketAudit, MarketAuditor, MarketAuditTime, MarketAuditRemark, is_sale, is_sale_date, created_time, updated_time, SelfConfessed, ActivityState, FinanceState, ActivityEstablishTime, ActivityEstablishUser, ActivityFinanceTime, ActivityFinanceUser, ActivitySXJUser, ActivitySXJTime, ActivityCode, YsType, YsDay, YsStartTime, YsEndTime, CommodityStartTime, CommodityFinishTime, Submit, addCartCount
+  </sql>
+
+  <select id="queryDiatributionProductByCodeList" resultType="distributionProduct" parameterType="java.util.List">
+    select  t.p_id,t.Product_Code,t.Product_Name,t.company
+           , t.company_name,t.CategoryId,t.GenreId,t.Isstandard
+           ,t.ThreeId,t.FourId,t.is_sale
+    from DistributionProduct  t
+    where Product_Code in
+    <foreach collection="list" item="Product_Code" index="index"
+                                    open="(" close=")" separator=",">
+    #{Product_Code}
+    </foreach>
+
+  </select>
+  
+    <select id="queryDiatributionProductByCodeListAndGoodsName" resultType="distributionProduct">
+    select  t.p_id,t.Product_Code,t.Product_Name,t.company
+           , t.company_name,t.CategoryId,t.GenreId
+           ,t.ThreeId,t.FourId,t.is_sale
+    from DistributionProduct  t
+    <where>
+  		 Product_Code in
+    <foreach collection="list" item="Product_Code" index="index"
+                                    open="(" close=")" separator=",">
+    #{Product_Code}
+    </foreach>
+		<if test="productName != null  and productName != ''"> 
+			and Product_Name =#{productName}
+		</if>
+		  </where>
+  </select>
+    <select id="queryDiatributionProductByProductName" resultType="distributionProduct" >
+    select  t.p_id,t.Product_Code,t.Product_Name,t.company, t.company_name,t.CategoryId,t.GenreId,t.ThreeId,t.FourId 
+    from DistributionProduct  t
+    where Product_Name =#{productName}
+  </select>
+  
+  <select id="queryFinalProductShelfStatusCountStatistics" resultType="com.shq.oper.model.dto.salestatistics.ProductShelfStatusCountStatisticsDto">
+   	 select tmp1.isForSale,tmp2.notForSale
+	 from(
+	 select count(1) as isForSale
+	 FROM DistributionProduct dp
+	 where dp.is_sale=1 and MarketAudit=1 and IsOriginal=1) tmp1,
+	 (
+	  select count(1) as notForSale
+	 FROM DistributionProduct dp
+	 where dp.is_sale=2 
+	 		and dp.MarketAudit =4
+			and dp.IsOriginal =1 ) tmp2
+  </select>
+  
+</mapper>

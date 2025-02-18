@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.CouponsUserMapper">
+
+	<select id="queryByReciveCoupons" resultType="CouponsUser">
+		select * from t_coupons_user t
+		<where>
+			<if test="userSeq != null and userSeq != ''">and t.user_seq=#{userSeq}</if>
+			<if test="couponsId != null and couponsId != ''">and t.coupons_id=#{couponsId}</if>
+			<if test="activityId != null and activityId != ''">and t.activity_id=#{activityId}</if>
+			<if test="isDisabled != null ">and t.is_disabled = #{isDisabled}</if>
+		</where>
+	</select>
+	
+	<select id="queryAndCouponsById" resultType="CouponsUser">
+		select 
+			tc.name as couponsName,
+			agr.id AS activityGoodsRuleId,
+			agr.type AS goodsRuleType,
+			tcu.* 
+			from t_coupons_user tcu
+		left join t_coupons tc on tc.id=tcu.coupons_id
+		LEFT JOIN t_activity_goods_rule agr ON agr.id = tc.category_rule_id
+		where  tcu.id=#{couponsUserId}
+	</select>
+
+	<select id="queryByQuickPurchase" resultType="com.shq.oper.model.dto.api.res.ResUserCouponsPackDataDto">
+		select tc.name as couponsName,ta.name as activityName,ta.batch as activityBatchNo,
+		ta.from_sys as fromSys, ta.from_sys_code as fromSysCode,
+		tcu.id as couponsUserId ,
+		tc.coupon_des,
+		tc.coupons_href_url,
+		tc.content_img,
+		tc.content_disabled_img,
+		tcu.give_seq as giveSeq,
+		tcu.receive_src as receiveSrc,
+		tcu.used_balance as usedBalance,
+		tcu.give_coupons_name as giveCouponsName,
+		tcu.* from t_coupons_user tcu
+		left join t_coupons tc
+		on tc.id=tcu.coupons_id
+		left join t_activity ta on
+		ta.id=tcu.activity_id
+		<where>
+			and tcu.is_disabled = 0
+			<if test="userSeq != null and userSeq != ''">and tcu.user_seq=#{userSeq}</if>
+			<choose>
+				<when test="couponsStatus != null ">
+					and ( tcu.coupons_status=#{couponsStatus}
+					<if test=" couponsStatus == 1  and nowTime != null and nowTime != '' ">
+						and #{nowTime} between tcu.vali_day_start  and tcu.vali_day_end
+					</if>
+					<if test=" couponsStatus == 4  and nowTime != null and nowTime != '' ">
+						<![CDATA[
+						or #{nowTime} <= tcu.vali_day_start  or #{nowTime} >= tcu.vali_day_end
+						]]>
+					</if>
+					)
+				</when>
+			</choose>
+		</where>
+		order by tcu.coupons_status asc , tcu.vali_day_end asc
+	</select>
+
+
+	<!--<select id="queryByGive" resultType="com.shq.oper.model.dto.api.res.ResUserCouponsPackDataDto">-->
+		<!--select tcu.giveCouponsName as couponsName,tcu.giveSeq as giveSeq,-->
+		<!--tcu.id as couponsUserId ,-->
+		<!--tcu.receive_src as receiveSrc,-->
+		<!--tcu.* from t_coupons_user tcu-->
+		<!--<where>-->
+			<!--and tcu.is_disabled = 0-->
+			<!--and tcu.receive_src="1000"-->
+			<!--<if test="userSeq != null and userSeq != ''">and tcu.user_seq=#{userSeq}</if>-->
+			<!--<choose>-->
+				<!--<when test="couponsStatus != null ">-->
+					<!--and ( tcu.coupons_status=#{couponsStatus}-->
+					<!--<if test=" couponsStatus == 1  and nowTime != null and nowTime != '' ">-->
+						<!--and #{nowTime} between tcu.vali_day_start  and tcu.vali_day_end-->
+					<!--</if>-->
+					<!--<if test=" couponsStatus == 4  and nowTime != null and nowTime != '' ">-->
+						<!--<![CDATA[-->
+						<!--or #{nowTime} <= tcu.vali_day_start  or #{nowTime} >= tcu.vali_day_end-->
+						<!--]]>-->
+					<!--</if>-->
+					<!--)-->
+				<!--</when>-->
+			<!--</choose>-->
+		<!--</where>-->
+		<!--order by tcu.coupons_status asc , tcu.vali_day_end asc-->
+	<!--</select>-->
+
+
+	<!-- 用户所有可用优惠券 -->
+	<select id="queryBySeqAllUsable"
+			resultType="com.shq.oper.model.dto.api.res.ResUserCouponsPackDataDto">
+		<![CDATA[
+			select tc.name as couponsName,
+				ta.name as activityName,
+				ta.batch as activityBatchNo,
+				ta.from_sys as fromSys, ta.from_sys_code as fromSysCode,
+				agr.id as activityGoodsRuleId,
+				agr.type as goodsRuleType,
+				tcu.id as couponsUserId ,
+				tc.coupon_des,
+				tc.coupons_href_url,
+				tc.content_img,
+				tc.content_disabled_img,
+				tcu.* from t_coupons_user tcu
+				left join t_coupons tc on tc.id=tcu.coupons_id
+				left join t_activity_goods_rule agr on agr.id=tc.category_rule_id
+				left join t_activity ta on ta.id=tc.activity_id
+			where
+				 tcu.user_seq=#{userSeq}
+				 and tcu.is_disabled = 0
+			order by tcu.amt_full_reduce desc ,tcu.amt_sub desc ,tcu.amt_discount desc , tcu.vali_day_end asc
+		]]>
+	</select>
+
+	<select id="queryCouponsUserAndCoupons" resultType="CouponsUser">
+		select 
+		tc.name as couponsName 
+		,ta.name as actName 
+		,tcu.* 
+		from t_coupons_user tcu 
+		left join t_coupons tc 
+		on tcu.coupons_id=tc.id 
+		left JOIN t_activity ta
+		on ta.id=tcu.activity_id
+		<where>
+			<if test="userSeq != null and userSeq != ''">
+				and tcu.user_seq=#{userSeq}
+			</if>
+			<if test="couponsStatus != null and couponsStatus != ''">
+				and tcu.coupons_status=#{couponsStatus}
+			</if>
+			<if test="couponsType != null and couponsType != ''">
+				and tcu.coupons_type=#{couponsType}
+			</if>
+			<if test="couponsId != null and couponsId != ''">
+				and tcu.coupons_id=#{couponsId}
+			</if>
+			<if test="isDisabled != null ">and tcu.is_disabled = #{isDisabled}</if>
+		</where>
+		order by tcu.id desc
+	</select>
+
+
+	<!-- 订单提交锁定优惠券。状态变更 2：锁定中 -->
+	<update id="updateByOrderUsedLock">
+		<![CDATA[
+		update t_coupons_user t
+			set t.coupons_status = 2
+			,t.use_time = #{nowTime}
+			,t.use_order = #{useOrderNo}
+			,t.use_order_money = #{useOrderMoney}
+			,t.use_spend_money = #{useSpendMoney}
+			,t.use_desc = #{useDesc}
+			,t.update_time = now()
+			,t.update_admin = #{userSeq}
+			where
+			 t.id = #{couponsUserId}
+			and t.is_disabled = 0
+			and t.coupons_status = 1
+			and t.user_seq = #{userSeq}
+			and #{nowTime} BETWEEN t.vali_day_start and t.vali_day_end
+			and #{useOrderMoney} >= t.min_spend_money
+		]]>
+	</update>
+
+	<!-- 订单结算成功。状态变更 3：已使用 -->
+	<update id="updateOrderByLockSuccess">
+		<![CDATA[
+		update t_coupons_user t
+			set t.coupons_status = 3
+			,t.update_time = now()
+			,t.update_admin = #{userSeq}
+			where
+			 t.id = #{couponsUserId}
+			and t.user_seq = #{userSeq}
+			and t.use_order = #{useOrderNo}
+			and t.coupons_status = 2
+		]]>
+	</update>
+
+	<!-- 订单取消优惠券还原。状态变更 1：未使用 -->
+	<update id="updateOrderByLockCannel">
+		<![CDATA[
+		update t_coupons_user t
+			set t.coupons_status = 1
+			,t.use_desc = #{useDesc}
+			,t.update_time = now()
+			,t.update_admin = #{userSeq}
+			where
+			 t.id = #{couponsUserId}
+			and t.user_seq = #{userSeq}
+			and t.use_order = #{useOrderNo}
+			and t.coupons_status = 2
+		]]>
+	</update>
+
+	<!--定时任务，优惠券过期 状态4过期 -->
+	<update id="updateCouponsStatusExpiredByJob">
+		<![CDATA[
+		update t_coupons_user t
+			set t.coupons_status = 4
+			,t.use_desc = '优惠券已过期'
+			,t.update_time = now()
+			,t.update_admin = 'system'
+			where
+			t.vali_day_end < #{expiredDay}
+			and t.coupons_status = 1
+		]]>
+		<if test="couponsUserId != null ">and t.id = #{couponsUserId}</if>
+	</update>
+
+	<select id="queryCouponsSellNum" resultType="int">
+		select count(1) as sellNum,coupons_id
+		from t_coupons_user tcu
+		where tcu.coupons_id=#{couponsId};
+	</select>
+	<select id="queryCouponsUseStatistics" resultType="com.shq.oper.model.dto.CouponsStatisticsDto">
+		select tmp.totalSendNums as totalSendNums,tmp2.totalUseCounts as
+		totalUseCounts
+		,tmp2.totalOrderMoney as totalOrderMoney,tmp2.totalSpendMoney as totalSpendMoney
+		FROM
+		(SELECT count(1) as totalSendNums
+		from  t_coupons tc
+		JOIN t_coupons_user tcu
+		<where>
+			tc.id=tcu.coupons_id
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time  <= #{end}]]>
+			</if>
+		</where>
+		) tmp ,
+		(
+		select  count(1) as totalUseCounts,SUM(tcu.use_order_money) as
+		totalOrderMoney,SUM(tcu.use_spend_money) as totalSpendMoney
+		from  t_coupons_user tcu
+		JOIN t_coupons tc
+		<where>
+			tc.id=tcu.coupons_id
+			and tcu.coupons_status=3
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time  <= #{end}]]>
+			</if>
+		</where>
+		) tmp2
+	</select>
+
+	<select id="queryAllCouponsUseStatistics" resultType="com.shq.oper.model.dto.CouponsStatisticsDto">
+		SELECT DATE_FORMAT(tcu.create_time, '%Y-%m-%d')  as statisticsTime, ifnull(tmp2.newInsertCount,0) as newAddCount,
+		ifnull(tmp2.totalOrderMoney,0) as newAddTotalOrderMoney,ifnull(tmp2.totalSpendMoney,0) as newAddTotalSpendMoney,
+		ifnull(tmp3.totalCount,0) as totalSendNums,ifnull(tmp.useCount,0) as totalUseCounts,ifnull(tmp.totalOrderMoney,0) as totalOrderMoney
+		,ifnull(tmp.totalSpendMoney,0) as totalSpendMoney,ifnull(tmp.counts,0) as numberOfUsingcoupons,ifnull(temp2.totalBalance,0) as totalBalance,
+		ifnull(temp2.totalUsedBalance,0) as totalUsedBalance,ifnull(temp2.totalDeductible,0) as totalDeductible,ifnull(temp1.totalAmount,0) as totalAmount
+		from t_coupons_user tcu
+		left join 
+		(SELECT  temp.counts AS counts,temp.date as date,temp.useCount as useCount,temp.totalOrderMoney as totalOrderMoney
+		,temp.totalSpendMoney as totalSpendMoney
+		FROM
+		(
+		select count(DISTINCT tcu.user_seq) as counts,DATE_FORMAT(tcu.create_time, '%Y-%m-%d') as date,count(1) as useCount,
+		sum(tcu.use_order_money) as totalOrderMoney,sum(tcu.use_spend_money) as totalSpendMoney
+		from t_coupons_user tcu
+		<where>
+				tcu.coupons_status=3
+			<if test="activityId != null and activityId!=''">
+				and tcu.activity_id = #{activityId}
+			</if>
+			<if test="couponsType != null and couponsType!=''">
+				and tcu.coupons_type = #{couponsType}
+			</if>
+				<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time <= #{end}]]>
+			</if>
+		</where>
+		GROUP BY  date
+		) temp
+		) tmp
+		on tmp.date=DATE_FORMAT(tcu.create_time, '%Y-%m-%d')
+
+		left join
+		(select DATE_FORMAT(tcu.create_time, '%Y-%m-%d') AS time,sum(tcu.amount) as totalAmount from  t_coupons_user tcu
+		<where>
+			tcu.coupons_status=3
+			and
+			tcu.coupons_type=4
+			<if test="couponsType != null and couponsType!=''">
+				and tcu.coupons_type = #{couponsType}
+			</if>
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time <= #{end}]]>
+			</if>
+		</where>
+		GROUP BY  time
+		) temp1
+		on temp1.time=DATE_FORMAT(tcu.create_time, '%Y-%m-%d')
+
+		left join
+		(select DATE_FORMAT(tcu.create_time, '%Y-%m-%d') AS time,sum(tcu.balance) as totalBalance,
+		sum(tcu.used_balance) as totalUsedBalance,sum(tcu.amount) as totalDeductible from  t_coupons_user tcu
+		<where>
+			tcu.coupons_type=5
+			<if test="couponsType != null and couponsType!=''">
+				and tcu.coupons_type = #{couponsType}
+			</if>
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time <= #{end}]]>
+			</if>
+		</where>
+		GROUP BY  time
+		) temp2
+		on temp2.time=DATE_FORMAT(tcu.create_time, '%Y-%m-%d')
+
+		left join
+		(select count(1) as newInsertCount,  sum(tcu.use_order_money) as totalOrderMoney
+		,sum(tcu.use_spend_money) as totalSpendMoney,DATE_FORMAT(tcu.create_time, '%Y-%m-%d') AS time,tcu.activity_id as activityId,tcu.coupons_type as couponsType
+		,tcu.create_time as create_time
+		FROM
+		t_coupons_user tcu
+		<where>
+				tcu.coupons_status=3
+				AND DATE_FORMAT( tcu.create_time, '%Y-%m-%d' ) = DATE_FORMAT( tcu.use_time, '%Y-%m-%d' ) 
+			<if test="activityId != null and activityId!=''">
+				and tcu.activity_id = #{activityId}
+			</if>
+			<if test="couponsType != null and couponsType!=''">
+				and tcu.coupons_type = #{couponsType}
+			</if>
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time <= #{end}]]>
+			</if>
+		</where>
+		GROUP BY  time ) tmp2
+		on tmp2.time=DATE_FORMAT(tcu.create_time, '%Y-%m-%d') 
+		left join 
+				(SELECT
+		temp.date as
+		date, temp.totalCount AS totalCount
+		FROM
+		(
+		select
+		count(1) as totalCount,tcu.create_time, DATE_FORMAT(tcu.create_time,'%Y-%m-%d') as date
+		from t_coupons_user tcu
+		left JOIN t_coupons tc
+		on
+		tc.id=tcu.id
+		<where>
+			<if test="activityId != null and activityId!=''">
+				tcu.activity_id = #{activityId}
+			</if>
+			<if test="couponsType != null and couponsType!=''">
+				and tcu.coupons_type = #{couponsType}
+			</if>
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time <= #{end}]]>
+			</if>
+		</where>
+		GROUP BY DATE_FORMAT(tcu.create_time, '%Y-%m-%d')
+		) AS temp
+		ORDER BY
+		temp.date
+		) tmp3
+		on tmp3.date=DATE_FORMAT(tcu.create_time, '%Y-%m-%d') 
+		<where>
+			<if test="start != null">
+				<![CDATA[and tcu.create_time >= #{start}]]>
+			</if>
+			<if test="end != null">
+				<![CDATA[and tcu.create_time <= #{end}]]>
+			</if>
+		</where>
+		group by DATE_FORMAT(tcu.create_time, '%Y-%m-%d') 
+		order by DATE_FORMAT(tcu.create_time, '%Y-%m-%d')  desc
+	</select>
+	
+	<select id="checkCouponsGetOrNotByUser" resultType="int" >
+		select count(ta.id) as couponsCounts
+			from t_coupons_user tcu
+			left join  t_activity ta
+			on tcu.activity_id=ta.id
+		where ta.user_role_rule=1
+			  and tcu.user_seq=#{userSeq}
+	</select>
+
+
+	<update id="updateCouponsStatus">
+
+		update t_coupons_user t
+			set t.coupons_status = 4
+			,t.use_desc = '优惠券已过期'
+			,t.update_time = now()
+			,t.update_admin = 'system'
+			where
+		t.id = #{couponsUserId}
+	</update>
+
+	<select id="queryGiveDayCouponsPage" resultType="com.shq.oper.model.dto.salestatistics.GiveCouponsDayStatisticsDto">
+
+		select tmp1.date, tmp2.frequency,tmp2.num,tmp2.giveNum,tmp2.total from(
+
+		select DATE_FORMAT(create_time,'%Y.%m.%d') as date  from t_coupons_user
+		<where>
+			receive_src='1000'
+			<if test="beginTime != null">
+				<![CDATA[and create_time >= #{beginTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and create_time  <= #{endTime}]]>
+			</if>
+		</where>
+		group by DATE_FORMAT(create_time,'%Y.%m.%d')
+		) tmp1
+
+		left join (
+		select count(id) as frequency,count(distinct user_seq) as num,count(distinct give_seq) as giveNum, sum(amt_sub) as total,DATE_FORMAT(create_time,'%Y.%m.%d') as date from t_coupons_user
+		<where>
+			receive_src='1000'
+			<if test="beginTime != null">
+				<![CDATA[and create_time >= #{beginTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and create_time  <= #{endTime}]]>
+			</if>
+		</where>
+		group by DATE_FORMAT(create_time,'%Y.%m.%d')
+
+		) tmp2
+
+		on tmp1.date=tmp2.date
+	</select>
+
+
+	<select id="queryGiveCouponsStatic" resultType="com.shq.oper.model.dto.salestatistics.GiveCouponsStatisticsDto">
+		select count(id) as frequency,count( distinct give_seq) as num,sum(amt_sub) as total,
+(select sum(amt_sub) as n from t_coupons_user where coupons_status=3 and receive_src='1000') as usedTotal,
+(select sum(amt_sub) as n from t_coupons_user where coupons_status=4 and receive_src='1000') as outTotal
+from t_coupons_user where receive_src='1000'
+
+	</select>
+
+
+
+	<!-- 使用抵扣券 -->
+	<update id="updateUserDeductible">
+		<![CDATA[
+		update t_coupons_user t
+			set t.coupons_status = #{couponsStatus}
+			,t.use_time = now()
+			,t.update_time = now()
+			,t.update_admin = #{userSeq}
+			,t.used_balance = #{usedBalance}
+			,t.balance = #{balance}
+			,t.use_desc = #{useDesc}
+			where
+			 t.id = #{id}
+			and t.is_disabled = 0
+			and t.user_seq = #{userSeq}
+			and  now() BETWEEN t.vali_day_start and t.vali_day_end
+		]]>
+	</update>
+
+
+</mapper>

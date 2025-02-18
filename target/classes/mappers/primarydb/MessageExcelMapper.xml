@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.MessageExcelMapper">
+
+    <update id="updateBath" parameterType="java.util.List">
+        update t_msg_excel
+        set  status=1
+        , finish_time=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case ID" close="end">
+            when #{item.id} then #{item.finishTime}
+        </foreach>
+        where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+
+    <select id="queryPageSort" resultType="MessageExcel">
+        select * from t_msg_excel t
+        <where>
+            <if test="batch != null and batch != ''">and t.batch=#{batch}</if>
+            <if test="phone != null and phone != ''">and t.phone=#{phone}</if>
+            and t.status=#{status}
+
+        </where>
+        order by t.create_time desc
+    </select>
+
+
+
+</mapper>

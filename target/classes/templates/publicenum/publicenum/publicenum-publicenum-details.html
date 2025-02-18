@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script type="text/javascript"></script>
+<style type="text/css">
+.test {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 20px;
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+
+td {
+	width: 120px;
+}
+</style>
+</head>
+<body>
+	<div>
+		<table class="layui-table"
+			style="margin-top: 1px; margin-bottom: 1px; height: 305px;">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td style="width: 50px;" th:text="${publiceNumDetails.id}"></td>
+					<th>公众号名称</th>
+					<td th:text="${publiceNumDetails.name}"></td>
+				</tr>
+				<th>二维码图片</th>
+				<td><a th:href="${publiceNumDetails.codeImg}" target="_blank">
+						<img class="imgUrl" style="width: 50px; height: 50px;"
+						th:src="${publiceNumDetails.codeImg}">
+				</a></td>
+				<th>是否禁用</th>
+				<td th:text="${publiceNumDetails.isDisabled}!=true?'启用':'禁用'"></td>
+				</tr>
+				<tr>
+					<th>链接地址</th>
+					<td colspan="3" th:text="${publiceNumDetails.connectionAdress}"></td>
+				</tr>
+				<tr>
+					<th>浮窗文案</th>
+					<td colspan="3" th:text="${publiceNumDetails.floatingContent}"></td>
+				</tr>
+				<tr>
+					<th>创建人</th>
+					<td th:text="${publiceNumDetails.createAdmin}"></td>
+					<th>创建时间</th>
+					<td th:text="${publiceNumDetails.createTime}"></td>
+				</tr>
+				<tr>
+					<th>最近更新人</th>
+					<td th:text="${publiceNumDetails.updateAdmin}"></td>
+					<th>最后修改时间</th>
+					<td th:text="${publiceNumDetails.updateTime}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

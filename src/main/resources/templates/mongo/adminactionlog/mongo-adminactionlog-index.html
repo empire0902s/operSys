@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员操作日志</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="details">详细</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">访问路径:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="action"
+							placeholder="请输入访问路径">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">搜索时间:</label>
+					<div class="layui-input-inline">
+						<input type="text" name="timeRange" class="layui-input"
+							readonly="readonly" id="timeRange" placeholder="请选择时间范围">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">管理员用户名:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="adminName"
+							placeholder="管理员用户名">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">参数:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="actionPara"
+							placeholder="请输入请求参数">
+					</div>
+				</div>
+					<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload" id="reload">搜索</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+
+</body>
+</html>

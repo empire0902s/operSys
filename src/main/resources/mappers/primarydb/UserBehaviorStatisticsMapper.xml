@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.UserBehaviorStatisticsMapper">
+	<resultMap id="BaseResultMap"
+		type="com.shq.oper.model.domain.primarydb.UserBehaviorStatistics">
+		<!-- WARNING - @mbg.generated -->
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="statistics_time" jdbcType="TIMESTAMP" property="statisticsTime" />
+		<result column="uv" jdbcType="INTEGER" property="uv" />
+		<result column="ip" jdbcType="INTEGER" property="ip" />
+		<result column="pv" jdbcType="INTEGER" property="pv" />
+	</resultMap>
+
+	<sql id="BaseColumns">
+		<!-- WARNING - @mbg.generated -->
+		id, create_time, statistics_time, uv, ip, pv
+	</sql>
+
+	<select id="queryUserBehaviorStatistics" resultType="userBehaviorStatistics">
+		SELECT tubs.*
+		from t_user_behavior_statistics tubs
+		<where>
+			<if test="begin!=null">
+			<![CDATA[tubs.statistics_time>=#{begin}]]>
+			</if>
+			<if test="last!=null">
+				<![CDATA[and tubs.statistics_time <=#{last}]]>
+			</if>
+		</where>
+		order by tubs.statistics_time desc
+	</select>
+
+
+</mapper>

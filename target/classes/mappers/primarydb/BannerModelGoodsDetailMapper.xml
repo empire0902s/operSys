@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.BannerModelGoodsDetailMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.primarydb.BannerModelGoodsDetail">
+    <!-- WARNING - @mbg.generated -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_admin" jdbcType="VARCHAR" property="updateAdmin" />
+    <result column="banner_id" jdbcType="BIGINT" property="bannerId" />
+    <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
+    <result column="first_class_id" jdbcType="VARCHAR" property="firstClassId" />
+    <result column="second_class_id" jdbcType="VARCHAR" property="secondClassId" />
+    <result column="three_class_id" jdbcType="VARCHAR" property="threeClassId" />
+    <result column="four_class_id" jdbcType="VARCHAR" property="fourClassId" />
+    <result column="sort_no" jdbcType="SMALLINT" property="sortNo" />
+    <result column="is_disabled" jdbcType="BIT" property="isDisabled" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    id, update_time, update_admin, banner_id, goods_code, first_class_id, second_class_id, three_class_id, four_class_id, sort_no, is_disabled
+  </sql>
+  <select id="queryBannerModelGoodsDetail" resultType="com.shq.oper.model.domain.primarydb.BannerModelGoodsDetail">
+	select *
+	from t_banner_model_goods_detail
+	<where>
+		<if test="bannerId != null and bannerId !=''">
+		and banner_id=#{bannerId}
+		</if>
+		<if test="goodsCode != null and goodsCode !=''">
+		and goods_code=#{goodsCode}
+		</if>
+	</where>
+  </select>
+  
+  
+  
+</mapper>

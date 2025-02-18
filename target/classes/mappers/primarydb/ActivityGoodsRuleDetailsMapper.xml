@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.ActivityGoodsRuleDetailsMapper">
+ 
+ 	<select id="queryByList" resultType="activityGoodsRuleDetails" >
+		SELECT gr.name as goodsRuleName,
+			gr.type as goodsRuleType,
+			gr.is_disabled as goodsRuleDisabled,
+			gr.rule_des as goodsRuleDes,	
+			grd.* from t_activity_goods_rule_details grd 
+			left join t_activity_goods_rule gr on gr.id = grd.activity_goods_rule_id
+			<where>
+				<if test="activityGoodsRuleId != null">and grd.activity_goods_rule_id = #{activityGoodsRuleId} </if>		
+				and gr.is_disabled = 0
+				
+				<if test="couponsGoodsRuleIdList != null  and couponsGoodsRuleIdList.size > 0">
+					and grd.activity_goods_rule_id in
+					<foreach item="item" index="index" collection="couponsGoodsRuleIdList" open="(" separator="," close=")">
+					    #{item}
+				  	</foreach>
+				</if>		
+	   		 
+			</where>
+			order by id desc
+ 	</select>
+
+
+	<select id="queryListByCouponsId"  resultType="com.shq.oper.model.dto.api.res.ResBrandCouponsGoodsListDto" >
+		SELECT ref_sign_name as goodsName,
+		ref_sign_local_id as goodsId,
+		ref_sign_value as goodsCode,
+		update_time as createTime
+		from t_activity_goods_rule_details
+
+		<where>
+			<if test="activityGoodsRuleId != null">and activity_goods_rule_id = #{activityGoodsRuleId} </if>
+
+		</where>
+		order by id desc
+	</select>
+
+
+	<delete id="BrandRemoveCouponsCateRule">
+		delete from t_activity_goods_rule_details
+		where activity_goods_rule_id = #{ruleId,jdbcType=INTEGER} AND ref_sign_value IN
+		<foreach collection="codes" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+<!--邀请页数据列表接口返回数据  -->
+	<select id="queryApiLoveOfHomeInvitationPageDataList" resultType="activityGoodsRuleDetails">
+		select tagrd.ref_sign_value as refSignValue
+		      ,tagr.name as goodsRuleName
+		      ,tagrd.sort as sort
+		      ,tagr.from_sys as fromSys
+		      ,tagr.from_sys_code as fromSysCode
+		from t_activity_goods_rule_details tagrd
+		left join t_activity_goods_rule tagr
+		on tagr.id=tagrd.activity_goods_rule_id
+		<where>
+			tagr.is_disabled=0 
+		<if test=" fromSys!=null and fromSys != '' ">
+			and tagr.from_sys=#{fromSys}
+		</if>
+		<if test=" fromSysCode !=null and fromSysCode != '' ">
+			and tagr.from_sys_code=#{fromSysCode}
+		</if>
+		</where>
+		order by tagrd.sort asc,tagrd.update_time desc
+	</select>
+	
+	<select id="queryLoveOfHomeInvitationPageDataList" resultType="activityGoodsRuleDetails">
+		select tagrd.id as id,tagrd.update_time as updateTime,tagrd.update_admin as updateAdmin
+				,tagrd.rule_type as ruleType,tagrd.ref_sign_value as refSignValue
+				,tagrd.ref_sign_name as refSignName,tagrd.ref_sign_local_id as refSignLocalId
+			    ,tagrd.activity_goods_rule_id as activityGoodsRuleId,tagr.name as goodsRuleName
+			    ,tagrd.sort as sort
+			    ,tagr.from_sys as fromSys
+		        ,tagr.from_sys_code as fromSysCode
+		from t_activity_goods_rule_details tagrd
+		left join t_activity_goods_rule tagr
+		on tagr.id=tagrd.activity_goods_rule_id
+		<where>
+			and tagr.from_sys='homeOfLove' 
+		<if test=" fromSysCode !=null and fromSysCode != '' ">
+			and tagr.from_sys_code=#{fromSysCode}
+		</if>
+		<if test=" refSignValue !=null and refSignValue != '' ">
+			and tagrd.ref_sign_value=#{refSignValue}
+		</if>
+		<if test=" refSignName !=null and refSignName != '' ">
+			and tagrd.ref_sign_name LIKE concat('%',#{refSignName},'%')
+		</if>
+		<if test=" activityGoodsRuleId !=null and activityGoodsRuleId != '' ">
+			and tagrd.activity_goods_rule_id=#{activityGoodsRuleId}
+		</if>
+		</where>
+		order by tagr.id ,tagrd.sort asc,tagrd.update_time desc
+	</select>
+
+
+
+</mapper>

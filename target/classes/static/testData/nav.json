@@ -1,0 +1,70 @@
+[
+	{
+		"title": "Nav.json菜单数据",
+		"icon": "fa-cubes",
+		"spread": true,
+		"children": [
+			{
+				"title": "用户管理",
+				"icon": "&#xe641;",
+				"href": "/auth/admin/index"
+			},{
+				"title": "角色管理",
+				"icon": "&#xe641;",
+				"href": "/auth/role/index"
+			}, {
+				"title": "菜单管理",
+				"icon": "&#xe641;",
+				"href": "/auth/resource/index"
+			}, {
+			},{
+				"title": "数据字典",
+				"icon": "&#xe641;",
+				"href": "/auth/dict/index"
+			},{
+				"title": "区域管理",
+				"icon": "&#xe641;",
+				"href": "/auth/area/index"
+			},{
+				"title": "区域规划",
+				"icon": "&#xe641;",
+				"href": "/auth/couponsAreaRule/index"
+			},{
+				"title": "Banner",
+				"icon": "&#xe641;",
+				"href": "/auth/banner/index"
+			},
+			{
+				"title": "商品管理",
+				"icon": "&#xe641;",
+				"href": "/auth/commodity/index"
+			},
+			{
+				"title": "金额管理",
+				"icon": "&#xe641;",
+				"href": "/auth/couponstype/index"
+			},
+			{
+				"title": "页面3",
+				"icon": "&#xe63c;",
+				"href": "form.html"
+			}
+		]
+	},  {
+		"title": "二级导航",
+		"icon": "&#x1002;",
+		"spread": false,
+		"children": [
+			{
+				"title": "QQ王子",
+				"icon": "fa-check-square-o",
+				"href": "https://www.qq.com"
+			}
+		]
+	}, {
+		"title": "这是一级导航",
+		"icon": "fa-stop-circle",
+		"href": "https://www.baidu.com",
+		"spread": false
+	}
+]

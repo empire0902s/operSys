@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>栏目商品绑定</title>
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+</script>
+<script th:inline="javascript">
+var activityGoodsRuleDetailsResult='[[${activityGoodsRuleDetailsResult}]]'
+var distributionProductResult='[[${distributionProductResult}]]'
+var operType='[[${operType}]]'
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+
+		<form class="layui-form  layui-form-pane data-list-form">
+			<div class="layui-form-item">
+					<label class="layui-form-label">商品Code:</label>
+					<div class="layui-input-inline " style="width:300px;">
+						<input type="text" style="width:300px;" class="layui-input" name="goodsCode"  id="code"
+							   placeholder="请输入商品Code">
+					</div>
+				<div >
+					<div class="layui-input-inline">
+						<a class="layui-btn search "  style="margin-left: 30px;" data-type="reload" id="search">搜索</a>
+					</div>
+				</div>
+			</div>
+
+		</form>
+
+		<fieldset class="layui-elem-field">
+		<form class="layui-form " >
+			<div class="layui-field-box disabledTable data-product-form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">商品Code：</label>
+						<div class="layui-input-inline"  style="width:280px;">
+							<div class="inline-text layui-text" ><span class="productCode" id="productCode"></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+						<div class="layui-inline">
+						<label class="layui-form-label">商品名称：</label>
+						<div class="layui-input-inline" style="width:480px;">
+							<div class="inline-text layui-text" ><span class="productName"></span></div>
+						</div>
+					</div>
+				</div>
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">供应商：</label>
+							<div class="layui-input-inline" style="width: 280px;">
+								<div class="inline-text layui-text">
+									<span class="companyName"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">状态：</label>
+						<div class="layui-inline">
+							<div class="layui-input-inline" style="width: 350px;">
+								<input type="radio" name="isSale" Id="isSale1" value="1"
+									   title="上架" disabled="disabled" /> <input type="radio"
+																				name="isSale" id="isSale2" value="2" title="下架"
+																				disabled="disabled" /> <input type="radio" name="isSale"
+																											  id="isSale3" value="0" title="待审核" disabled="disabled" />
+							</div>
+						</div>
+					</div>
+				</div>
+					<!--<div class="layui-form-item" type="hidden">-->
+						<!--<div class="layui-inline">-->
+							<!--<label class="layui-form-label">状态：</label>-->
+							<!--<div class="layui-inline">-->
+								<!--<div class="layui-input-inline" style="width: 350px;">-->
+									<!--<input type="radio" name="companyState" Id="companyState1" value=1 class="companyState"-->
+										<!--title="上架" disabled="disabled" /> <input type="radio"-->
+										<!--name="companyState" id="companyState2" value=2 title="下架" class="companyState"-->
+										<!--disabled="disabled" />-->
+									<!--<input type="radio"-->
+										   <!--name="companyState" id="companyState3" value="0" title="待审核" class="companyState"-->
+										   <!--disabled="disabled" />-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">商品类型：</label>
+						<div class="layui-inline">
+							<div class="layui-input-inline" style="width: 350px;">
+								<input type="radio" name="Isstandard " value=0 id="ifBrandProduct1"
+									   title="平台商品" disabled="disabled" /> <input type="radio"
+																				name="Isstandard"  value=1 title="品牌商品" id="ifBrandProduct2"
+																				disabled="disabled" />
+								<!--<input type="radio"-->
+									   <!--name="Isstandard"  value=2 title="平台商品" id="ifBrandProduct3"-->
+									   <!--disabled="disabled" />-->
+
+							</div>
+						</div>
+					</div>
+				</div>
+						<div class="layui-form-item">
+						<div class="layui-inline" style="margin-left: 15px;">
+							<label class="layui-form-label">排序：</label>
+							<div class="layui-input-inline">
+										<input type="text" class="layui-input" name="sort" lay-verify="required|number|space|positiveInteger"
+										id="sort" value="1000">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</fieldset>
+
+		<table  lay-size="sm"  class="layui-hide data-list" lay-filter="data-list" ></table>
+		
+		<div class="center">
+			<button class="layui-btn _submit " lay-submit lay-filter="submit" id="saveToList">保存到列表</button>
+			<button class="layui-btn off  layui-btn-primary" lay-submit lay-filter="submit">关闭</button>
+		</div>
+	</div>
+
+
+</body>
+</html>

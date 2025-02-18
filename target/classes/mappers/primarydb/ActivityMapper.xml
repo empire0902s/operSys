@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.ActivityMapper">
+  
+  <select id="queryListByApi" resultType="com.shq.oper.model.dto.api.res.ResActivityListDataDto">
+  		select 
+  			date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStartStr
+  			,date_format( t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEndStr
+  			,t.* 
+  			from t_activity t
+  		<where>
+  			and t.is_disabled = 0
+  			and #{nowTime} BETWEEN t.send_time_start and t.send_time_end
+  			and t.from_sys = #{fromSys}
+  			<if test="fromSysCode != null  and fromSysCode != ''"> and t.from_sys_code = #{fromSysCode} </if>
+  			<if test="actBatch != null  and actBatch != ''"> and t.batch = #{actBatch} </if>
+  			<if test="userRoleRule != null "> and t.user_role_rule = #{userRoleRule} </if>
+  			
+  		</where>
+  		order by t.send_time_start asc, t.send_time_end desc,id desc
+  </select>
+  
+    <select id="queryNewPeopleActivityListByApi" resultType="com.shq.oper.model.dto.api.res.ResActivityListDataDto">
+  		select 
+  			date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStartStr
+  			,date_format( t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEndStr
+  			,t.* 
+  			from t_activity t
+  		<where>
+  			and t.is_disabled = 0
+  			and t.user_role_rule= 1
+  			and #{nowTime} BETWEEN t.send_time_start and t.send_time_end
+  			and t.from_sys = #{fromSys}
+  			<if test="fromSysCode != null  and fromSysCode != ''"> and t.from_sys_code = #{fromSysCode} </if>
+  			<if test="actBatch != null  and actBatch != ''"> and t.batch = #{actBatch} </if>
+  			
+  		</where>
+  		order by t.create_time desc,t.send_time_start asc, t.send_time_end desc,id desc
+  </select>
+  
+
+
+	<select id="queryBrandListByApi" resultType="com.shq.oper.model.dto.api.res.ResActivityListDataDto">
+		select
+		date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStartStr
+		,date_format( t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEndStr
+		,t.*
+		from t_activity t
+		<where>
+			and t.from_sys = #{fromSys} 
+			<if test="id != null  and id != ''"> and t.id = #{id} </if>
+			<if test="name != null  and name != ''"> and t.name LIKE concat('%',#{name},'%')</if>
+			<if test="fromSysCode != null  and fromSysCode != ''"> and t.from_sys_code = #{fromSysCode} </if>
+		</where>
+		order by t.send_time_start asc, t.send_time_end desc,id desc
+	</select>
+
+	<update id="updateBrandActice" parameterType="activity">
+		update t_activity
+		set
+		 update_time=#{updateTime}
+		,update_admin=#{brandShopSeq}
+		,name=#{name}
+		,activity_desc=#{activityDesc}
+		,is_disabled=#{isDisabled}
+		where id=#{id}
+	</update>
+
+	<select id="queryActivity" resultType="activity">
+		select t.*
+		from t_activity t
+		<where>
+		<if test="name != null  and name != ''">
+			and t.name LIKE concat('%',#{name},'%')
+		</if>
+		<if test="fromSysCode != null  and fromSysCode != ''">
+			and t.from_sys_code= #{fromSysCode}
+		</if>
+		<if test="fromSys != null  and fromSys != ''">
+			and t.from_sys= #{fromSys}
+		</if>
+		<if test="batch != null  and batch != ''">
+			and t.batch= #{batch}
+		</if>
+		<if test="sendTimeStart != null">
+			<![CDATA[and t.send_time_start >= #{sendTimeStart}]]>
+		</if>
+		<if test="sendTimeEnd!= null">
+			<![CDATA[and t.send_time_end  <= #{sendTimeEnd}]]>
+		</if>
+		<if test="isDisabled != null">
+			and t.is_disabled = #{isDisabled}
+		</if>
+		</where>
+		order by t.id desc,t.update_time desc
+	</select>
+
+
+
+</mapper>

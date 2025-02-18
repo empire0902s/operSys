@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+	<title>管理员列表</title>
+	<script th:inline="javascript">
+        var operSysCodeList = '[[${operSysCodeList}]]';
+        var operSysList = '[[${operSysList}]]';
+	</script>
+
+	<style type="text/css">
+		.layui-form-checkbox {
+			margin: 5px 0px 5px 10px;
+		}
+
+		#resourceTree {
+			padding: 10px;
+		}
+		#layui-layer-shade1{
+			z-index:99 !important;
+		}
+		#layui-layer1{
+			z-index:100 !important;
+		}
+		#edui7{
+			z-index:120 !important;
+		}
+
+		#layui-layer-shade2{
+			z-index:100 !important;
+		}
+		#edui64{
+			z-index:121 !important;
+		}
+		.layui-layer-page{
+			z-index:150 !important;
+		}
+		.layui-layer-shade{
+			z-index:99 !important;
+		}
+	</style>
+
+
+	<script type="text/html" id="oper-col">
+		<a class="layui-btn  layui-btn-xs" lay-event="updateNum">修改</a>
+	</script>
+
+	<script type="text/html" id="isDisabledTpl">
+		<input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+	</script>
+	<script type="text/html" id="editBar">
+		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="delete">删除</a>
+	</script>
+</head>
+<body>
+<div style="margin: 15px;">
+	<form class="layui-form data-list-form">
+		<div class="layui-form-item">
+
+			<div class="layui-inline" style="margin-left: -40px;">
+				<label class="layui-form-label">时间范围:</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="timeRange"
+						   id="timeRange" readonly="readonly"
+						   placeholder="查询日期范围最大为31天">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">发布类型：</label>
+				<div class="layui-input-inline">
+					<select name="type">
+						<option value="1">每日爆款</option>
+						<option value="2">宣传推广</option>
+					</select>
+				</div>
+			</div>
+		<!--</div>-->
+
+		<!--<div class="layui-form-item">-->
+			<div class="layui-inline">
+				<div class="layui-input-block">
+					<a class="layui-btn" data-type="reload">搜索</a> <a
+						href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+				</div>
+			</div>
+		</div>
+	</form>
+	<table class="layui-hide data-list" lay-filter="data-list"></table>
+</div>
+
+<div class="layer-open-form edit-form">
+	<form class="layui-form ">
+		<input type="hidden" name="id" />
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">*小编名称：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="name" id="name" lay-verify="" 
+						   maxlength="8" placeholder="输入1-8个字符" autocomplete="off"
+						   class="layui-input">
+				</div>
+			</div>
+			<div class="layui-inline" style="position:relative; z-index:1001;">
+				<label class="layui-form-label">使用默认名称：</label>
+				<div class="layui-input-inline">
+					<input type="checkbox" name="name" title="爱之家商城" value="爱之家商城" id="aizhijia"  lay-filter="headImg" >
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">*头像选择：</label>
+				<div class="layui-input-inline">
+					<button type="button"  class="layui-btn layui-btn-primary layui-btn-radius" id="file"><i class="layui-icon"></i></button>
+					<!--<button type="button" class="layui-btn  layui-btn-primary layui-btn-radius layui-icon" id="file"><i class="layui-icon"></i></button>-->
+					<a target="_blank" id="checkBigImg" href=""><img type=""
+																	 class="layui-upload-img" id="contentImgDisplay"
+																	 style="display: none"></a>
+					<p id="imageText"></p>
+					<input type="hidden" style="margin-top: 5px" class="layui-input"
+						   name="headImg" id="headImg" readonly="readonly">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">使用默认头像：</label>
+				<div class="layui-input-inline">
+					<img style='width: 50px; height: 30px;'
+						 src='http://ndhimg.520shq.com//UploadFile/YY/20181112/2018111214470744350.jpeg'>
+					<input type="checkbox" name="headImg" lay-filter="defaultHeadImg" id="defaultHeadImg" title="" value="http://192.168.1.36:8019/UploadFile/YY/20181102/2018110214400518519.jpeg">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">选择类型：</label>
+				<div class="layui-input-inline">
+					<select name="type" lay-filter="type" >
+						<option value="1">每日爆款</option>
+						<option value="2">宣传推广</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline" id="isShow">
+				<label class="layui-form-label">是否显示查看详情：</label>
+				<div class="layui-input-inline">
+					<select name="isShow">
+						<option value="1">展示</option>
+						<option value="2">不展示</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<!--<div class="layui-inline">-->
+				<!--<label class="layui-form-label">是否禁用：</label>-->
+				<!--<div class="layui-input-inline">-->
+					<!--<input type="radio" name="isDisabled" value="0" title="否" checked />-->
+					<!--<input type="radio" name="isDisabled" value="1" title="是" />-->
+				<!--</div>-->
+			<!--</div>-->
+
+			<div class="layui-inline" id="sku">
+				<label class="layui-form-label">*每日爆款商品：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="commoditySku" lay-verify=""
+						   maxlength="40" placeholder="请输入商品code" autocomplete="off"
+						   class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline" id="goodsType">
+				<label class="layui-form-label">商品类型</label>
+				<div class="layui-input-inline">
+					<select name="goodsType" >
+						<option value="">请选择</option>
+						<option value="1">普通</option>
+						<option value="2">秒杀</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">*内容编辑：</label>
+				<div class="layui-input-inline" >
+					<textarea maxlength="800" style="width: 550px; height: 80px;" name="content" id="activityDesc"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline" id="comment">
+				<label class="layui-form-label">评论：</label>
+				<div class="layui-input-inline" >
+					<textarea maxlength="800" style="width: 500px; height: 80px;" name="comment"></textarea>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="layui-form-item" id="piture">
+			<div class="layui-inline">
+				<label class="layui-form-label">插入图片：</label>
+				<div class="layui-input-inline">
+					<button type="button"  class="layui-btn layui-btn-primary layui-btn-radius" id="file2"><i class="layui-icon"></i></button>
+					<!--<button type="button" class="layui-btn  layui-btn-primary layui-btn-radius layui-icon" id="file"><i class="layui-icon"></i></button>-->
+					<a target="_blank" id="checkBigImg2" href=""><img type=""
+																	  class="layui-upload-img" id="contentImgDisplay2"
+																	  style="display: none"></a>
+					<p id="imageText2"></p>
+					<input type="hidden" style="margin-top: 5px" class="layui-input"
+						   name="picture" id="headImg2" readonly="readonly">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="layui-form-item">
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+	<div class="layer-open-form edit-form1">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">分享次数：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="shareNum"  lay-verify="positiveInteger"
+							   maxlength="20" autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-form-item center">
+					<div class="layui-inline">
+						<button class="layui-btn" lay-submit lay-filter="submit1">提交</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+			</div>
+		</form>
+    </div>
+
+</body>
+</html>

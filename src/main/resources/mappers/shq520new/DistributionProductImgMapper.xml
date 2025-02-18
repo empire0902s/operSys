@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.shq520new.DistributionProductImgMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.shq520new.DistributionProductImg">
+    <!-- WARNING - @mbg.generated -->
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="Code" jdbcType="NVARCHAR" property="code" />
+    <result column="ImgName" jdbcType="NVARCHAR" property="imgname" />
+    <result column="ImgUrl" jdbcType="NVARCHAR" property="imgurl" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="UploadUser" jdbcType="NVARCHAR" property="uploaduser" />
+    <result column="UploadDate" jdbcType="TIMESTAMP" property="uploaddate" />
+    <result column="isture" jdbcType="INTEGER" property="isture" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    Id, Code, ImgName, ImgUrl, Status, UploadUser, UploadDate, isture
+  </sql>
+  
+</mapper>

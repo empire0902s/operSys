@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员操作日志</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+</script>
+<script type="text/html" id="editBar">
+	<!--<a class="layui-btn layui-btn-xs" lay-event="jump">预览</a>-->
+	<!--<a class="layui-btn layui-btn-xs" lay-event="details">详细</a>-->
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<blockquote class="layui-elem-quote quoteBox">
+			<form class="layui-form data-list-form">
+					<input type="hidden" name="columnId" id="columnId">
+								<input type="hidden" name="identifyType" id="identifyType" value="11"/>
+				<div class="layui-inline">
+					<div class="layui-input-inline" style="width: 30%">
+						<input type="text" name="title" maxlength="25"
+							autocomplete="off" class="layui-input" placeholder="图片标题">
+					</div>
+					<div class="layui-inline">
+						<div class="layui-input-block">
+							<a class="layui-btn" data-type="reload" title="搜索" id="reload">
+								<i class="layui-icon layui-icon-search "></i>
+							</a> <a href="javascript:;"
+								class="layui-btn layui-btn-normal btn-add">添加</a>
+						</div>
+					</div>
+				</div>
+			</form>
+		</blockquote>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	<div class="layer-open-form edit-form">
+		<form class="layui-form" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="id" />
+			<input type="hidden" name="columnId" id="columnIdReal" />
+			<input type="hidden" name="identifyType" id="identifyType" value="11"/>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">banner标题：</label>
+					<div class="layui-inline">
+						<input type="text" name="title" maxlength="32" lay-verify="required"  style="width:190px;"
+							placeholder="标题长度小于32" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item" >
+				<div class="layui-inline">
+					<label class="layui-form-label">图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal" id="file">上传图片(宽:750*高:350)</button>
+								<!-- <a style="margin-top: 10px;margin-left: 200px;margin-top: -57px;display: none;" class="layui-btn layui-btn-normal"  id="cleanLogoImg">清空</a> -->
+						<a target="_blank" id="checkBigImg" href=""><img type=""
+							class="layui-upload-img" id="imgDisplay" style="display: none;width:188px;height:88px;margin-top: 4px;"></a>
+					
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="imageLocation" id="imgPath" readonly="readonly">
+					</div>
+				</div>
+			</div>
+					<div class="layui-form-item" >
+								<label class="layui-form-label">跳转地址：</label>
+				<div class="layui-input-inline">
+					<textarea name="jumpTarget" lay-verify="required"  style="margin-top: 5px;"
+						maxlength="100" placeholder="跳转路径" class="layui-textarea"></textarea>
+				</div>
+			</div>
+<!-- 			<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">Banner位置：</label>
+						<div class="layui-input-inline"style="width: 182px;">
+						<select name="identifyType" id="identifyType" lay-verify="required">
+							<option value="9" selected="selected">顶部上部分</option>
+							<option value="10" >顶部下部分</option>
+						</select>
+						</div>
+					</div>
+			</div>  -->
+			<div class="layui-form-item" style="display: none">
+				<div class="layui-inline">
+					<label class="layui-form-label">排序：</label>
+					<div class="layui-inline">
+						<input type="text" name="sortNum" lay-verify="required"
+							value="10000" maxlength="20" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+			</div> 
+			<div class="layui-form-item center" style="margin-left: 85px;">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</form>
+	
+	</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script type="text/javascript"></script>
+<style type="text/css">
+.test {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 20px;
+}
+</style>
+</head>
+<body>
+	<div>
+		<table class="layui-table"
+			style="margin-top: 1px; margin-bottom: 1px; height: 305px;">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td style="width: 50px;" th:text="${bannerDetails.id}"></td>
+					<th>banner名称</th>
+					<td th:text="${bannerDetails.bannerName}"></td>
+				</tr>
+				<tr>
+					<th>图片路径</th>
+					<td><a th:href="${bannerDetails.imgPath}" target="_blank">
+							<img class="imgUrl" style="width: 50px; height: 50px;"
+							th:src="${bannerDetails.imgPath}">
+					</a></td>
+					<th>跳转地址</th>
+					<td><a th:href="${bannerDetails.url}" target="_blank" id="bannerDetails">
+							<span style="color: blue" >点击跳转</span>
+					</a></td>
+				</tr>
+				<tr>
+					<th>类型</th>
+					<td th:text="${bannerDetails.type}"></td>
+					<th>排序</th>
+					<td th:text="${bannerDetails.sort}"></td>
+				</tr>
+				<tr>
+					<th>创建人</th>
+					<td th:text="${bannerDetails.createAdmin}"></td>
+					<th>创建时间</th>
+					<td th:text="${bannerDetails.createTime}"></td>
+				</tr>
+				<tr>
+					<th>最近更新人</th>
+					<td th:text="${bannerDetails.updateAdmin}"></td>
+					<th>最后修改时间</th>
+					<td th:text="${bannerDetails.updateTime}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

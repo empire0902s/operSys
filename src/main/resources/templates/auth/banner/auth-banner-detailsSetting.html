@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>Banner详细设置</title>
+<script th:inline="javascript">
+	var bannerAuxiliary = '[[${bannerAuxiliary}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+</script>
+</head>
+<body>
+	<div class="layer-form edit-form">
+		<form class="layui-form" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="id" /> <input type="hidden"
+				name="parentId" th:value="${banner.id}" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">Banner名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="bannerName" style="width:180px;"
+							th:value="${banner.bannerName}" disabled="disabled" maxlength="20">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">logo图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal"
+							id="logoFile">上传图片</button>
+						<a target="_blank" id="checkBigImg" href=""><img type=""
+							class="layui-upload-img" id="imgDisplay" style="display: none"></a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="logoPath" id="logoPath" readonly="readonly">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">banner图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal"
+							id="bannerFile">上传图片</button>
+						<a target="_blank" id="bannerCheckBigImg" href=""><img type=""
+							class="layui-upload-img" id="bannerImgDisplay"
+							style="display: none"></a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="bannerImgPath" id="bannerImgPath" readonly="readonly">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">活动图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal"
+							id="activityFile">上传图片</button>
+						<a target="_blank" id="activityCheckBigImg" href=""><img
+							type="" class="layui-upload-img" id="activityImgDisplay"
+							style="display: none"></a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="activityImgPath" id="activityImgPath" readonly="readonly">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.AdminMapper">
+  
+  	<select id="queryByExcludeAdmin" resultType="admin">
+  		select * from t_admin t
+  		<where>
+  			<if test=" showAdmin != true ">and t.name != 'admin'</if>
+  			<if test="name != null and name != '' ">and t.name = #{name}</if>
+  			<if test="phone != null and phone != '' ">and t.phone = #{phone}</if>
+  			<if test="realName != null and realName != '' ">and t.real_name = #{realName}</if>
+  			<if test="isDisabled != null ">and t.is_disabled = #{isDisabled}</if>
+  		</where>
+  		order by id desc 
+  	</select>
+  	
+</mapper>

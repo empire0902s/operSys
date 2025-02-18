@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<configuration scan="true" scanPeriod="300 seconds">  
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>  
+    <!--↑使用该行，则控制台中有重复的日志，默认格式的日志和此处配置的日志-->  
+    <logger name="root" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springframework.web.jdbc" level="DEBUG"/>
+    <logger name="org.mybatis" level="INFO"/>
+    <logger name="com.github.trang" level="DEBUG"/>
+    <logger name="com.shq.oper" level="DEBUG"/>
+    
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN"/>
+    <logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO"/>
+    <logger name="org.springframework.data.mongodb" level="DEBUG"/>
+  
+    <contextName>operSys</contextName>  
+  
+    <property name="LOG_HOME" value="././logBacks"/>  
+    <!--正常日志的文件名-->  
+    <property name="FILE" value="operSys.log_info"/>  
+    <!--错误日志的文件名-->  
+    <property name="FILEError" value="operSys.log_error"/>  
+  
+    <!-- 输出到文件 Simple file output -->  
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <!--文件生成/切分策略 开始-->  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <fileNamePattern>${LOG_HOME}/${FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>  
+            <MaxHistory>90</MaxHistory>  
+        </rollingPolicy>  
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->  
+            <!--<!–日志文件达到5MB时生成新文件–>-->  
+            <!--<maxFileSize>10MB</maxFileSize>-->  
+        <!--</triggeringPolicy>-->  
+        <!--文件生成/切分策略 结束-->  
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->  
+        <encoder>  
+            <!--logback中parrern布局的左右括号()有特殊含义，如需输出应该转义-->  
+            <pattern>  
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n  
+            </pattern>  
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->  
+        </encoder>  
+        <!--仅输出INFO以上级别日志-->  
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">  
+            <level>DEBUG</level>  
+        </filter>  
+    </appender>  
+  
+    <!-- 输出错误日志到另一文件 Simple file output -->  
+    <appender name="FILEError" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <!--文件生成/切分策略 开始-->  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <fileNamePattern>${LOG_HOME}/${FILEError}.%d{yyyy-MM-dd}.log</fileNamePattern>  
+            <MaxHistory>30</MaxHistory>  
+        </rollingPolicy>  
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->  
+            <!--<!–日志文件达到5MB时生成新文件–>-->  
+            <!--<maxFileSize>10MB</maxFileSize>-->  
+        <!--</triggeringPolicy>-->  
+        <!--文件生成/切分策略 结束-->  
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->  
+        <encoder>  
+            <pattern>  
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n  
+            </pattern>  
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->  
+        </encoder>  
+        <!--仅输出ERROR级别日志-->  
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">  
+            <level>ERROR</level>  
+        </filter>  
+    </appender>  
+  
+  
+    <!-- 输出到控制台Console output -->  
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->  
+        <encoder>  
+            <pattern>  
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n  
+            </pattern>  
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->  
+        </encoder>  
+        <!-- Only log level WARN and above -->  
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">  
+            <level>ERROR</level>  
+        </filter>  
+    </appender>  
+  
+    <!-- Enable FILE and STDOUT appenders for all log messages.  By default, only log at level INFO and above. -->  
+    <root level="INFO">  
+        <appender-ref ref="FILE"/>  
+        <appender-ref ref="FILEError"/>  
+        <appender-ref ref="STDOUT"/>  
+    </root>  
+  
+</configuration>  

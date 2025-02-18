@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>规则与商品关系列表</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	启用中
+  {{#  } else { }}
+    	禁用
+  {{#  } }}
+</script>
+<script type="text/html" id="editBar">
+	<!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+	<a class="layui-btn layui-btn-xs" lay-event="pricesetting">设置价格</a>
+	<!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabled">禁用</a>-->
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商品规则Id:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="activityGoodsRuleId"	maxlength="20"
+							placeholder="商品规则Id">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">商品Id:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="goodsProductPid"	maxlength="20"
+							   placeholder="商品Id">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div >
+						<a class="layui-btn" data-type="reload">搜索</a>
+						<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+						<a href="javascript:;" class="layui-btn layui-btn-primary btn-return">返回</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+
+
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商品规则id：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="activityGoodsRuleId" lay-verify="required"
+							maxlength="32"  autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">商品Id：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="goodsProductPid" lay-verify="required"
+							   maxlength="32"  autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">规则类型：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="ruleType" lay-verify="required"
+							   maxlength="32"  autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

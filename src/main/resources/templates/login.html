@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+	<title>登录页</title>
+	<script type="text/javascript">
+		if (top.location != self.location) {
+			top.location = self.location;
+		}
+	</script>
+	<style type="text/css">
+		html,body{ height: 100%; background: #F7FAFC no-repeat 50% 50%; }
+			.layui-main{ position: absolute; top: 50%; left: 0; right: 0; margin: -230px auto 0; padding: 40px 50px; width: 340px; background-color: #fff; box-shadow: 0 5px 20px rgba(106,106,106,0.1);}
+			.layui-elip{ margin: 0 0 30px; text-align: center;}
+			.layui-elip p{ margin-top: 30px; height: 35px; line-height: 35px; font-size: 30px; font-weight: 100; text-align: center;}
+			.login-form .layui-form-item .layui-input-inline,.login-form .layui-form-pane .layui-input-inline,.login-form  .layui-btn{ width: 100%;}
+			.layui-main form .login-btn{ margin-bottom: 20px;}
+			.layui-form-item .layui-input-inline { margin: 0 0 10px 0px;}
+			.layui-form-item .layui-input-block { margin-left: 0px;}
+			.layui-copyright{ text-align: center; color: #999;}
+			.pop-form{ padding: 20px;}
+			.layui-tc{ text-align: center;}
+			.layui-form-mid{ padding: 9px 0 9px 10px!important;}
+			.layui-smsCode{ position: relative;}
+			.layui-getSmsCode{ position: absolute; right: 5px; top: 6px; height: 24px; line-height: 24px;}
+			@media screen and (max-width: 500px){
+				.layui-main{ top: 0; width: 80%; height: 88.8%; margin-top: 0; padding: 20% 10% 0;}
+				.layui-elip{ margin-top: 20%;}
+			}
+	</style>
+</head>
+<body>
+		<div class="layui-main">
+			<header class="layui-elip">
+				<p>运营数据中心系统登录</p>
+			</header>
+			<form class="login-form layui-form layui-form-pane layui-anim layui-anim-upbit" method="post">
+				<div class="layui-form-item" id="nameDiv">
+					<div class="layui-input-inline">
+						<input type="text" name="name"  value="" lay-verify="required" placeholder="请输入账户名" autocomplete="off" class="layui-input" />
+				    </div>
+				</div>
+				<div class="layui-form-item" id="pwdDiv">
+		  			<input type="password" name="pwd" value="" lay-verify="required" placeholder="请输入登录密码" autocomplete="off" class="layui-input" />
+			  	</div>
+			  	
+			  	
+			  	<div class="layui-form-item" id="phoneDiv" style="display: none;">
+			  		<div class="layui-input-inline">
+						<input type="text"  name="phone" value=""  placeholder="请输入手机号码" autocomplete="off" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item" id="verificationCodeDiv" style="display: none">
+					<div style="float: left; width: 60%">
+		  			<input type="password"  name="verificationCode" value=""  placeholder="请输入验证码" autocomplete="off" class="layui-input" />
+		  			</div>
+		  			 <div style="float: left;margin-left:10px; width: 30%">
+						<a class="layui-btn search " style="display: none;width:125px;background-color: #1E9FFF" id="getCode" >获取验证码</a>
+				    </div>
+			  	</div>
+			 	<div class="layui-form-item">
+			 		<div class="layui-input-inline">
+			   			<button class="layui-btn layui-btn-danger" id="formSubmit" lay-submit lay-filter="formSubmit">登录</button>
+			   		</div>
+				</div>
+				 	<div class="layui-form-item" style="display: none;" >
+			 		<div class="layui-input-inline">
+			   			<a href="javascript:;" style="width: 100%;" class="layui-btn layui-btn-normal phoneLogin">手机登录</a>
+			   		</div>
+			   		</div>
+			   		 	<div class="layui-form-item" >
+			   		<div class="layui-input-inline" id="accountLogin" style="display: none;margin-top: -25px;" >
+			   			<a href="javascript:;" style="width: 100%;"  class="layui-btn layui-btn-normal accountLogin">使用已有账号登录</a>
+			   		</div>
+				</div>
+				<hr/>
+				<p class="layui-copyright">华项科技&nbsp;&nbsp;&nbsp;&nbsp;© www.520shq.com</p>
+			</form>
+		</div>
+    </body>
+</html>

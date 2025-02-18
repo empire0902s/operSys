@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="operSys:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="operSys.war">
+      <element id="artifact" artifact-name="operSys:war exploded" />
+    </root>
+  </artifact>
+</component>

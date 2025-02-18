@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+	<script th:inline="javascript">
+        var operSysCodeList = '[[${operSysCodeList}]]';
+        var operSysList = '[[${operSysList}]]';
+	</script>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bingcoupons">绑定的优惠券</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">活动名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" maxlength="20"
+							placeholder="请输入活动名称">
+					</div>
+				</div>
+                <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">来源系统</label>
+                    <div class="layui-input-inline">
+                        <select name="fromSys" >
+							<option value="" style="width: 150px;"
+									th:each="operSys : ${operSysList}"
+									th:text="${operSys.key}" th:value="${operSys.value}"></option>
+                        </select>
+                        <!-- <select name="fromSys"  th:url="@{/coupons/activity/fromsysDict}" value="operSys" lay-search></select> -->
+                    </div>
+                </div>
+                 <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">来源系统code</label>
+                    <div class="layui-input-inline">
+                    	<input type="text" class="layui-input" name="fromSysCode" maxlength="50"
+							placeholder="请输入来源系统code">
+                    </div>
+                </div>
+                		<div class="layui-inline">
+				<label class="layui-form-label">活动批次:</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="batch" maxlength="32"
+						   placeholder="请输入活动批次">
+				</div>
+			</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">活动状态</label>
+					<div class="layui-input-inline">
+						<select name="isDisabled">
+							<option value="0" selected="selected">启用中</option>
+							<option value="1">已禁用</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">使用范围规则：</label>
+					<div class="layui-input-inline">
+						<select name="userRoleRule">
+							<option value="">请选择</option>
+							<option value="0">所有用户</option>
+							<option value="1">新人</option>
+							<option value="2">大兵专享</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">活动名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="name" lay-verify="required|space|normal"
+							maxlength="20" placeholder="活动名称长度小于20个字符" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline" style="position:relative; z-index:1001;">
+					<label class="layui-form-label">活动类型：</label>
+					<div class="layui-input-inline">
+						<select name="useType" lay-filter="type" >
+							<!-- <option value="">--请选择--</option> -->
+							<option value=1>优惠券活动</option>
+							<!-- <option value=2>商品活动</option> -->
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">活动开始时间：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="sendTimeStart" lay-verify="required"
+								   readonly="readonly" autocomplete="off"
+								   class="layui-input datetimeCss">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">活动结束时间：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="sendTimeEnd" lay-verify="required|sendTimeEnd"
+								   readonly="readonly" autocomplete="off"
+								   class="layui-input datetimeCss">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">活动批次:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="batch" maxlength="32"  readonly="readonly">
+					</div>
+				</div>
+				<!--<div class="layui-inline" >-->
+					<!--<label class="layui-form-label">活动宣传标题：</label>-->
+					<!--<div class="layui-input-inline" >-->
+						<!--<input type="text" name="batch" lay-verify="required|space|normal"-->
+							   <!--maxlength="32" autocomplete="off" class="layui-input">-->
+					<!--</div>-->
+				<!--</div>-->
+
+				<!-- <div class="layui-inline " id="actid" style="position:relative; z-index:1000;">
+					<label class="layui-form-label">活动商品规则：</label>
+					<div class="layui-input-inline" >
+						<select name="activityGoodsRuleId"
+								id="activityGoodsRuleId"  th:url="@{/coupons/activity/goods/rule/selectValue}" lay-search>
+						</select>
+					</div>
+				</div> -->
+
+
+			<div class="layui-inline">
+					<label class="layui-form-label">使用范围规则：</label>
+					<div class="layui-input-inline">
+						<select name="userRoleRule">
+							<option value="0">所有用户</option>
+							<option value="1">新人</option>
+							<option value="2">大兵专享</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<!-- <div class="layui-inline">
+					<label class="layui-form-label">用户领取次数：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="receiveNumRule"
+							lay-verify="required|number|space" placeholder="用户领取次数,0为不限制"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div> -->
+				<div class="layui-inline">
+					<label class="layui-form-label">是否禁用：</label>
+					<div class="layui-input-inline">
+						<input type="radio" name="isDisabled" value="0" title="否" checked />
+						<input type="radio" name="isDisabled" value="1" title="是" />
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">活动说明：</label>
+					<div class="layui-input-inline" >
+						<textarea  style="width: 550px; height: 80px;" name="activityDesc" id="activityDesc"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-form-item center">
+					<div class="layui-inline">
+						<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+		</form>
+	</div>
+
+</body>
+</html>

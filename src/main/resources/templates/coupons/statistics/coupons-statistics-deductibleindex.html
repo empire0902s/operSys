@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>分销订单统计</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+
+.layui-col-xs4 {
+	width: 22%;
+}
+
+.layadmin-backlog
+.layadmin-backlog-body {
+	display: block;
+	padding: 3px 8px;
+	background-color: #f8f8f8;
+	color: #999;
+	border-radius: 2px;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	width: 180px;
+}
+
+.layadmin-carousel .layui-col-space10 {
+	margin: 0;
+}
+
+.layadmin-carousel .layui-carousel, .layadmin-carousel>[carousel-item]>*
+	{
+	background-color: #fff;
+}
+
+.layadmin-backlog-body p cite {
+	font-style: normal;
+	font-size: 20px;
+	font-weight: 200;
+	color: #009688;
+}
+.layui-carousel>[carousel-item] {
+    height: 140px;
+}
+</style>
+
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+			<div style="margin: 15px;">
+				<div style="margin: 10px; width: 100%;'">
+					<!--<div class="layui-carousel layadmin-carousel layadmin-backlog"-->
+						<!--lay-anim="" lay-indicator="inside" lay-arrow="none"-->
+						<!--style="width: 100%; height: 170px;">-->
+						<!--<div carousel-item="">-->
+							<!--<ul class="layui-row layui-col-space10 layui-this">-->
+								<!--<li class="layui-col-xs3" id="totalOrdersCount"><a-->
+									<!--href="javascript:;" id="ordersCounts"-->
+									<!--class="layadmin-backlog-body">-->
+										<!--<h3>总订单量</h3>-->
+										<!--<p>-->
+											<!--<cite> <span-->
+												<!--th:text="${ordersTotalStatisticsMsg.toatalOrdersCount}"></span>-->
+											<!--</cite>-->
+										<!--</p>-->
+								<!--</a></li>-->
+								<!--<li class="layui-col-xs3" id="totalSalesCount"><a-->
+									<!--href="javascript:;" id="salesCounts"-->
+									<!--class="layadmin-backlog-body">-->
+										<!--<h3>总销量</h3>-->
+										<!--<p>-->
+											<!--<cite> <span-->
+												<!--th:text="${ordersTotalStatisticsMsg.totalSalesCount}"></span>-->
+											<!--</cite>-->
+										<!--</p>-->
+								<!--</a></li>-->
+								<!--<li class="layui-col-xs3" id="totalSalesMoney"><a-->
+									<!--href="javascript:;" id="salesMoney"-->
+									<!--class="layadmin-backlog-body">-->
+										<!--<h3>总销售金额</h3>-->
+										<!--<p>-->
+											<!--<cite> <span-->
+												<!--th:text="${ordersTotalStatisticsMsg.totalSalesAmount}"></span>-->
+											<!--</cite>-->
+										<!--</p>-->
+								<!--</a></li>-->
+							<!--</ul>-->
+						<!--</div>-->
+						<!--</div>-->
+						<!--<div class="layui-carousel layadmin-carousel layadmin-backlog"-->
+							<!--lay-anim="" lay-indicator="inside" lay-arrow="none"-->
+							<!--style="width: 100%; height: 60px; margin-top: -100px;">-->
+							<!--<div carousel-item="">-->
+								<!--<ul class="layui-row layui-col-space10 layui-this">-->
+									<!--<li class="layui-col-xs3" id="testToatalOrdersCount"><a-->
+										<!--href="javascript:;" id="testOrdersCount"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>测试订单总数</h3>-->
+											<!--<p>-->
+												<!--<cite> <span-->
+													<!--th:text="${testOrderStatisticsMsg.testToatalOrdersCount}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+									<!--<li class="layui-col-xs3" id="testTotalSalesAmount"><a-->
+										<!--href="javascript:;" id="testSalesAmount"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>测试订单总金额</h3>-->
+											<!--<p>-->
+												<!--<cite> <span-->
+													<!--th:text="${testOrderStatisticsMsg.testTotalSalesAmount}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+						<!--<li class="layui-col-xs3"><a href="javascript:;"-->
+							<!--class="layadmin-backlog-body">-->
+								<!--<h3>爱之家APP安装次数</h3>-->
+								<!--<p>-->
+									<!--<cite> <span th:text="${installationCounts}"></span>-->
+									<!--</cite>-->
+								<!--</p>-->
+						<!--</a></li>-->
+					<!--</ul>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="layui-carousel layadmin-carousel layadmin-backlog"-->
+							<!--lay-anim="" lay-indicator="inside" lay-arrow="none"-->
+							<!--style="width: 100%; height: 40px; margin-top: 10px;">-->
+							<!--<div carousel-item="">-->
+								<!--<ul class="layui-row layui-col-space10 layui-this">-->
+									<!--<li class="layui-col-xs3"><a href="javascript:;"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>商品上架总数</h3>-->
+											<!--<p>-->
+												<!--<cite> <span th:text="${statisticsResult.isForSale}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+									<!--<li class="layui-col-xs3"><a href="javascript:;"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>商品下架总数</h3>-->
+											<!--<p>-->
+												<!--<cite> <span th:text="${statisticsResult.notForSale}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+						<!--<li class="layui-col-xs3"><a href="javascript:;"-->
+							<!--class="layadmin-backlog-body">-->
+								<!--<h3>爱之家APP启动次数</h3>-->
+								<!--<p>-->
+									<!--<cite> <span th:text="${startupCounts}"></span>-->
+									<!--</cite>-->
+								<!--</p>-->
+						<!--</a></li>-->
+					<!--</ul>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="layui-carousel layadmin-carousel layadmin-backlog"-->
+							<!--lay-anim="" lay-indicator="inside" lay-arrow="none"-->
+							<!--style="width: 100%; height: 40px; margin-top: 30px;">-->
+							<!--<div carousel-item="">-->
+								<!--<ul class="layui-row layui-col-space10 layui-this">-->
+									<!--<li class="layui-col-xs3"><a href="javascript:;"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>爱之家注册人数</h3>-->
+											<!--<p>-->
+												<!--<cite> <span th:text="${countLoveOfHomeUsersStatistics.loveOfHomeUserCounts}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+									<!--<li class="layui-col-xs3"  id="homeOfLoveUserBuyCounts">-->
+									<!--<a href="javascript:;"  id="homeOfLoveUserBuyCountsText"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>爱之家购买人数</h3>-->
+											<!--<p>-->
+												<!--<cite> <span th:text="${buyCountsStatistics.totalOrderPurchasesUser}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+											<!--<li class="layui-col-xs3" id="homeOfLoveUserDoubleBuyCounts">-->
+										<!--<a href="javascript:;" id="homeOfLoveUserDoubleBuyCountsText"-->
+										<!--class="layadmin-backlog-body">-->
+											<!--<h3>爱之家二次购买人数</h3>-->
+											<!--<p>-->
+												<!--<cite> <span th:text="${buyCountsStatistics.twoPurchasesOfUsers}"></span>-->
+												<!--</cite>-->
+											<!--</p>-->
+									<!--</a></li>-->
+								<!--</ul>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<fieldset class="layui-elem-field layui-field-title"-->
+							<!--style="margin-top: 10px;">-->
+							<!--<legend>商品排行榜</legend>-->
+						<!--</fieldset>-->
+						<div class="layui-tab layui-tab-card" lay-filter="test">
+							<ul class="layui-tab-title">
+								<li class="layui-this" lay-id="commodityTradingVolumeData">抵扣券统计</li>
+								<li data-id="commoditySalesData">代金券统计</li>
+
+							</ul>
+							<div class="layui-tab-content">
+								<div class="layui-tab-item layui-show">
+									<fieldset class="layui-elem-field">
+										<form class="layui-form data-list-form">
+											<div class="layui-form-item" style="margin-top: 15px;">
+												<div class="layui-inline">
+													<label class="layui-form-label">时间范围:</label>
+													<div class="layui-input-inline">
+														<input type="text" name="timeRange" class="layui-input"
+															readonly="readonly" id="timeRange" placeholder="请选择时间范围">
+													</div>
+												</div>
+												<div class="layui-inline">
+													<div class="layui-inline">
+														<div class="layui-input-block">
+															<a class="layui-btn" data-type="reload" id="reload">查询</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+									</fieldset>
+									<table lay-size="sm" class="layui-hide data-list"
+										lay-filter="data-list"></table>
+								</div>
+								<div class="layui-tab-item">
+									<fieldset class="layui-elem-field">
+										<form class="layui-form">
+											<div class="layui-form-item" style="margin-top: 15px;">
+												<div class="layui-inline">
+													<label class="layui-form-label">时间范围:</label>
+													<div class="layui-input-inline">
+														<input type="text" name="timeRange2" class="layui-input"
+															readonly="readonly" id="timeRange2" placeholder="请选择时间范围">
+													</div>
+												</div>
+												<div class="layui-inline">
+													<div class="layui-inline">
+														<div class="layui-input-block">
+															<a class="layui-btn" id="reload2">查询</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+									</fieldset>
+									<table id="commoditySalesData" class="layui-table"
+										style="display: none;" lay-size="sm"></table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+</body>
+</html>

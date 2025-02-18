@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script th:inline="javascript">
+var commodityDetails = '[[${commodityDetails}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-unselect {
+	width: 125px;
+	margin-left: 25px
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+td{
+width: 120px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="layui-form">
+		<table class="layui-table" style="margin-top: 0.5px; margin-bottom: 0px">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td th:text="${commodityDetails.id}"></td>
+					<th>商品名</th>
+					<td th:text="${commodityDetails.commodityName}"></td>
+				</tr>
+				<tr>
+					<th>商品代码</th>
+					<td th:text="${commodityDetails.commodityCode}"></td>
+					<th>是否禁用</th>
+					<td th:text="${commodityDetails.isDisabled}"></td>
+				</tr>
+				<tr>
+					<th>创建人</th>
+					<td th:text="${commodityDetails.createAdmin}"></td>
+					<th>创建时间</th>
+					<td id="createTime"></td>
+				</tr>
+				<tr>
+					<th>最近更新人</th>
+					<td th:text="${commodityDetails.updateAdmin}"></td>
+					<th>最后修改时间</th>
+					<td id="updateTime"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

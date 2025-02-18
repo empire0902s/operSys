@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.OrderEvaluateLikesMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.primarydb.OrderEvaluateLikes">
+    <!-- WARNING - @mbg.generated -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_evaluate_id" jdbcType="BIGINT" property="orderEvaluateId" />
+    <result column="likes_time" jdbcType="TIMESTAMP" property="likesTime" />
+    <result column="user_seq" jdbcType="VARCHAR" property="userSeq" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    id, order_evaluate_id, likes_time, user_seq
+  </sql>
+  
+  
+  <select id="queryLikesCount" resultType="int">
+  	select count(1)
+  	from t_order_evaluate_likes
+  	where order_evaluate_id=#{orderEvaluateId}
+  </select>
+  
+  
+  
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.DeductibleIntroduceDetailMapper">
+
+
+
+    <!--获取介绍介绍明细列表 -->
+    <select id="selectDeductibleDetailList" resultType="DeductibleIntroduceDetail">
+select t.*
+ from t_deductible_introduce_detail t where introduce_id= #{introduceId}
+ order by  sort
+
+
+	</select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script th:inline="javascript">
+var resourceDetails = '[[${resourceDetails}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-unselect {
+	width: 125px;
+	margin-left: 25px
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+td{
+width: 120px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="layui-form">
+		<table class="layui-table" style="margin-top: 0.5px; margin-bottom: 0px">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td th:text="${resourceDetails.id}"></td>
+					<th>资源名称</th>
+					<td th:text="${resourceDetails.name}"></td>
+				</tr>
+				<tr>
+					<th>资源url路径</th>
+					<td th:text="${resourceDetails.url}"></td>
+					<th>排序</th>
+					<td th:text="${resourceDetails.sort}"></td>
+				</tr>
+				<tr>
+					<th>类型</th>
+					<td th:text="${resourceDetails.type}"></td>
+					<th>备注</th>
+					<td th:text="${resourceDetails.remark}"></td>
+				</tr>
+				<tr>
+					<th>父id</th>
+					<td th:text="${resourceDetails.parentId}"></td>
+					<th>父菜单</th>
+					<td th:text="${resourceDetails.parentName}"></td>
+				</tr>
+				<tr>
+					<th>创建人</th>
+					<td th:text="${resourceDetails.createAdmin}"></td>
+					<th>创建时间</th>
+					<td th:text="${resourceDetails.createTime}"></td>
+				</tr>
+				<tr>
+					<th>最近更新人</th>
+					<td th:text="${resourceDetails.updateAdmin}"></td>
+					<th>最后修改时间</th>
+					<td th:text="${resourceDetails.updateTime}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

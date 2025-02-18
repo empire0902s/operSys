@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>栏目商品添加</title>
+<style type="text/css">
+</style>
+<script th:inline="javascript">
+	var id = '[[${id}]]';
+	var sortNo = '[[${sortNo}]]';
+	var isDisabled = '[[${isDisabled}]]';
+	var operateType = '[[${operateType}]]';
+	var product = '[[${product}]]';
+</script>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form  layui-form-pane data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline layui-col-xs4">
+					<label class="layui-form-label">商品Code:</label>
+					<div class="layui-input-inline ">
+						<input type="text" style="width: 265px;" class="layui-input"
+							name="productCode" id="code" placeholder="请输入商品Code">
+					</div>
+				</div>
+				<div>
+					<div class="layui-input-inline">
+						<a class="layui-btn search " style="margin-left: 200px;"
+							data-type="reload" id="search">搜索</a>
+					</div>
+				</div>
+			</div>
+
+		</form>
+		<form class="layui-form " id="editForm">
+			<input type="hidden" name="id" th:value="${id}==null?'':${id}">
+			<input type="hidden" name="bannerId" id="bannerId"
+				th:value="${bannerId}"> <input type="hidden"
+				name="categoryid" id="categoryid"> <input type="hidden"
+				name="genreid" id="genreid"> <input type="hidden"
+				name="threeid" id="threeid"> <input type="hidden"
+				name="fourid" id="fourid">
+			<fieldset class="layui-elem-field">
+				<div class="layui-field-box disabledTable data-product-form">
+					<div class="layui-row">
+						<div class="layui-inline layui-col-md6">
+							<label class="layui-form-label">商品Code：</label>
+							<div class="layui-input-inline">
+								<div class="inline-text layui-text">
+									<span class="product_Code"></span> <input type="hidden"
+										class="layui-input" name="productCode" id="productCode">
+								</div>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">供应商：</label>
+							<div class="layui-input-inline">
+								<div class="inline-text layui-text">
+									<span class="company_name"></span> <input type="hidden"
+										class="layui-input" name="companyName">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-row">
+						<div class="layui-inline">
+							<label class="layui-form-label">商品名称：</label>
+							<div class="layui-input-inline" style="width: 800px;">
+								<div class="inline-text layui-text">
+									<span class="product_Name"></span> <input type="hidden"
+										class="layui-input" name="productName">
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="layui-row">
+						<div class="layui-inline">
+							<label class="layui-form-label">排序：</label>
+							<div class="layui-input-inline">
+								<div class="inline-text layui-text">
+									<input type="text" class="layui-input" name="sortNo"
+										id="sortNo" value="1000">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-row">
+						<div class="layui-inline">
+							<label class="layui-form-label">是否禁用：</label>
+							<div class="layui-inline">
+								<div class="inline-text layui-text">
+									<input type="radio" name="isDisabled" id="isDisabled" value="0"
+										title="否" checked="checked"><input type="radio"
+										id="isDisabled" name="isDisabled" value="1" title="是">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="center" style="margin-bottom: 10px;">
+				<button class="layui-btn submit " lay-submit lay-filter="submit">保存到列表</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+		</form>
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>角色分配菜单</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+var roleMenuList = [(${roleMenuList})];
+var role = '[(${entity})]';
+</script>
+</head>
+<body>
+	<div class="grant-form">
+		<form id="menusForm" >
+			<!-- <ul class="layui-tab-title">
+				<li class="layui-this">运营系统</li>
+			</ul> -->
+			<div class="layui-tab-content">
+				<div style="display: inline-block; width: 300px; height: 300px; padding: 10px; border: 1px solid #ddd; overflow: auto;">
+				<ul id="demoTree"></ul>
+				</div>
+			</div>
+			<input type="hidden" id="roleId" name="roleId" th:value="${role.id}"/>
+			<input type="hidden" name="roleNames" th:value="${entity.name}"/>
+			
+			<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      	<a class="layui-btn submitBtn" >保存权限</a>
+     			<a id="closeBtn" class="layui-btn layui-btn-primary">关闭</a>
+		    </div>
+		  </div>
+		</form>
+		
+	</div>
+</body>
+</html>

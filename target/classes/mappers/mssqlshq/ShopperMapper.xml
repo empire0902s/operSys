@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.mssqlshq.ShopperMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.mssqlshq.Shopper">
+    <!-- WARNING - @mbg.generated -->
+    <id column="SEQ" jdbcType="INTEGER" property="seq" />
+    <result column="systemcode" jdbcType="VARCHAR" property="systemcode" />
+    <result column="teamid" jdbcType="VARCHAR" property="teamid" />
+    <result column="departid" jdbcType="VARCHAR" property="departid" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="username" jdbcType="NVARCHAR" property="username" />
+    <result column="logincount" jdbcType="INTEGER" property="logincount" />
+    <result column="lastip" jdbcType="VARCHAR" property="lastip" />
+    <result column="registtime" jdbcType="TIMESTAMP" property="registtime" />
+    <result column="lastlogintime" jdbcType="TIMESTAMP" property="lastlogintime" />
+    <result column="checkemail" jdbcType="NVARCHAR" property="checkemail" />
+    <result column="banknumber" jdbcType="VARCHAR" property="banknumber" />
+    <result column="qqnumber" jdbcType="VARCHAR" property="qqnumber" />
+    <result column="userType" jdbcType="VARCHAR" property="usertype" />
+    <result column="adresscode" jdbcType="VARCHAR" property="adresscode" />
+    <result column="adressdetail" jdbcType="NVARCHAR" property="adressdetail" />
+    <result column="provice" jdbcType="NVARCHAR" property="provice" />
+    <result column="city" jdbcType="NVARCHAR" property="city" />
+    <result column="area" jdbcType="NVARCHAR" property="area" />
+    <result column="street" jdbcType="NVARCHAR" property="street" />
+    <result column="community" jdbcType="NVARCHAR" property="community" />
+    <result column="contact" jdbcType="NVARCHAR" property="contact" />
+    <result column="shopname" jdbcType="NVARCHAR" property="shopname" />
+    <result column="serverfanwei" jdbcType="VARCHAR" property="serverfanwei" />
+    <result column="servertime" jdbcType="NVARCHAR" property="servertime" />
+    <result column="zhizhaoNo" jdbcType="NVARCHAR" property="zhizhaono" />
+    <result column="shenfengNo" jdbcType="VARCHAR" property="shenfengno" />
+    <result column="passstateYN" jdbcType="VARCHAR" property="passstateyn" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="mark" jdbcType="NVARCHAR" property="mark" />
+    <result column="WeiXinnumber" jdbcType="VARCHAR" property="weixinnumber" />
+    <result column="RMmobile" jdbcType="VARCHAR" property="rmmobile" />
+    <result column="keyword" jdbcType="NVARCHAR" property="keyword" />
+    <result column="comeFrom" jdbcType="VARCHAR" property="comefrom" />
+    <result column="shopType" jdbcType="NVARCHAR" property="shoptype" />
+    <result column="experience" jdbcType="NVARCHAR" property="experience" />
+    <result column="agentYN" jdbcType="VARCHAR" property="agentyn" />
+    <result column="agentArea" jdbcType="NVARCHAR" property="agentarea" />
+    <result column="smallfanwei" jdbcType="VARCHAR" property="smallfanwei" />
+    <result column="kefu" jdbcType="VARCHAR" property="kefu" />
+    <result column="lng" jdbcType="DOUBLE" property="lng" />
+    <result column="lat" jdbcType="DOUBLE" property="lat" />
+    <result column="DHkefu" jdbcType="VARCHAR" property="dhkefu" />
+    <result column="Jpushid" jdbcType="VARCHAR" property="jpushid" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="agentgrade" jdbcType="VARCHAR" property="agentgrade" />
+    <result column="postnumber" jdbcType="VARCHAR" property="postnumber" />
+    <result column="banktype" jdbcType="NVARCHAR" property="banktype" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="URL" jdbcType="NVARCHAR" property="url" />
+    <result column="corpInfo" jdbcType="NVARCHAR" property="corpinfo" />
+    <result column="dbname" jdbcType="VARCHAR" property="dbname" />
+    <result column="checkuser" jdbcType="VARCHAR" property="checkuser" />
+    <result column="tlat" jdbcType="DOUBLE" property="tlat" />
+    <result column="tlng" jdbcType="DOUBLE" property="tlng" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    SEQ, systemcode, teamid, departid, mobile, userid, company, pwd, username, logincount, lastip, registtime, lastlogintime, checkemail, banknumber, qqnumber, userType, adresscode, adressdetail, provice, city, area, street, community, contact, shopname, serverfanwei, servertime, zhizhaoNo, shenfengNo, passstateYN, telephone, mark, WeiXinnumber, RMmobile, keyword, comeFrom, shopType, experience, agentYN, agentArea, smallfanwei, kefu, lng, lat, DHkefu, Jpushid, sex, agentgrade, postnumber, banktype, stage, URL, corpInfo, dbname, checkuser, tlat, tlng, age
+  </sql>
+  
+  <select id="queryBySeqOrMobile" resultType="shopper">
+  	select top 1  t.SEQ,t.mobile,t.pwd,t.userType,t.comeFrom from shopper t
+  	<where>
+	  	<if test="seq != null"> and t.SEQ = #{seq}</if>
+	  	<if test="mobile != null and mobile != '' "> and t.mobile = #{mobile}</if>
+  	</where>
+  </select>
+  
+  <select id="queryBy" resultType="shopper">
+  	select  t.SEQ,t.mobile,t.pwd,t.userType,t.comeFrom from shopper  t  order by t.registtime desc
+  </select>
+  
+  <select id="queryBySupplier" resultType="shopper">
+  	select  t.SEQ,t.mobile,t.username,t.shopname, t.pwd,t.userType,t.comeFrom,t.username,t.company,t.city,t.adressdetail,
+    t.community from shopper  t
+  	<where>
+	  	and  userType = 5
+	  	<if test="seq != null"> and t.SEQ = #{seq}</if>
+	  	<if test="shopname != null and shopname != '' "> and t.shopname = #{shopname}</if>
+  	</where>
+  </select>
+
+  <select id="queryByShopper" resultType="shopper">
+    select  t.SEQ,t.mobile,t.username,t.shopname, t.pwd,t.userType,t.comeFrom,t.username,t.company,t.city,t.adressdetail,
+    t.community from shopper  t
+    <where>
+      and  userType = 5
+      <if test="seq != null"> and t.SEQ = #{seq}</if>
+      <if test="shopname != null and shopname != '' "> and t.shopname = #{shopname}</if>
+    </where>
+    order by t.registtime desc
+  </select>
+
+  <select id="queryShopper" resultMap="BaseResultMap">
+    select t.SEQ,t.mobile,t.username,t.shopname, t.pwd,t.userType,t.comeFrom,t.username,t.company,t.city,t.adressdetail,
+    t.community from shopper  t
+    <where>
+      <if test="mobile != null and mobile !='' "> and t.mobile = #{mobile}</if>
+      <if test="usertype != null and usertype !='' "> and t.userType = #{usertype}</if>
+      <if test="seq != null and seq != ''"> and t.SEQ = #{seq}</if>
+      <if test="shopname != null and shopname != '' "> and t.shopname = #{shopname}</if>
+    </where>
+    order by t.registtime desc
+  </select>
+
+
+  <select id="queryRoleShopper" resultMap="BaseResultMap">
+    select t.userType
+   from shopper  t
+    <where>
+      <if test="usertype != null and usertype !='' "> and t.userType = #{usertype}</if>
+    </where>
+    group by t.userType order by t.userType desc
+  </select>
+
+
+  <select id="queryAereShopper" resultMap="BaseResultMap">
+    select  t.provice,t.city,t.area
+    from shopper  t
+    <where>
+      <if test="provice != null and provice !='' "> and t.provice LIKE  concat('%',#{provice},'%')</if>
+      <if test="city != null and city !='' "> and t.city  LIKE  concat('%',#{city},'%')</if>
+      <if test="area != null and area !='' "> and t.area  LIKE  concat('%',#{area},'%')</if>
+    </where>
+    group by t.provice,t.city,t.area order by t.area desc
+  </select>
+
+
+  <select id="queryShopperSeqs" resultMap="BaseResultMap">
+    select  *
+    from shopper  t  where t.SEQ in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+    order by t.registtime desc
+  </select>
+
+
+  <select id="queryShopperphones" resultMap="BaseResultMap">
+    select  *
+    from shopper  t  where t.mobile in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    order by t.registtime desc
+  </select>
+
+	<select id="queryShopperBySeqSet" resultMap="BaseResultMap">
+	select  SEQ,mobile,contact,shopname
+    from shopper  t  
+    where t.SEQ in
+    <foreach item="item" index="index" collection="collection" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    order by t.registtime desc
+	</select>
+
+	<!--
+  	爱之家数据统计
+  		爱之家总注册人数
+    -->
+  <select id="countLoveOfHomeUsersStatistics" resultType="com.shq.oper.model.dto.salestatistics.LoveOfHomeDataCountStatisticsDto">
+	select count(distinct sp.SEQ) as loveOfHomeUserCounts
+	from shopper sp
+	where sp.comeFrom = 1001
+ </select>
+
+  <select id="queryHomeOfLoveUserStatisticsData" resultType="com.shq.oper.model.dto.salestatistics.CommodityOrderStatisticsDto">
+	select isnull(count(sp.SEQ),0) as registCounts,convert(datetime,convert(varchar(10),sp.registtime,120)) as date
+	from shopper sp
+		<where>
+			sp.comeFrom=1001		
+			<if test="startTime != null">
+				<![CDATA[and sp.registtime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and sp.registtime  <= #{endTime}]]>
+			</if>	
+			</where>
+	GROUP BY convert(datetime,convert(varchar(10),sp.registtime,120)) 
+	order by convert(datetime,convert(varchar(10),sp.registtime,120)) desc
+  </select>
+
+
+</mapper>

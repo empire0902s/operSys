@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户行为</title>
+<script th:inline="javascript">
+	
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+.laydate-btns-now{
+display:none;
+}
+#resourceTree {
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div style="height: 350px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item" style="margin-top:18px;">
+				<div class="layui-inline">
+					<label class="layui-form-label">统计日期:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input"  name="timeRange" id="statisticsTime" readonly="readonly"
+							placeholder="请选择日期">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload" id="reload">搜索</a> <a
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list" ></table>
+	</div>
+</body>
+</html>

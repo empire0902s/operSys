@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head th:fragment="header(title,links,scripts)">
+	<meta charset="UTF-8" />
+    <meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<title th:replace="${title}"></title>
+
+<!-- <script>
+  var _dgt = _dgt || [];
+  window._dgt = _dgt;
+      (function () {
+    	  var sysDoMain = "oc.520shq.com";
+    	   //sysDoMain = "192.168.1.43:9090/operSys";
+    	   //sysDoMain = "192.168.0.57:8080/operSys";
+          _dgt.push(['setSiteId', '42c224b3c8899047460f5a6d1c041411']);
+          _dgt.push(['track_role', 'RoleName1']);
+          var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+          g.type = 'text/javascript'; g.async = true; g.defer = true;
+          g.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + sysDoMain + '/js/page/jk_dgt_dev.js';
+          s.parentNode.insertBefore(g, s);
+      })();
+</script>  -->
+
+<!-- 
+	<script type="text/javascript">
+	function IsPC(){    
+		//平台、设备和操作系统     
+		var system ={     
+		win : false,     
+		mac : false,     
+		xll : false     
+		};     
+		//检测平台     
+		var p = navigator.platform;     
+		system.win = p.indexOf("Win") == 0;     
+		system.mac = p.indexOf("Mac") == 0;     
+		system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);     
+		//跳转语句，如果是手机访问就自动跳转到caibaojian.com页面     
+		if(system.win||system.mac||system.xll){    
+			console.log("PC");
+			return true;
+		}else{     
+			console.log("MOBILE");
+		return false;     
+		}     
+	  }  
+	console.log(IsPC());
+	document.addEventListener("mousedown",function(event){
+	console.log("222");
+});
+</script>
+
+ -->
+	<!-- 通用样式、脚本 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/js/plugin/layui/css/layui.css(v=${application.version})}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/global.css(v=${application.version})}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome/css/font-awesome.min.css(v=${application.version})}" />
+	<style type="text/css">
+	.layer-open-form{display: none;padding: 5px 10px 5px 5px;}
+	.center{text-align: center;}
+	.inline-text{float:left; padding: 9px 15px;margin-right: 10px;line-height: 20px;}
+	.inline-text-width{width: 150px;}
+	.layui-form-label{width: 100px;}
+	.inline-block{display: table-row;}
+	.layui-elem-field legend {font-size:14px; font-style: italic;}
+	.layui-timeline-item{padding-bottom: 1px;}
+	.layui-upload-img {width: 64px;height: 64px;margin: 0 10px 5px 0;}
+	.layui-upload-list span{float: left;text-align: center;margin-right: 10px;cursor: pointer;}
+	.hide{display: none;}
+	.layui-form-selected dl{
+		z-index: 9999;
+    	max-height: 180px;
+	}
+	</style>
+	<script type="text/javascript">
+		var rootPath = '[[${#request.contextPath}]]';
+		var version = '[[${application.version}]]';
+	</script>
+	
+	<script type="text/javascript" th:src="@{/ueditor/ueditor.config.js}"></script>
+	<script type="text/javascript" th:src="@{/ueditor/ueditor.all.js}"></script>
+	<script type="text/javascript" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+<script type="text/javascript">
+	var ueditor = UE;
+	//建立富文本编辑器
+	ueditor.Editor.prototype._bkGetActionUrl = ueditor.Editor.prototype.getActionUrl;
+	ueditor.Editor.prototype.getActionUrl = function(action) {
+		if (action === 'config' || action === 'uploadscrawl') {
+			return rootPath + '/ueditor/upload';//这就是自定义的上传地址
+		} else if (action === 'uploadimage') {
+			return rootPath + '/ueditor/uploadimage';
+		} else {
+			return this._bkGetActionUrl.call(this, action);
+		}
+	}
+</script>
+
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.serializejson.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/plugin/layui/layui.js(v=${application.version})}"></script>
+	<script type="text/javascript" th:src="@{/js/plugin/layui/config.js(v=${application.version})}"></script>
+	<script type="text/javascript" th:if="${viewName != null}" th:src="@{('/js/page/'+${viewName}+'.js')(v=${application.version})}"></script>
+	
+	<!-- 自定义样式、脚本 -->
+	<th:block th:replace="${links}" />
+	<th:block th:replace="${scripts}" />
+</head>
+<body>
+	<div th:fragment="copy">&copy; 2018用户中心认证系统</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.ResourceMaper">
+  
+	<select id="queryWithParent" resultType="com.shq.oper.model.domain.primarydb.Resource">
+		select tp.name as parentName, t.* from t_resource t 
+		left join
+		t_resource tp on t.parent_id = tp.id  
+		<where>
+			<if test="isDisabled != null">
+				and t.is_disabled = #{isDisabled}
+			</if>
+			<if test="parentId != null">
+				and t.parent_id = #{parentId}
+			</if>
+			<if test="parentName != null and parentName != ''">
+				and tp.name = #{parentName}
+			</if>
+			<if test="name != null and name != ''">
+				and t.name = #{name}
+			</if>
+			<if test="systemCode != null and systemCode != ''">
+				and t.system_code = #{systemCode}
+			</if>
+		</where>
+		order by t.id desc 
+	</select>
+
+	<select id="queryWhinChilds" resultType="String">
+		select remark from t_resource where parent_id= #{parentId}
+
+	</select>
+
+
+  <select id="queryResourceeByAdmin" resultType="com.shq.oper.model.domain.primarydb.Resource">
+	select * from t_resource r  JOIN
+	(
+		select rr.resource_id from t_admin a
+		JOIN t_admin_role ar on a.id = ar.admin_id and a.id = #{adminId}
+		JOIN t_role_resource rr on ar.role_id = rr.role_id
+		where a.is_disabled = false
+	) tmp on tmp.resource_id = r.id
+	where r.is_disabled = false
+	order by r.parent_id,r.sort,r.id
+  </select>
+
+	<select id="queryResourceDetailById" resultType="com.shq.oper.model.domain.primarydb.Resource">
+		select tp.name as parentName, t.* from t_resource t
+		left join
+		t_resource tp on t.parent_id = tp.id where t.id=#{id}
+
+	</select>
+  
+</mapper>

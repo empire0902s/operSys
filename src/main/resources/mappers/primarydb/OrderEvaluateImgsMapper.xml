@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.OrderEvaluateImgsMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.primarydb.OrderEvaluateImgs">
+    <!-- WARNING - @mbg.generated -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_evaluate_id" jdbcType="BIGINT" property="orderEvaluateId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    id, order_evaluate_id, img_url
+  </sql>
+  
+</mapper>

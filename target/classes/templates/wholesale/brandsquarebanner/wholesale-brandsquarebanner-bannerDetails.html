@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script type="text/javascript"></script>
+<style type="text/css">
+.test {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 20px;
+}
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 180px;
+}
+
+td {
+	width: 150px;
+}
+</style>
+</head>
+<body>
+	<div>
+		<table class="layui-table"
+			style="margin-top: 1px; margin-bottom: 1px; height: 305px;">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td style="width: 50px;" th:text="${bannerDetails.id}"></td>
+					<th>标题</th>
+					<td th:text="${bannerDetails.title}"></td>
+				</tr>
+				<tr>
+					<th>图片路径</th>
+					<td><a th:href="${bannerDetails.imageLocation}" target="_blank">
+							<img class="imgUrl" style="width: 50px; height: 50px;"
+							th:src="${bannerDetails.imageLocation}">
+					</a></td>
+					<th>跳转地址</th>
+					<td><a th:href="${bannerDetails.jumpTarget}" target="_blank" id="bannerDetails">
+							<span style="color: blue" >点击跳转</span>
+					</a></td>
+				</tr>
+				<tr>
+					<th>识别标识</th>
+					<td th:text="${bannerDetails.identifyType}"></td>
+					<th>排序</th>
+					<td th:text="${bannerDetails.sortNum}"></td>
+				</tr>
+				<tr>
+					<th>内容</th>
+					<td th:text="${bannerDetails.content}" colspan="3"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

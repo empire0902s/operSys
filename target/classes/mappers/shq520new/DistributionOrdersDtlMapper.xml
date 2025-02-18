@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.shq520new.DistributionOrdersDtlMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.shq520new.DistributionOrdersDtl">
+    <!-- WARNING - @mbg.generated -->
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="orderDetailId" jdbcType="NVARCHAR" property="orderdetailid" />
+    <result column="orderId" jdbcType="NVARCHAR" property="orderid" />
+    <result column="orderno" jdbcType="NVARCHAR" property="orderno" />
+    <result column="goodsId" jdbcType="NVARCHAR" property="goodsid" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="unit" jdbcType="NVARCHAR" property="unit" />
+    <result column="discountPrice" jdbcType="DECIMAL" property="discountprice" />
+    <result column="attributes" jdbcType="NVARCHAR" property="attributes" />
+    <result column="goodsName" jdbcType="NVARCHAR" property="goodsname" />
+    <result column="spec" jdbcType="NVARCHAR" property="spec" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="remark" jdbcType="NVARCHAR" property="remark" />
+    <result column="evaluationContent" jdbcType="NVARCHAR" property="evaluationcontent" />
+    <result column="goodsImgUrl" jdbcType="NVARCHAR" property="goodsimgurl" />
+    <result column="bEvaluation" jdbcType="BIT" property="bevaluation" />
+    <result column="promotion" jdbcType="NVARCHAR" property="promotion" />
+    <result column="orderSku" jdbcType="NVARCHAR" property="ordersku" />
+    <result column="insertOrderType" jdbcType="NVARCHAR" property="insertordertype" />
+    <result column="preferentialHowMany" jdbcType="DECIMAL" property="preferentialhowmany" />
+    <result column="primitiveFactoryPrice" jdbcType="DECIMAL" property="primitivefactoryprice" />
+    <result column="cost_unit_price" jdbcType="DECIMAL" property="costUnitPrice" />
+    <result column="factoryPrice" jdbcType="DECIMAL" property="factoryprice" />
+    <result column="subOrdersNo" jdbcType="NVARCHAR" property="subordersno" />
+    <result column="isActivityGoods" jdbcType="NVARCHAR" property="isactivitygoods" />
+    <result column="isDistrbutionGoods" jdbcType="BIT" property="isdistrbutiongoods" />
+    <result column="agentProfit" jdbcType="DECIMAL" property="agentprofit" />
+    <result column="platformPrice" jdbcType="DECIMAL" property="platformprice" />
+    <result column="logisticsPrice" jdbcType="NUMERIC" property="logisticsprice" />
+    <result column="States" jdbcType="INTEGER" property="states" />
+    <result column="useCash" jdbcType="DECIMAL" property="usecash" />
+    <result column="useBalance" jdbcType="DECIMAL" property="usebalance" />
+    <result column="goodsCode" jdbcType="NVARCHAR" property="goodscode" />
+    <result column="activeColumnMark" jdbcType="NVARCHAR" property="activecolumnmark" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    Id, orderDetailId, orderId, orderno, goodsId, count, price, unit, discountPrice, attributes, goodsName, spec, amount, remark, evaluationContent, goodsImgUrl, bEvaluation, promotion, orderSku, insertOrderType, preferentialHowMany, primitiveFactoryPrice, cost_unit_price, factoryPrice, subOrdersNo, isActivityGoods, isDistrbutionGoods, agentProfit, platformPrice, logisticsPrice, States, useCash, useBalance, goodsCode, activeColumnMark
+  </sql>
+  
+</mapper>

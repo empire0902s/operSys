@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.shq520new.BannerAuxiliaryMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.primarydb.BannerAuxiliary">
+    <!-- WARNING - @mbg.generated -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="logo_path" jdbcType="VARCHAR" property="logoPath" />
+    <result column="banner_img_path" jdbcType="VARCHAR" property="bannerImgPath" />
+    <result column="activity_img_path" jdbcType="VARCHAR" property="activityImgPath" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="update_admin" jdbcType="VARCHAR" property="updateAdmin" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    id, update_time, logo_path, banner_img_path, activity_img_path, parent_id, update_admin
+  </sql>
+  
+</mapper>

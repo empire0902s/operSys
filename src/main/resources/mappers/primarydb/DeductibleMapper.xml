@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.DeductibleMapper">
+
+
+	<select id="queryDeductible" resultType="Deductible">
+			<![CDATA[
+select t.*
+ from t_deductible t where user_seq= #{userSeq} and status <=2 and type=1
+		]]>
+
+	</select>
+
+	<!-- 获取抵扣券 -->
+	<select id="selectDeductible" resultType="Deductible">
+			<![CDATA[
+select t.* ,(select ti.discount from t_deductible_introduce ti where ti.is_disabled=false) as discount
+ from t_deductible t where user_seq= #{userSeq} and t.type=2 and status <3
+		]]>
+
+	</select>
+
+    <!-- 使用抵扣券 -->
+    <update id="updateUserDeductible">
+		<![CDATA[
+		update t_deductible t
+			set t.status = #{status}
+			,t.update_time = now()
+			,t.used_balance = #{usedBalance}
+			,t.balance = #{balance}
+			where
+			 t.id = #{id}
+			and  now() BETWEEN t.validay_start and t.validay_end
+		]]>
+	</update>
+
+
+	<!--定时任务，优惠券过期 状态4过期 -->
+	<update id="updateDetuctibleStatusExpiredByJob">
+		<![CDATA[
+		update t_deductible t
+			set t.status = 4
+			,t.update_time = now()
+			,t.update_admin = 'system'
+			where
+			t.validay_end < #{expiredDay}
+			and t.type=2
+			and (t.status = 1 or t.status = 2)
+		]]>
+	</update>
+
+	<select id="getDeducitbleStatisticsDay" resultType="com.shq.oper.model.domain.mongo.DeducitbleStatisticsDay">
+
+		select  DATE_FORMAT(create_time, '%Y-%m-%d') AS time,ifnull(tempNum.userNum,0) as userNum,(
+		select sum(balance) as balanceTotal from t_deductible
+		<where>
+			<![CDATA[ status<5 ]]>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+		) as balanceTotal,
+		ifnull(tempNum1.usedNum,0) as deleteNum,ifnull(tempNum1.balanceTotal,0) as deleteAmout
+		from t_deductible td
+		left join (
+		select  DATE_FORMAT(create_time, '%Y-%m-%d') AS time,count(id) as userNum from t_deductible
+
+	<where>
+	<if test="beTime != null">
+				<![CDATA[and create_time >= #{beTime}]]>
+			</if>
+
+		<if test="endTime != null">
+		<![CDATA[and create_time < #{endTime}]]>
+	</if>
+		<if test="type != null">
+			and type = #{type}
+		</if>
+	</where>
+		GROUP BY  time
+		) as tempNum
+		on time=tempNum.time
+
+		left join(
+
+		select  DATE_FORMAT(update_time, '%Y-%m-%d') AS time,count(id) as usedNum, sum(balance) as balanceTotal from t_deductible
+		<where>
+			and status=5
+			<if test="beTime != null">
+				<![CDATA[and create_time >= #{beTime}]]>
+			</if>
+
+			<if test="endTime != null">
+				<![CDATA[and create_time < #{endTime}]]>
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+		GROUP BY  time
+		) as tempNum1
+		on tempNum.time =tempNum1.time
+
+		<where>
+			<if test="beTime != null">
+				<![CDATA[and create_time >= #{beTime}]]>
+			</if>
+
+			<if test="endTime != null">
+				<![CDATA[and create_time < #{endTime}]]>
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+
+		GROUP BY  DATE_FORMAT(td.create_time, '%Y-%m-%d')
+
+	</select>
+
+
+
+</mapper>

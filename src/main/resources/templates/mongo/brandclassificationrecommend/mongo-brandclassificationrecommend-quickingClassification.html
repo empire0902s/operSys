@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>Banner列表</title>
+<script th:inline="javascript">
+	var imageUrl = '[[${imageUrl}]]';
+</script>
+<script type="text/javascript"></script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="jump">预览</a>
+	<a class="layui-btn layui-btn-xs" lay-event="look">详细</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+			<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">当前分类:</label>
+				<div class="layui-input-inline">
+					<label type="text"  class="layui-form-label"  name="modularName" th:text="${modularName}"
+						id="modularName" readonly="readonly"></label>
+				<input type="hidden" name="columnId" th:value="${columnId}" 
+						id="columnId" maxlength="20" readonly="readonly">
+				</div>
+			</div>
+		</div>
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">品牌推荐名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="brandName" id="brandNameTmp"
+							maxlength="20" placeholder="请输入品牌名称">
+					</div>
+				</div>
+					<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload" id="reload">搜索</a>
+						<a class="layui-btn"  id="binding">一键绑定</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list" id="dataList"></table>
+	</div>
+</body>
+</html>

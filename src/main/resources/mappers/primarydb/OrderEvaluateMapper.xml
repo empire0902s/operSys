@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.OrderEvaluateMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.primarydb.OrderEvaluate">
+    <!-- WARNING - @mbg.generated -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_admin" jdbcType="VARCHAR" property="updateAdmin" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
+    <result column="evaluate_time" jdbcType="TIMESTAMP" property="evaluateTime" />
+    <result column="user_seq" jdbcType="VARCHAR" property="userSeq" />
+    <result column="evaluate_lev" jdbcType="SMALLINT" property="evaluateLev" />
+    <result column="is_anonymous" jdbcType="SMALLINT" property="isAnonymous" />
+    <result column="is_top" jdbcType="SMALLINT" property="isTop" />
+    <result column="append_evaluate_id" jdbcType="BIGINT" property="appendEvaluateId" />
+    <result column="audit_stats" jdbcType="SMALLINT" property="auditStats" />
+    <result column="audit_admin" jdbcType="VARCHAR" property="auditAdmin" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="audit_reply" jdbcType="VARCHAR" property="auditReply" />
+    <result column="audit_desc" jdbcType="VARCHAR" property="auditDesc" />
+    <result column="evaluatie_type" jdbcType="VARCHAR" property="evaluatieType" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="user_icon" jdbcType="VARCHAR" property="userIcon" />
+    <result column="evaluate_content" jdbcType="LONGVARCHAR" property="evaluateContent" />
+  </resultMap>
+  
+    <resultMap type="com.shq.oper.model.domain.primarydb.OrderEvaluateImgs" id="OrderEvaluateImgResutlMap"> 
+        <id column="id" property="id" /> 
+        <result column="order_evaluate_id" property="orderEvaluateId" /> 
+        <result column="img_url" property="imgUrl" /> 
+    </resultMap> 
+  
+  
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    id, update_time, update_admin, order_no, goods_code, evaluate_time, user_seq, evaluate_lev, is_anonymous, is_top, append_evaluate_id, audit_stats, audit_admin, audit_time, audit_reply, audit_desc, evaluate_content
+  </sql>
+  	<update id="orderEvaluateExamine" parameterType="java.util.List">
+		 update t_order_evaluate 
+		 set  audit_stats=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.auditStats}
+   		 </foreach>
+		 , audit_admin=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.auditAdmin}
+   		 </foreach>
+   		 , audit_time=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.auditTime}
+   		 </foreach>
+   		,  audit_desc=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.auditDesc}
+   		 </foreach> 
+		   where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+	</update>
+	
+	<select id="queryOrderEvaluateListData" resultType="com.shq.oper.model.dto.api.res.ResOrderEvaluateListDataDto">
+		select temp.likesCount,temp2.id,temp2.updateTime,temp2.updateAdmin,temp2.orderNo,temp2.goodsCode
+				,temp2.evaluateTime,temp2.userSeq,temp2.evaluateContent
+				,temp2.evaluateLev,temp2.isAnonymous,temp2.isTop,temp2.appendEvaluateId
+						,temp2.auditStats,temp2.auditAdmin,temp2.auditTime
+						,temp2.auditReply,temp2.auditDesc,temp2.goodsSku,temp2.nickName,temp2.userIcon
+		from (
+		select count(1) as likesCount,order_evaluate_id as orderEvaluateId
+		 from t_order_evaluate_likes
+		 group by orderEvaluateId
+		)temp
+		right join (select id,update_time as updateTime,nick_name as nickName,update_admin as updateAdmin,order_no as orderNo,goods_code as goodsCode
+						,evaluate_time as evaluateTime,user_seq as userSeq,evaluate_content as evaluateContent
+						,evaluate_lev as evaluateLev,is_anonymous as isAnonymous,is_top as isTop,append_evaluate_id as appendEvaluateId
+						,audit_stats as auditStats,audit_admin as auditAdmin,audit_time as auditTime
+						,audit_reply as auditReply,audit_desc as auditDesc,goods_sku as goodsSku
+						,user_icon as userIcon
+				from t_order_evaluate
+		<where>
+			<if test="orderNo != null and orderNo !=''">
+				and order_no = #{orderNo}
+			</if>
+			<if test="userSeq != null and userSeq != ''">
+				and user_seq = #{userSeq}
+			</if>
+			<if test="goodsCode != null and goodsCode !=''">
+				and goods_code = #{goodsCode}
+			</if>
+			<if test="auditStats != null and auditStats !=''">
+				<if test="auditStats==0">
+					and audit_stats = 0
+				</if>
+				<if test="auditStats==1">
+					and audit_stats = 1
+				</if>
+				<if test="auditStats==2">
+					and (audit_stats = 0 or audit_stats = 1 or audit_stats = 3)
+				</if>
+			</if>
+		</where>
+			)temp2
+			on temp.orderEvaluateId=temp2.id
+			order by temp2.id
+	</select>
+	
+	<select id="queryOrderEvaluateOrderByIsTop" resultType="com.shq.oper.model.domain.primarydb.OrderEvaluate">
+	select tov.id,tov.update_time as updateTime,tov.update_admin as updateAdmin,tov.order_no as orderNo
+				,tov.goods_code as goodsCode,tov.evaluate_time as evaluateTime,tov.user_seq as userSeq
+				,tov.evaluate_content as evaluateContent,tov.evaluate_lev as evaluateLev
+				,tov.is_anonymous as isAnonymous,tov.is_top as isTop,tov.append_evaluate_id as appendEvaluateId
+				,tov.audit_stats as auditStats,tov.audit_admin as auditAdmin
+				,tov.audit_time as auditTime,tov.audit_reply as auditReply
+				,tov.audit_desc as auditDesc,tov.goods_sku as goodsSku
+				,tov.evaluatie_type as evaluatieType
+				,tov.nick_name as nickName
+				,tov.user_icon as userIcon
+			from t_order_evaluate tov
+		<where>
+			<if test="evaluatieType != null and evaluatieType != ''">
+				and tov.evaluatie_type = #{evaluatieType}
+			</if>
+			<if test="evaluateContent  != null and evaluateContent!=''">
+				and evaluate_content  LIKE  concat('%',#{evaluateContent},'%')
+			</if>
+			<if test="auditStats != null">
+				and tov.audit_stats=#{auditStats}
+			</if>
+			<if test="orderNo != null and orderNo !=''">
+				and tov.order_no = #{orderNo}
+			</if>
+			<if test="userSeq != null and userSeq != ''">
+				and tov.user_seq = #{userSeq}
+			</if>
+			<if test="goodsCode != null and goodsCode !=''">
+				and tov.goods_code = #{goodsCode}
+			</if>
+			<if test="auditReply ==1 and auditReply!=''">
+				and tov.audit_reply is not null and audit_reply!=''
+			</if>
+				<if test="auditReply ==0 and auditReply!=''">
+				and (tov.audit_reply is null or tov.audit_reply='')
+			</if>
+			
+		</where>
+			order by tov.is_top desc,tov.evaluate_time desc,tov.audit_time desc
+	</select>
+	
+	<select id="queryManualEvaluateList" resultType="orderEvaluate">
+		select toe.*,imgs.img_url  as evaluatieImg
+			from t_order_evaluate toe
+			left join  t_order_evaluate_imgs imgs
+			on toe.id=imgs.order_evaluate_id
+		<where>
+				audit_stats=1
+			<if test="goodsCode != null and goodsCode !=''">
+				and goods_code = #{goodsCode}
+			</if>
+			<if test="evaluatieType != null and evaluatieType !=''">
+				and evaluatie_type = #{evaluatieType}
+			</if>
+			<if test="nickName != null and nickName !=''">
+				and nick_name  LIKE  concat('%',#{nickName},'%')
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateOrderEvaluateAuditStats" parameterType="orderEvaluate">
+	
+	UPDATE t_order_evaluate 
+	SET 
+	<if test="auditStats != null">
+		audit_stats = #{auditStats},
+	</if>
+
+	<if test="auditTime !=''">
+		audit_time = #{auditTime},
+	</if>	
+	
+	<if test="updateTime !=null">
+		update_time = #{updateTime},
+	</if>	
+	
+	<if test="updateAdmin !='' and updateAdmin !=null">
+		update_admin = #{updateAdmin},
+	</if>	
+	
+	<if test="auditDesc !=''">
+		audit_desc = #{auditDesc},
+	</if>
+		audit_admin = #{auditAdmin}
+	WHERE id = #{id}	
+	</update>
+	
+	
+	
+	
+	
+</mapper>

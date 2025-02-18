@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>栏目商品绑定</title>
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+
+		<form class="layui-form  layui-form-pane data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline layui-col-xs4">
+					<label class="layui-form-label">商品Code:</label>
+					<div class="layui-input-inline ">
+						<input type="text" style="width:400px;" class="layui-input" name="Product_Code"  id="code"
+							   placeholder="请输入商品Code">
+					</div>
+				</div>
+				<div >
+					<div class="layui-input-inline">
+						<a class="layui-btn search "  style="margin-left: 200px;" data-type="reload" id="search">搜索</a>
+					</div>
+				</div>
+			</div>
+
+		</form>
+
+		<fieldset class="layui-elem-field">
+
+			<div class="layui-field-box disabledTable data-product-form">
+				<div class="layui-row">
+					<div class="layui-inline layui-col-md6">
+						<label class="layui-form-label">商品Code：</label>
+						<div class="layui-input-inline">
+							<div class="inline-text layui-text" ><span class="productCode"></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row">
+					<div class="layui-inline layui-col-md6">
+						<label class="layui-form-label">商品名称：</label>
+						<div class="layui-input-inline">
+							<div class="inline-text layui-text" ><span class="productName"></span></div>
+						</div>
+					</div>
+					<div class="layui-inline">
+					<label class="layui-form-label">供应商：</label>
+					<div class="layui-input-inline">
+					<div class="inline-text layui-text" ><span class="companyName"></span></div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<table  lay-size="sm" class="layui-hide data-list" lay-filter="data-list" ></table>
+		
+		<div class="center">
+			<button class="layui-btn _submit " lay-submit lay-filter="submit">保存到列表</button>
+			<button class="layui-btn off  layui-btn-primary" lay-submit lay-filter="submit">关闭</button>
+		</div>
+	</div>
+
+
+</body>
+</html>

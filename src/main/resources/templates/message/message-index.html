@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+	<title>短信推送管理</title>
+
+	<script th:inline="javascript">
+        var messagePlamList = '[[${messagePlamList}]]';
+
+	</script>
+
+	<style type="text/css">
+		.layui-form-checkbox {
+			margin: 5px 0px 5px 10px;
+		}
+
+		#resourceTree {
+			padding: 10px;
+		}
+	</style>
+	<script type="text/html" id="isDisabledTpl">
+		<input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+	</script>
+	<script type="text/html" id="editBar">
+		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	</script>
+</head>
+<body>
+<div style="margin: 15px;">
+	<form class="layui-form data-list-form">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">用户手机号:</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="userPhone" maxlength="20"
+						   placeholder="请输入用户手机号">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">消息类型</label>
+				<div class="layui-input-inline">
+					<select name="msgType">
+						<!--<option value="" selected="selected">请选择</option>-->
+						<option value="isMsg" >短信</option>
+						<option value="isApp" >APP推送</option>
+						<!--<option value="isEmail" >邮件</option>-->
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">发送状态</label>
+				<div class="layui-input-inline">
+					<select name="sendStatus">
+						<!--<option value="" >请选择</option>-->
+						<option value=0  selected="selected">发送中</option>
+						<option value=1 >成功</option>
+						<option value=2 >失败</option>
+						<option value=3 >部分成功</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline" >
+				<label class="layui-form-label">发送平台：</label>
+				<div class="layui-input-inline"  maxlength="50"  >
+					<select name="sendingPlatform" >
+						<option value="" style="width: 150px;"
+								th:each="message : ${messagePlamList}"
+								th:text="${message.key}" th:value="${message.value}"></option>
+					</select>
+				</div>
+			</div>
+
+
+			<div class="layui-inline">
+				<div class="layui-input-block">
+
+					<a class="layui-btn" data-type="reload">查询</a>
+					<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">发送短信</a>
+					<a class="layui-btn push" >发送推送</a>
+					<!--<a class="layui-btn" data-type="upload">Excel导入发送</a>-->
+				</div>
+			</div>
+		</div>
+	</form>
+	<table class="layui-hide data-list" lay-filter="data-list"></table>
+</div>
+
+<div class="layer-open-form edit-form">
+	<form class="layui-form ">
+		<input type="hidden" name="id" />
+		<div class="layui-form-item">
+			<div class="layui-inline type" >
+				<label class="layui-form-label">信息类型：</label>
+				<div class="layui-input-inline"  maxlength="50"  style="width: 400px">
+					<input type="text" name="msgType" class="layui-input messageType"  />
+					<!--<input type="checkbox" name="message" value="1" title="短信" checked />-->
+					<!--<input type="checkbox" name="push" value="2" title="推送" />-->
+					<!--<input type="checkbox" name="mail" value="3" title="邮件" />-->
+				</div>
+			</div>
+		</div>
+
+			<div class="layui-inline" id="plat">
+				<label class="layui-form-label">发送平台：</label>
+				<div class="layui-input-inline"  maxlength="50"  >
+					<select name="sendingPlatform" >
+						<option value="" style="width: 150px;"
+								th:each="message : ${messagePlamList}"
+								th:text="${message.key}" th:value="${message.value}"></option>
+					</select>
+				</div>
+			</div>
+			
+			
+			<div class="layui-inline">
+				<label class="layui-form-label">接受信息类别：</label>
+				<div class="layui-input-inline"  style="width: 400px">
+					<input type="radio" name="receiveType" value="1" title="单个手机号" lay-filter="type" />
+					<!--<input type="radio" name="receiveType" value="2" title="用户角色" lay-filter="type" />-->
+					<!--<input type="radio" name="receiveType" value="3" title="区域用户" lay-filter="type" />-->
+					<!--<input type="radio" name="receiveType" value="4" title="全平台" lay-filter="type" />-->
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-form-item center">
+					<div class="layui-inline">
+						<a class="layui-btn layui-btn-primary layui-btn-radius adddetail" >添加信息明细</a>
+						<a class="layui-btn layui-btn-primary layui-btn-radius deletedetail" >清空信息明细</a>
+					</div>
+				</div>
+
+			<div class="layui-inline" >
+				<label class="layui-form-label">接受信息明细：</label>
+				<div class="layui-input-inline" >
+					<input type="text" name="receiveTypeDetail" id="detail" readonly="readonly"  placeholder="请添加信息明细"
+						   maxlength="100" style="width: 400px" autocomplete="off" class="layui-input detail">
+				</div>
+			</div>
+
+
+				<div class="layui-inline seq"  >
+					<label class="layui-form-label">：</label>
+					<div class="layui-input-inline" >
+						<input type="text" name="seqs"
+							   maxlength="50" autocomplete="off" class="layui-input seqs" >
+					</div>
+				</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">标题：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="msgDesc"
+						   maxlength="30"  style="width: 400px" placeholder="请输入标题"
+						   class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline" >
+				<label class="layui-form-label">发送短信内容：</label>
+				<div class="layui-input-inline" >
+					<textarea type="text" name="msgContent"
+							  autocomplete="off" style="width: 400px;height: 100px;" class="layui-input" placeholder="输入短信内容"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+					<div class="layui-form-item center">
+						<div class="layui-inline">
+							<button class="layui-btn" lay-submit lay-filter="submit">保存</button>
+							<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+						</div>
+					</div>
+
+				</div>
+		</div>
+	</form>
+
+</div>
+
+<div class="layer-open-form edit-form1">
+	<form class="layui-form ">
+		<input type="hidden" name="id" />
+		<div class="layui-form-item">
+			<div class="layui-inline type" >
+				<label class="layui-form-label">信息类型：</label>
+				<div class="layui-input-inline"  maxlength="50"  style="width: 400px">
+					<input type="text" name="msgType" class="layui-input type"  />
+					<!--<input type="checkbox" name="message" value="1" title="短信" checked />-->
+					<!--<input type="checkbox" name="push" value="2" title="推送" />-->
+					<!--<input type="checkbox" name="mail" value="3" title="邮件" />-->
+				</div>
+			</div>
+
+			<div class="layui-inline" id="plat1">
+				<label class="layui-form-label">发送平台：</label>
+				<div class="layui-input-inline"  maxlength="50"  >
+					<select name="sendingPlatform" >
+						<option value="" style="width: 150px;"
+								th:each="message : ${messagePlamList}"
+								th:text="${message.key}" th:value="${message.value}"></option>
+					</select>
+				</div>
+			</div>
+
+
+			<div class="layui-inline">
+				<label class="layui-form-label">接受信息类别：</label>
+				<div class="layui-input-inline" id="appDIV1" style="width: 400px">
+					<input type="radio" name="receiveType" value="1" title="单个手机号" lay-filter="type" />
+					<!--<input type="radio" name="receiveType" value="2" title="用户角色" lay-filter="type"/>-->
+					<!--<input type="radio" name="receiveType" value="3" title="区域用户" lay-filter="type"/>-->
+					<input type="radio" name="receiveType" value="4" title="全平台" lay-filter="type" />
+				</div>
+			</div>
+
+			<div class="layui-inline app" >
+				<label class="layui-form-label">请选择平台：</label>
+				<div class="layui-input-inline"  maxlength="100" style="width: 400px">
+					<input type="radio" name="appType" value="1" title="ios推送"  lay-filter="app"/>
+					<input type="radio" name="appType" value="2" title="安卓推送"  lay-filter="app"/>
+					<input type="radio" name="appType" value="3" title="ios推送+安卓推送"  lay-filter="app"/>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-form-item center">
+					<div class="layui-inline detailhide">
+						<a class="layui-btn layui-btn-primary layui-btn-radius adddetail" >添加信息明细</a>
+						<a class="layui-btn layui-btn-primary layui-btn-radius deletedetail" >清空信息明细</a>
+					</div>
+				</div>
+
+				<div class="layui-inline" >
+					<label class="layui-form-label">接受信息明细：</label>
+					<div class="layui-input-inline" >
+						<input type="text" name="receiveTypeDetail"  readonly="readonly"  placeholder="请添加信息明细"
+							   maxlength="100" style="width: 400px" autocomplete="off" class="layui-input detail">
+					</div>
+				</div>
+
+
+				<div class="layui-inline seq"  >
+					<label class="layui-form-label">：</label>
+					<div class="layui-input-inline" >
+						<input type="text" name="seqs"
+							   maxlength="50" autocomplete="off" class="layui-input seqs" >
+					</div>
+				</div>
+
+
+				<div class="layui-inline">
+					<label class="layui-form-label">跳转链接：</label>
+					<div class="layui-input-inline">
+						<textarea type="text" name="jumpUrl"
+							   style="width: 400px" placeholder="请输入跳转链接"
+							   class="layui-input"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">标题：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="msgDesc"
+							   maxlength="30"  style="width: 400px" placeholder="请输入标题"
+							   class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-inline" >
+					<label class="layui-form-label">发送短信内容：</label>
+					<div class="layui-input-inline" >
+					<textarea type="text" name="msgContent"
+							  autocomplete="off" style="width: 400px;height: 100px;" class="layui-input" placeholder="输入短信内容"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-form-item center">
+						<div class="layui-inline">
+							<button class="layui-btn" lay-submit lay-filter="submit">保存</button>
+							<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</form>
+
+</div>
+
+</body>
+</html>

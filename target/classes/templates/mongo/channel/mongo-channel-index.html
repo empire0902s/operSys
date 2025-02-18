@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员操作日志</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="goodssetting">商品设置</a>
+	<a class="layui-btn layui-btn-xs" lay-event="columSetting">栏目设置</a>
+	<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
+	<!--<a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>-->
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">渠道名:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name"
+							placeholder="请输入渠道名">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">渠道号:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="channelNum"
+							placeholder="请输入渠道号">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">状态:</label>
+					<div class="layui-input-inline">
+						<select name="state">
+							<option value="0" >已禁用</option>
+							<option value="1" selected="selected">启用中</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+					<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" class="idInput" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">渠道名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="name" lay-verify="required|space|normal"
+							   maxlength="30"
+							   class="layui-input">
+
+					</div>
+				</div>
+				<!--<div class="layui-inline" style="position:relative; z-index:1001;">-->
+					<!--<label class="layui-form-label">渠道号：</label>-->
+					<!--<div class="layui-input-inline">-->
+						<!--<input type="text" name="name" lay-verify="required|space|normal"-->
+							   <!--maxlength="30"-->
+							   <!--class="layui-input">-->
+					<!--</div>-->
+				<!--</div>-->
+
+				<div class="layui-inline" >
+					<label class="layui-form-label">模板样式：</label>
+					<div class="layui-input-inline" >
+						<select name="templateType">
+							<option value="1">模板样式1</option>
+							<option value="2">模板样式2</option>
+							<option value="3">模板样式3</option>
+							<option value="4">模板样式4</option>
+							<option value="5">模板样式5</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">ios下载地址：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="iosLoadUrl" lay-verify="required|space"
+								   maxlength="30"
+								   class="layui-input">
+						</div>
+					</div>
+					<div class="layui-inline" style="position:relative; z-index:1001;">
+						<label class="layui-form-label">安卓下载地址：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="androndLoadUrl" lay-verify="required|space"
+								   maxlength="30"
+								   class="layui-input">
+						</div>
+					</div>
+				</div>
+
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">品牌说明：</label>
+						<div class="layui-input-inline">
+							<button type="button" class="layui-btn layui-btn-normal"
+									id="logoFile">上传图片</button>
+							<a target="_blank" id="checkBigImg" href=""><img type=""
+																			 class="layui-upload-img" id="imgDisplay" style="display: none;width:105px;"></a>
+							<p id="imageText"></p>
+							<input type="hidden" style="margin-top: 5px" class="layui-input"
+								   name="brandDescImg" id="logoURL" readonly="readonly">
+						</div>
+					</div>
+				<!--</div>-->
+				<div class="layui-form-item" style="display: none">
+					<div class="layui-inline">
+						<div class="layui-input-inline">
+					<textarea name="logoURLTarget" style="height: 60px;width:200px;margin-left: 17px;" id="logoURLTarget"
+							  autocomplete="off"
+							  placeholder="logo图片链接跳转" class="layui-input"></textarea>
+						</div>
+					</div>
+				</div>
+				<!--<div class="layui-form-item">-->
+					<!--<div class="layui-inline">-->
+						<!--<label class="layui-form-label">爱之家描述：</label>-->
+						<!--<div class="layui-input-inline">-->
+							<!--<button type="button" class="layui-btn layui-btn-normal"-->
+									<!--id="logoBannerFile">上传图片</button>-->
+							<!--<a target="_blank" id="bannerCheckBigImg" href=""><img type=""-->
+																				   <!--class="layui-upload-img" id="logoBannerImgDisplay"-->
+																				   <!--style="display: none;width:105px;"></a>-->
+							<!--<p id="imageText"></p>-->
+							<!--<input type="hidden" style="margin-top: 5px" class="layui-input"-->
+								   <!--name="loveDescImg" id="logoBannerURL" readonly="readonly">-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+				<div class="layui-form-item" style="display: none">
+					<div class="layui-inline">
+						<div class="layui-input-inline">
+						<textarea name="logoBannerURLTarget" style="height: 60px;width:200px;margin-left: 17px;" id="logoBannerURLTarget"
+								  autocomplete="off"
+								  placeholder="Banner图片链接跳转" class="layui-input"></textarea>
+						</div>
+					</div>
+				</div>
+				<!--<div class="layui-form-item">-->
+					<div class="layui-inline">
+						<label class="layui-form-label">二维码：</label>
+						<div class="layui-input-inline">
+							<button type="button" class="layui-btn layui-btn-normal"
+									id="activeBannerFile">上传图片</button>
+							<a target="_blank" id="activityCheckBigImg" href=""><img
+									type="" class="layui-upload-img" id="activeBannerImgDisplay"
+									style="display: none;width:105px;"></a>
+							<p id="imageText"></p>
+							<input type="hidden" style="margin-top: 5px" class="layui-input"
+								   name="qrCodeUrl" id="activeBannerURL" readonly="readonly">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">是否禁用：</label>
+						<div class="layui-input-inline">
+							<input type="radio" name="state" value="1" title="否" checked />
+							<input type="radio" name="state" value="0" title="是" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">爱之家描述：</label>
+						<div class="layui-input-inline" >
+							<textarea  style="width: 550px; height: 80px;" name="description" id="description"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-form-item center">
+						<div class="layui-inline">
+							<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+							<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+						</div>
+					</div>
+		</form>
+	</div>
+
+</body>
+</html>

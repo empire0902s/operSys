@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>区域管理</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+
+$(function(){
+	$("#open").click(function(){
+		alert("dd");
+	})
+})
+</script>
+<script type="text/html" id="editBar"> 
+	<a class="layui-btn layui-btn-xs" lay-event="look">详细</a>
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabled">禁用</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">区域规则名:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" maxlength="20"
+							placeholder="请输入区域规则名">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">区域级别:</label>
+					<div class="layui-input-inline">
+						<select name="lev" display="block">
+							<option value="">请选择</option>
+							<option value="1">全国</option>
+							<option value="2">省级</option>
+							<option value="3">市级</option>
+							<option value="4">县/区级</option>
+							<option value="5">街道</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">区域类型:</label>
+					<div class="layui-input-inline">
+						<select name="levType" display="block">
+							<option value="1">包含</option>
+							<option value="0">排除</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否启用:</label>
+				<div class="layui-input-inline">
+					<select name="isDisabled">
+						<!-- <option value="">--请选择--</option> -->
+						<option value="0" selected="selected">未禁用</option>
+						<option value="1">已禁用</option>
+					</select>
+				</div>
+				<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+	<div class="layer-open-form edit-form">
+		<form class="layui-form">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">区域规则名称：</label>
+				<div class="layui-input-block">
+					<input type="text" name="name" lay-verify="required|normal|space"
+						maxlength="20" id="name" placeholder="区域规则名称长度小于20个字符"
+						autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">区域级别：</label>
+				<div class="layui-input-inline" display="block">
+					<select name="lev" id="sLev">
+						<option value="1">全国</option>
+						<option value="2">省级</option>
+						<option value="3">市级</option>
+						<option value="4">县/区级</option>
+						<option value="5">街/道级</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">区域类型：</label>
+				<div class="layui-input-inline" display="block">
+					<!-- <select name="levType">
+						<option value="1">包含</option>
+						<option value="0">排除</option>
+					</select> -->
+					<div class="layui-input-inline">
+					<input type="radio" name="levType" value="1" title="包含" checked />
+					<input type="radio" name="levType" value="0" title="排除" />
+				</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">区域明细：</label>
+				<div class="layui-input-inline" display="block">
+					<input type="button" value="添加弹出" id="open">
+				</div>
+				<div class="layui-input-inline" display="block"
+					style="display: none" id="openLoad">
+					<table border="1" id="areaTable">
+					</table>
+				</div>
+
+				<div class="layui-input-inline" display="block"
+					style="display: none" id="areaLoad">
+					<table border="1" id="areaLoadTab">
+						<tr>
+							<td>范围</td>
+							<td>编码</td>
+							<td>操作</td>
+						</tr>
+					</table>
+				</div>
+				<input type="hidden" name="parentCode" id="pCode" value="" /> <input
+					type="hidden" name="levRangeDetail" id="lrd" value="" />
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">描述：</label>
+					<div class="layui-input-block">
+						<input type="text" lay-verify="required" name="areaDesc"
+							maxlength="200" placeholder="描述长度字数限制200字以内" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="layui-form-item center">
+				<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+		</form>
+	</div>
+
+</body>
+
+</html>

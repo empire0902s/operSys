@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>爱之家首页模块详情</title>
+<script type="text/javascript"></script>
+<script th:inline="javascript">
+	var homePageModuleResult = '[[${homePageModuleResult}]]';
+</script>
+<style type="text/css">
+.test {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 20px;
+}
+</style>
+</head>
+<body>
+	<div>
+		<table class="layui-table"
+			style="margin-top: 1px; margin-bottom: 1px; height: 305px;">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td style="width: 50px;" th:text="${homePageModuleResult.id}"></td>
+					<th>模块名称</th>
+					<td th:text="${homePageModuleResult.moduleName}"></td>
+				</tr>
+				<tr>
+					<th>排序</th>
+					<td th:text="${homePageModuleResult.sortNum}"></td>
+					<th>更多目标链接</th>
+					<td><a th:href="${homePageModuleResult.loadMoreTarget}" target="_blank" id="homePageModule">
+							<span style="color: blue" >点击跳转</span>
+					</a></td>
+				</tr>
+				<tr>
+					<th>活动类型</th>
+					<td  id="actityType"></td>
+					<th>显示模块名称</th>
+					<td th:text="${homePageModuleResult.showModuleName}==0?'不显示':'显示'"></td>
+				</tr>
+				<tr>
+					<th>展示状态</th>
+					<td th:text="${homePageModuleResult.showState}==0?'不显示':'显示'"></td>
+					<th>加载更多</th>
+					<td th:text="${homePageModuleResult.showloadMore}==0?'不显示':'显示'"></td>
+				</tr>
+				<tr>
+					<th>创建时间</th>
+					<td th:text="${homePageModuleResult.createTime}"></td>
+					<th>创建人</th>
+					<td th:text="${homePageModuleResult.createAdmin}"></td>
+				</tr>
+				<tr>
+					<th>更新时间</th>
+					<td th:text="${homePageModuleResult.updateTime}"></td>
+					<th>更新人</th>
+					<td th:text="${homePageModuleResult.updateAdmin}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

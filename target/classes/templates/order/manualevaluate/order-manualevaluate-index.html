@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+#upload_img_list {
+	margin: 10px 0 0 0
+}
+#upload_img_list dd {
+	position: relative;
+	margin: 0 10px 10px 0;
+	float: left
+}
+#upload_img_list .operate {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1
+}
+#upload_img_list .operate i {
+	cursor: pointer;
+	background: #2F4056;
+	padding: 2px;
+	line-height: 15px;
+	text-align: center;
+	color: #fff;
+	margin-left: 1px;
+	float: left;
+	filter: alpha(opacity=80);
+	-moz-opacity: .8;
+	-khtml-opacity: .8;
+	opacity: .8
+}
+#upload_img_list dd .img {
+	max-height: 150px;
+	max-width: 500px
+}
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>
+</script>
+</head>
+<body>
+	<div class="edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<input type="hidden" name="evaluateLev" value="5" />
+			<input type="hidden" name="isAnonymous" value="0" />
+			<input type="hidden" name="isTop" value="0" />
+			<input type="hidden" name="evaluatieType" value="1" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商品CODE：</label>
+					<div class="layui-input-inline" style="width:275px;">
+						<input type="text" name="goodsCode" id="goodsCode"
+							lay-verify="required|space|normal" maxlength="100"
+							autocomplete="off" class="layui-input">
+					</div>
+						<div class="layui-inline">
+						<a href="#" class="layui-btn layui-btn-normal search" lay-filter="search">搜索</a>
+				</div>
+				</div>
+			
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商品名称：</label>
+					<div class="layui-input-inline" style="width:350px;">
+						<input type="text" name="goodsName" id="goodsName" readonly="readonly" lay-verify="required"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">昵称：</label>
+					<div class="layui-input-inline" style="width:350px;">
+						<input type="text" name="nickName"
+							lay-verify="required" maxlength="20"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">头像：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-primary" id="file">上传头像</button>
+						<a target="_blank" id="checkBigImg" href=""><img type=""
+							class="layui-upload-img" id="imgDisplay" style="display: none"></a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							name="userIcon" id="userIcon" readonly="readonly">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">评论时间：</label>
+					<div class="layui-input-inline" style="width:350px;">
+						<input type="text" name="evaluateTime" readonly="readonly"
+							id="evaluateTime" maxlength="100" autocomplete="off" lay-verify="required"
+							class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">评论内容：</label>
+					<div class="layui-input-inline" style="width:350px;">
+						<textarea name="evaluateContent" lay-verify="required"  style="margin-top: 5px;"
+						 placeholder="请输入评论内容，字数限制200字以内" class="layui-textarea" maxlength="200"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+					<div class="layui-inline">
+					<label class="layui-form-label">是否匿名：</label>
+					<div class="layui-input-inline">
+		<!-- 				<select name="isAnonymous">
+							<option value="0" selected="selected">公开</option>
+							<option value="1">匿名</option>
+						</select> -->
+						<input type="radio" name="isAnonymous" value="0" title="公开" checked />
+						<input type="radio" name="isAnonymous" value="1" title="匿名" />
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+			<div class="layui-inline">
+					<label class="layui-form-label">评论图片：</label>
+					<div class="layui-input-inline" style="width:500px;">
+				<button type="button" class="layui-btn layui-btn-primary" id="upload_img">上传图片</button>
+				<div id="upload_img_list"> </div>
+				</div>
+				</div>
+			</div>
+					<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">编辑回复：</label>
+					<div class="layui-input-inline" style="width:350px;">
+						<textarea name="auditReply" style="margin-top: 5px;"
+						 placeholder="请输入回复内容" class="layui-textarea" maxlength="100"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+					<div class="layui-inline">
+					<div class="layui-input-inline">
+						<button class="layui-btn" lay-submit lay-filter="submit" style="margin-left: 250px;">立即发布</button>
+						<button type="reset" class="layui-btn btn-reload layui-btn-primary" style="display: none">刷新</button>
+				</div>
+		</form>
+	</div>
+
+</body>
+</html>

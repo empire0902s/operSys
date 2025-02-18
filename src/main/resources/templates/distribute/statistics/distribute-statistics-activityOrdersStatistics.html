@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户行为</title>
+<script th:inline="javascript">
+	
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.laydate-btns-now {
+	display: none;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+<div style="margin: 15px;">
+	<div style="height: 350px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item" style="margin-top: 18px;">
+				<div class="layui-inline">
+					<label class="layui-form-label">统计日期:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="timeRange"
+							id="statisticsTime" readonly="readonly" placeholder="请选择日期">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">活动名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="activeColumnMark"
+							id="activeColumnMark"  placeholder="请输入活动名称">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload" id="reload">搜索</a> <a
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	<!--	订单总数--当天下单的订单总数,包括支付成功,未支付和申请退款的订单数 
+			订单总金额--当天下单的订单总金额,包括支付成功,未支付和退款的订单金额
+			购买用户数--当天下单人数,不同订单但是是同一个用户只算一个 
+			已下单已付款订单数--当天已下单已支付订单数,支付成功就算，包括退款订单数
+			已售商品数量--当天已下单已支付订单商品总数,支付成功就算，包括退款订单的商品 
+			已经下单已付款订单总金额--当天已下单已支付订单总金额，支付成功就算,包括退款订单金额
+			申请退款订单数--当天退款订单总数,申请退款就算，不管退款是否成功
+		 	退款总金额--当天退款订单金额总数,申请退款就算，不管是否退款成功
+			客单率--当天已支付订单总金额/当天已支付订单数  
+			已经下单未付款订单总金额--当天已下单未付款订单金额,未支付成功的都算
+			已下单未付款订单数--当天已下单未付款订单数,未支付成功的都算  
+			退款率--当天申请退款订单商品总数(申请退款就统计在内)/当天已下单已支付订单商品总数(支付成功就统计在内,包括申请退款的订单)
+			-->
+</div>			
+</body>
+</html>

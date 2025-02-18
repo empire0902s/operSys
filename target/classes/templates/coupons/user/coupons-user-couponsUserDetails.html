@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script th:inline="javascript">
+	var couponsUserDetails = '[[${couponsUserDetails}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-unselect {
+	width: 125px;
+	margin-left: 25px
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+
+td {
+	width: 120px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+</script>
+
+</head>
+<body>
+	<div class="layui-form">
+		<table class="layui-table"
+			style="margin-top: 0.5px; margin-bottom: 0px">
+			<tbody>
+				<tr>
+					<th>编号</th>
+					<td th:text="${couponsUserDetails.id}"></td>
+					<th>用户标识</th>
+					<td th:text="${couponsUserDetails.userSeq}"></td>
+				</tr>
+				<tr>
+					<th>用户手机号</th>
+					<td th:text="${couponsUserDetails.phone}"></td>
+					<th>领取时间</th>
+					<td th:text="${couponsUserDetails.createTime}"></td>
+				</tr>
+				<tr>
+					<th>优惠券关联编号</th>
+					<td th:text="${couponsUserDetails.couponsId}"></td>
+					<th>来源</th>
+					<td th:text="${couponsUserDetails.receiveSrc}"></td>
+				</tr>
+				<tr>
+					<th>有效期开始时间</th>
+					<td th:text="${couponsUserDetails.valiDayStart}"></td>
+					<th>有效期结束时间</th>
+					<td th:text="${couponsUserDetails.valiDayEnd}"></td>
+				</tr>
+				<tr>
+					<th>优惠模式</th>
+					<td th:text="${couponsUserDetails.couponsTypeModel}==1?'固定金额':'浮动金额'"></td>
+					<th>优惠类型</th>
+					<td th:text="${couponsTypeString}"></td>
+				</tr>
+				<tr>
+					<th>最低消费金额,满足后才可使用</th>
+					<td th:text="${couponsUserDetails.minSpendMoney}"></td>
+					<th>满减_满足金额</th>
+					<td th:text="${couponsUserDetails.minSpendMoney}"></td>
+				</tr>
+				<tr>
+					<th>满减_优惠减少金额</th>
+					<td th:text="${couponsUserDetails.amtFullReduce}"></td>
+					<th>折扣</th>
+					<td th:text="${couponsUserDetails.amtDiscount}"></td>
+				</tr>
+				<tr>
+					<th>立减金额</th>
+					<td th:text="${couponsUserDetails.amtSub}"></td>
+					<th>描述</th>
+					<td th:text="${couponsUserDetails.couponsTypeDesc}"></td>
+				</tr>
+				<tr>
+					<th>优惠券状态</th>
+					<td th:text="${couponsStatusString}"></td>
+					<th>使用时间</th>
+					<td th:text="${couponsUserDetails.useTime}"></td>
+				</tr>
+				<tr>
+					<th>使用的单号</th>
+					<td th:text="${couponsUserDetails.useOrder}"></td>
+					<th>订单原金额</th>
+					<td th:text="${couponsUserDetails.useOrderMoney}"></td>
+				</tr>
+				<tr>
+					<th>订单优惠金额</th>
+					<td th:text="${couponsUserDetails.useSpendMoney}"></td>
+					<th>使用描述</th>
+					<td th:text="${couponsUserDetails.useDesc}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

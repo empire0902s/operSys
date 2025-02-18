@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+	<title>管理员操作日志</title>
+	<style type="text/css">
+		.layui-form-checkbox {
+			margin: 5px 0px 5px 10px;
+		}
+
+		#resourceTree {
+			padding: 10px;
+		}
+	</style>
+
+	<script type="text/html" id="oper-col">
+		{{# if(d.modify == true&&d.modeType==2){ }}
+		<a class="layui-btn  layui-btn-xs" lay-event="groudedit">组合修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delgroud">删除组合</a>
+		{{# } }}
+
+		{{# if(d.modify == true&&d.modeType==3){ }}
+		<a class="layui-btn  layui-btn-xs" lay-event="goodsedit">商品修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delgoods">删除商品</a>
+		{{# } }}
+
+		{{# if(d.modify == true&&d.modeType==4){ }}
+		<a class="layui-btn layui-btn-xs" lay-event="banneredit">banner修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delbanner">删除banner</a>
+		{{# } }}
+
+
+		{{# if(d.add == true&&d.modeType==1&&d.styleType!=10){ }}
+		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="groudadd">添加滑块</a>
+		<a class="layui-btn  layui-btn-xs" lay-event="groudedit">滑块修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delgroud">删除滑块</a>
+		{{# } }}
+
+		{{# if(d.add == true&&d.modeType==1&&d.styleType==10){ }}
+		<a class="layui-btn  layui-btn-xs" lay-event="groudedit">滑块修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delgroud">删除滑块</a>
+		{{# } }}
+
+		{{# if(d.add == true&&d.modeType==2){ }}
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="bannerAdd">banner添加</a>
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="goodsAdd">商品添加</a>
+		{{# } }}
+
+		<!--{{# if(d.delete == true){ }}-->
+		<!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+		<!--{{# } }}-->
+
+	</script>
+	<script type="text/html" id="disabledTpl">
+</script>
+	<script type="text/html" id="editBar">
+		<!--<a class="layui-btn layui-btn-xs" lay-event="jump">预览</a>-->
+		<!--<a class="layui-btn layui-btn-xs" lay-event="details">详细</a>-->
+		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		<a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>
+	</script>
+</head>
+<body>
+<div style="margin: 15px;">
+
+	<blockquote class="layui-elem-quote quoteBox">
+		<form class="layui-form data-list-form" type="hidden">
+			<div class="layui-inline" style="margin-left: -100px;">
+				<div class="layui-input-block">
+					<a class="layui-btn" id="btn-expand">全部展开</a>
+					<a class="layui-btn btn-search" id="reload">刷新表格</a>
+				</div>
+			</div>
+			<div class="layui-inline" type="hidden">
+				<div class="layui-input-inline" style="width: 30%" type="hidden">
+					<input type="hidden" name="moduleId" id="moduleId"  />
+				</div>
+			</div>
+		</form>
+	</blockquote>
+		
+	<table id="table1" class="layui-table data-list" lay-filter="data-list"></table>
+
+</div>
+<div class="layer-open-form edit-form-item">
+	<form class="layui-form">
+		<input type="hidden" name="id" />
+		<input type="hidden" name="createTime" />
+		<input type="hidden" name="createAdmin" />
+		<input type="hidden" name="moduleId" />
+		<input type="hidden" name="groupItemId" />
+		<input type="hidden" name="goodsItemId" />
+		<!--<input type="hidden" name="moduleId" />-->
+		<!--<div class="layui-form-item"  >-->
+			<!--<div class="layui-inline">-->
+			<!--<div class="layui-input-inline">-->
+			<!--<select  name="moduleId" lay-verify="required">-->
+			<!--<option id="moduleId2"></option>-->
+			<!--</select>-->
+				<!--<label class="layui-form-label">所属模块：</label>-->
+			<!--</div>-->
+			<!--</div>-->
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">排序：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="sortNum" value="1000" id="sortNumGroup"
+							   lay-verify="required|number|space" maxlength="20"
+							   autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">组合名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="groupName"
+							   lay-verify="required|space" maxlength="20"
+							   autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+	</form>
+</div>
+
+		<div class="layer-open-form edit-form-goods">
+			<form class="layui-form">
+				<input type="hidden" name="id" />
+				<input type="hidden" name="createTime" />
+				<input type="hidden" name="createAdmin" />
+				<input type="hidden" name="moduleId" />
+				<input type="hidden" name="groupItemId" />
+		<input type="hidden" name="goodsItemId" />
+		<!--<input type="hidden" name="moduleId" />-->
+		<!--<div class="layui-form-item"  >-->
+		<!--<div class="layui-inline">-->
+		<!--<div class="layui-input-inline">-->
+		<!--<select  name="moduleId" lay-verify="required">-->
+		<!--<option id="moduleId2"></option>-->
+		<!--</select>-->
+		<!--<label class="layui-form-label">所属模块：</label>-->
+		<!--</div>-->
+		<!--</div>-->
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">排序：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="sortNum" value="1000"
+						   lay-verify="required|number|space" maxlength="20"
+						   autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">商品Code：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="goodsCode"
+						   lay-verify="required|space" maxlength="20"
+						   autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item center">
+			<div class="layui-inline">
+				<button class="layui-btn" lay-submit lay-filter="savegoods">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="layer-open-form edit-form-banner">
+	<form class="layui-form">
+		<input type="hidden" name="id" />
+		<input type="hidden" name="createTime" />
+		<input type="hidden" name="createAdmin" />
+		<input type="hidden" name="moduleId" />
+		<input type="hidden" name="groupItemId" />
+		<input type="hidden" name="goodsItemId" />
+		<!--<input type="hidden" name="moduleId" />-->
+		<div class="layui-form-item"  >
+			<!--<div class="layui-inline">-->
+			<!--<div class="layui-input-inline">-->
+			<!--<select  name="moduleId" lay-verify="required">-->
+			<!--<option id="moduleId2"></option>-->
+			<!--</select>-->
+			<!--<	<label class="layui-form-label">所属模块：</label>-->
+			<!--/div>-->
+			<!--</div>-->
+			<!--</div>-->
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">排序：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="sortNum" value="1000" id="sortNumBanner"
+							   lay-verify="required|number|space" maxlength="20"
+							   autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">图片标题：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="imgTitle"
+							   lay-verify="required|space" maxlength="20"
+							   autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">图片：</label>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal" id="file">上传图片(宽:750*高:350)</button>
+						<a target="_blank" id="checkBigImg" href=""><img type=""
+																		 class="layui-upload-img" id="imgDisplay" style="display: none"></a>
+						<p id="imageText"></p>
+						<input type="hidden" style="margin-top: 5px" class="layui-input"
+							   name="imgUrl" id="imgUrl" readonly="readonly" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">图片跳转链接：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="imgTarget"
+							   lay-verify="required|space" autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="savebanner">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+</body>
+</html>

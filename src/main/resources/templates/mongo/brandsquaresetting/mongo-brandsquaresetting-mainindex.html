@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-table-view{
+	margin-top: 0px;
+}
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="details">详情</a>
+	{{#  if(d.auditStats == 1){ }}
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabled">禁用</a>
+  	{{#  } else if(d.auditStats == 2){ }}
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="enableBy">启用</a>
+  	{{#  } }}
+</script>
+</head>
+<body>
+	<div style="margin: 12px;">
+		<fieldset class="layui-elem-field">
+			<div class="layui-field-box">
+
+				<!-- 首页栏目模块 -->
+				<div style="position: absolute;">
+					<form class="layui-form data-list-form">
+						<a class="layui-btn" data-type="reload" style="width: 160px; background-color: #737b7b !important;">刷新栏目模块</a>
+					</form>
+					<table class="layui-hide data-list" lay-size="sm"
+						lay-filter="data-list"></table>
+				</div>
+
+				<!-- 栏目详情设置 tab -->
+				<div class="layui-tab layui-tab-card" style="margin-left: 165px; margin-top: 0px;" lay-filter="test">
+					<ul class="layui-tab-title">
+						<li class="layui-this" data-id="bannerSetting" id="banner" style="display:none">Banner设置</li>
+						<li data-id="goodsSetting" id="good" style="display:none">商品设置</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item">
+							<iframe frameborder="no" class='layui-col-xs12 iframeCss' id="bannerSetting" th:src="@{index}"></iframe>
+						</div>
+						<div class="layui-tab-item">
+							<iframe frameborder="no" class='layui-col-xs12 iframeCss' id="goodsSetting" th:src="@{goods}"></iframe>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</fieldset>
+	</div>
+
+
+</body>
+</html>

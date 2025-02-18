@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>金额规则管理</title>
+
+	<script th:inline="javascript">
+        var operSysCodeList = '[[${operSysCodeList}]]';
+        var operSysList = '[[${operSysList}]]';
+	</script>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+.ondisplay{
+	
+
+}
+
+
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar"> 
+	<a class="layui-btn layui-btn-xs" lay-event="look">详细</a>	
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bingcoupons">绑定的优惠券</a>
+</script>
+
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<label class="layui-form-label">金额名称:</label>
+				<div class="layui-inline">
+					<div class="layui-input-inline">
+						<input type="text" id="monor_name" class="layui-input" name="name"
+							maxlength="20" placeholder="请输入金额名称">
+					</div>
+				</div>
+				<!-- <div class="layui-inline">
+					<label class="layui-form-label">优惠券模式:</label>
+					<div class="layui-input-inline">
+						<select name="model" class="model_m">
+							<option value="" selected="selected">请选择</option>
+							<option th:each="modelStatus: ${couponsModelStatus}"
+								th:text="${modelStatus.key}" th:value="${modelStatus.value}"></option>
+						</select>
+					</div>
+				</div> -->
+				<div class="layui-inline">
+					<label class="layui-form-label">优惠券类型:</label>
+					<div class="layui-input-inline">
+						<select name="type" class="type_t">
+							<option value="" selected="selected">请选择</option>
+							<option th:each="typeStatus: ${couponsTypeStatus}"
+								th:text="${typeStatus.key}" th:value="${typeStatus.value}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">是否禁用</label>
+					<div class="layui-input-inline">
+						<select name="isDisabled">
+							<option value="0">已启用</option>
+							<option value="1">已禁用</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline"style="display: none">
+					<label class="layui-form-label">来源系统</label>
+					<div class="layui-input-inline">
+						 <select name="fromSys" >
+							<option value="" style="width: 150px;"
+									th:each="operSys : ${operSysList}"
+									th:text="${operSys.key}" th:value="${operSys.value}"></option>
+                        </select>
+                        <!-- <select name="fromSys"  th:url="@{/coupons/activity/fromsysDict}" value="operSys" lay-search></select> -->
+					</div>
+				</div>
+				<div class="layui-inline"style="display: none">
+					<label class="layui-form-label">来源系统code</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="fromSysCode" maxlength="50"
+							placeholder="请输入来源系统code">
+					</div>
+				</div>
+				<div class="layui-inline" style="margin-left: 80px;">
+					<div class="layui-input-inline  center">
+						<a class="layui-btn" data-type="reload">查询</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+	<div class="layer-open-form edit-form"
+		style="overflow: auto; width: 340px;">
+		<form class="layui-form">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">金额名称：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="name" lay-verify="required"
+						maxlength="20" placeholder="金额名长度小于20个字符" class="layui-input">
+				</div>
+			</div>
+			 <!-- <div class="layui-form-item">
+				<label class="layui-form-label">优惠券模式：</label>
+				<div class="layui-input-inline">
+					<select name="model" id="select_model" lay-filter="selectModel">
+						<option value="1">固定金额</option>
+						<option value="2">浮动金额</option>
+					</select>
+				</div>
+			</div>  -->
+			<div class="layui-form-item">
+				<label class="layui-form-label">优惠券类型：</label>
+				<div class="layui-input-inline">
+					<select name="type" id="select_type" lay-filter="selectType">
+						<option value="1">满减</option>
+						<option value="2">立减</option>
+						<option value="3">折扣</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-form-item manjian" style="hight: 35px;" id="MANJIAN">
+				<label class="layui-form-label">满减（元）：</label>
+				<div class="layui-input-inline">
+					满 <input type="text" name="minSpendMoney" id="minSpendMoney" lay-verify="number|space|PositiveNumber"
+						maxlength="12" placeholder="请输入数字"
+						style="border-color: rgb(239, 238, 238); width: 70px; height: 27px; margin-top: 4px;">
+					减 <input type="text" name="amtFullReduce"  lay-verify="number|space|PositiveNumber"
+						id="amtFullReduce" maxlength="12" placeholder="请输入数字"
+						style="border-color: rgb(239, 238, 238); width: 70px; height: 27px; margin-top: 4px;">
+				</div>
+			</div>
+			<div class="layui-form-item lijian" style="hight: 35px;" id="LIJIAN"  >
+				 <label class="layui-form-label">立减（元）：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="amtSub" id="amtSub"   maxlength="12" placeholder="请输入数字"
+						class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item zhekou" style="hight: 35px;" id="ZHEKOU">
+				<label class="layui-form-label">折扣百分比：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="amtDiscount" id="amtDiscount"  maxlength="10"
+						placeholder="输入值为百分比值（0-100）" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item" id="minSpendMoneyDiv" style="display: none">
+				<label class="layui-form-label">最低消费(元)：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="minSpendMoney" 
+						maxlength="20" placeholder="请输入数字" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否禁用：</label>
+				<div class="layui-input-inline">
+					<input type="radio" name="isDisabled" value="0" title="启用" checked />
+					<input type="radio" name="isDisabled" value="1" title="禁用" />
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<script th:inline="javascript">
+	
+</script>
+<title>优惠券管理</title>
+<script th:inline="javascript">
+	var editType = '[[${editType}]]';
+	var couponsData = '[[${couponsData}]]';
+	var vali_day_num = '[[${vali_day_num}]]';
+	var vali_day_start = '[[${vali_day_start}]]';
+	var vali_day_end = '[[${vali_day_end}]]';
+	var couponDes = '[[${couponDes}]]';
+</script>
+	
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-unselect {
+	width: 225px;
+	margin-left: 25px
+}
+
+.layui-unselect.layui-layedit-tool {
+	width: 510px;
+}
+
+.layui-input {
+	width: 200px;
+	height: 30px;
+}
+
+.layui-input-categoryRuleId {
+	margin-left: 49px;
+}
+
+.divHidden {
+	display: none;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+</script>
+
+</head>
+<body>
+	<form class="layui-form addForm" id="addForm">
+		<input type="hidden" name="id" />
+		<div class="layui-form-item" style="margin-top: 10px;">
+			<div class="layui-inline">
+				<label class="layui-form-label">优惠券名称：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required" type="text" name="name"
+						maxlength="20" placeholder="优惠券名称长度小于20" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">活动名称：</label>
+				<div class="layui-input-inline" style="left: -50px;">
+					<select lay-verify="required" name="activityId" id="activity"
+						lay-filter="activity" th:url="@{/coupons/activity/selectValue}"
+						th:value="${couponsData}==null?'':${couponsData.activityId}">
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item divHidden">
+			<div class="layui-inline divHidden">
+				<label class="layui-form-label">优惠券批次号：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required" name="batch"
+						th:attr="value=${tmpBatch}" class="layui-input"
+						readonly="readonly">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">优惠金额规则：</label>
+				<div class="layui-input-inline" style="left: -50px;">
+					<select lay-verify="required" name="couponsRuleId"
+						id="couponsRuleId"
+						th:url="@{/coupons/couponsTypeRule/selectValue}"
+						th:value="${couponsData}==null?'':${couponsData.couponsRuleId}">
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline " id="actid">
+				<label class="layui-form-label">活动商品规则：</label>
+				<div class="layui-input-inline">
+					<select name="categoryRuleId" id="activityGoodsRuleId"
+						th:url="@{/coupons/activity/goods/rule/selectValue}"
+						th:value="${couponsData}==null?'':${couponsData.categoryRuleId}"
+						lay-search>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">发券开始时间：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required" replaceDateT="true" type="text"
+						class="layui-input" readonly="readonly" id="sendTimeStart"
+						name="sendTimeStart" placeholder="发放开始时间">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">发券截至时间：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required|sendTimeEnd" replaceDateT="true"
+						type="text" class="layui-input" style="left: -50px;"
+						readonly="readonly" id="sendTimeEnd" name="sendTimeEnd"
+						placeholder="发放结束时间">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">发放总数量：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required|number|pInteger" type="text"
+						class="layui-input" name="sendNum" value="0"
+						placeholder="优惠券总发放数量(0不限制)">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">用户可领数量：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required|number|pInteger" type="text"
+						class="layui-input" value="1" name="receiveNumRule"
+						placeholder="用户最多领取数量(0不限制)">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">优惠券有效期：</label>
+				<div class="layui-input-inline" style="left: -50px;">
+					<select name="valiDayType" id="valiDayType"
+						lay-filter="valiDayType" style="width: 150px;">
+						<option value="" style="width: 150px;"
+							th:each="valiDayType : ${valiDayTypeList}"
+							th:text="${valiDayType.key}" th:value="${valiDayType.value}"></option>
+					</select>
+				</div>
+			</div>
+
+		</div>
+		<div class="layui-form" id="TIME">
+			<div class="layui-inline">
+				<label class="layui-form-label">有效开始时间：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required" type="text" class="layui-input"
+						style="width: 200px; height: 28px; border-width: 0.5px;"
+						id="timeBegin" readonly="readonly" name="timeBegin"
+						replaceDateT="true" placeholder="   开始时间">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">有效截至时间：</label>
+				<div class="layui-input-inline">
+					<input lay-verify="required|timeEnd" type="text"
+						replaceDateT="true" class="layui-input"
+						style="width: 200px; height: 28px; border-width: 0.5px;"
+						id="timeEnd" name="timeEnd" readonly="readonly"
+						placeholder="    截止时间">
+				</div>
+			</div>
+
+			<!-- <div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">指定有效期：</label> <input
+						lay-verify="required" type="text" class="layui-input"
+						style="width: 200px; height: 28px; border-width: 0.5px;"
+						id="timeBegin" readonly="readonly" name="timeBegin"
+						replaceDateT="true" placeholder="   开始时间">&nbsp;&nbsp;----&nbsp;&nbsp;
+					<input lay-verify="required|timeEnd" type="text" replaceDateT="true" class="layui-input"
+						style="width: 200px; height: 28px; border-width: 0.5px;"
+						id="timeEnd" name="timeEnd" readonly="readonly"
+						placeholder="    截止时间">
+				</div>
+			</div> -->
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-form" id="DAYS" style="display: none">
+				<div class='layui-form-item'>
+					<div class='layui-inline'>
+						<label class='layui-form-label'>指定有效天数： </label> <input
+							name='days' class='layui-input'>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 		<div class="layui-form-item  divHidden">
+			<div class="layui-inline">
+				<label class="layui-form-label">发放方式：</label>
+				<div class="layui-input-inline" style="left: -33px;">
+					<select name="sendType" style="width: 150px;">
+						<option value="" style="width: 150px;"
+							th:each="sendType : ${sendTypeList}" th:text="${sendType.key}"
+							th:value="${sendType.value}"></option>
+					</select>
+				</div>
+			</div>
+		</div> -->
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">优惠券图片：</label>
+				<div class="layui-input-inline">
+					<button type="button" class="layui-btn  layui-btn-primary layui-btn-radius" id="file">上传</button>
+					<a target="_blank" id="checkBigImg" href=""><img type=""
+						class="layui-upload-img" id="contentImgDisplay"
+						style="display: none"></a>
+					<p id="imageText"></p>
+					<input type="hidden" style="margin-top: 5px" class="layui-input"
+						name="contentImg" id="contentImg" readonly="readonly">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">优惠券禁用图：</label>
+				<div class="layui-input-inline">
+					<button type="button" class="layui-btn  layui-btn-primary layui-btn-radius" id="file2">上传</button>
+					<a target="_blank" id="checkBigImg2" href=""><img type=""
+						class="layui-upload-img" id="contentDisabledImgDisplay"
+						style="display: none"></a>
+					<p id="imageText"></p>
+					<input type="hidden" style="margin-top: 5px" class="layui-input"
+						name="contentDisabledImg" id="contentDisabledImg"
+						readonly="readonly">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">去使用转链接：</label>
+				<div class="layui-input-inline">
+					<input  type="text"  style="width: 550px; "
+						class="layui-input"  name="couponsHrefUrl">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">优惠券说明：</label>
+				<div class="layui-input-inline">
+					<textarea style="width: 550px; height: 80px;" id="couponDes"
+						name="couponDes"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+	</form>
+
+</body>
+</html>

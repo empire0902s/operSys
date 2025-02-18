@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+</script>
+<script type="text/html" id="editBar">
+<a class="layui-btn layui-btn-xs" lay-event="details">详细</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">优惠券名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" maxlength="20"
+							placeholder="请输入优惠券名称">
+					</div>
+					<label class="layui-form-label">审核状态:</label>
+					<div class="layui-input-inline">
+						<select name="finanStatus">
+							<option value="">--请选择--</option>
+							<option value="0" selected="selected">未通过</option>
+							<option value="1">通过</option>
+						</select>
+					</div>
+					<label class="layui-form-label">金额规则:</label>
+					<div class="layui-input-inline">
+						<select name="couponsRuleId" class="layui-input"
+							th:url="@{/coupons/couponsTypeRule/selectValue}" lay-search></select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">发放开始时间:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="sendTimeStart"
+							readonly="readonly" name="sendTimeStart"
+							placeholder="查询该开始时间后所有数据">
+					</div>
+					<label class="layui-form-label">发放结束时间:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="sendTimeEnd"
+							readonly="readonly" name="sendTimeEnd" placeholder="查询该结束时间前所有数据">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+
+					<div class="layui-inline">
+						<div class="layui-input-block">
+							<a class="layui-btn" data-type="reload">查询</a> <a
+								href="javascript:;" class="layui-btn layui-btn-normal btn-check">财务审核</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">审核备注：</label>
+				<div class="layui-input-inline">
+					<textarea name="finanAuditRemark" lay-verify="required" 
+						maxlength="100" placeholder="备注字数限制100字以内" class="layui-textarea"></textarea>
+				</div>
+			</div>
+
+			<div class="layui-form-item center">
+				<button class="layui-btn submit" lay-submit lay-filter="submit">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+		</form>
+	</div>
+
+
+</body>
+</html>

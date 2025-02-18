@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>菜单列表</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="detail">详细</a>
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">菜单名:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" maxlength="20"
+							placeholder="请输入菜单名">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">菜单父节点:</label>
+					<div class="layui-input-inline">
+						<select name="parentId" class="layui-input"
+							th:url="@{/auth/resource/selectValue}" lay-search></select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">是否禁用</label>
+					<div class="layui-input-inline">
+						<select name="isDisabled">
+							<option value="0">未禁用</option>
+							<option value="1">已禁用</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+	<div class="layer-open-form edit-form">
+		<form class="layui-form">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">菜单名：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="name" lay-verify="required|space|normal"
+						maxlength="20" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">资源url路径：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="url" lay-verify="space" maxlength="50"
+						autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">排序：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="sort" lay-verify="space|normal"
+						maxlength="6" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">菜单父节点:</label>
+				<div class="layui-input-inline">
+					<select name="parentId" class="layui-input"
+						th:url="@{/auth/resource/selectValue}" lay-search></select>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">类型：</label>
+				<div class="layui-input-inline">
+					<input type="radio" name="type" value="1" title="菜单" checked /> <input
+						type="radio" name="type" value="2" title="功能" />
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">是否禁用：</label>
+					<div class="layui-input-inline">
+						<input type="radio" name="isDisabled" value="0" title="否" checked />
+						<input type="radio" name="isDisabled" value="1" title="是" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">备注：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="remark" autocomplete="off" maxlength="50"
+							placeholder="备注字数限制为50个字以内" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item center">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+		</form>
+	</div>
+
+
+	<div class="layer-open-form role-form">
+		<form class="layui-form">
+			<div class="layui-form-item chk-roles">
+				<fieldset th:each="map : ${roleMap}"
+					class="layui-elem-field layui-field-title"
+					style="margin-bottom: 20px;">
+					<legend th:text="${#strings.defaultString(map.key, '其他')}"></legend>
+					<div th:each="model : ${map.value}" class="layui-input-inline"
+						style="white-space: nowrap; min-width: 24%;">
+						<input type="checkbox" lay-skin="primary" name="roleIds"
+							th:value="${model.id}" th:title="${model.name}">
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

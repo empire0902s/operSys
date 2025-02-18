@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.shq520new.DistributionOrdersMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.shq520new.DistributionOrders">
+    <!-- WARNING - @mbg.generated -->
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="orderId" jdbcType="NVARCHAR" property="orderid" />
+    <result column="orderno" jdbcType="NVARCHAR" property="orderno" />
+    <result column="invoiceHead" jdbcType="NVARCHAR" property="invoicehead" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="NVARCHAR" property="username" />
+    <result column="buyersType" jdbcType="NVARCHAR" property="buyerstype" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="purchaseDate" jdbcType="TIMESTAMP" property="purchasedate" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="orderStatus" jdbcType="INTEGER" property="orderstatus" />
+    <result column="deliverStatus" jdbcType="INTEGER" property="deliverstatus" />
+    <result column="freight" jdbcType="DECIMAL" property="freight" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="payType" jdbcType="NVARCHAR" property="paytype" />
+    <result column="remark" jdbcType="NVARCHAR" property="remark" />
+    <result column="fromType" jdbcType="INTEGER" property="fromtype" />
+    <result column="acceptTime" jdbcType="TIMESTAMP" property="accepttime" />
+    <result column="rejectTime" jdbcType="TIMESTAMP" property="rejecttime" />
+    <result column="rejectReason" jdbcType="NVARCHAR" property="rejectreason" />
+    <result column="invoiceType" jdbcType="NVARCHAR" property="invoicetype" />
+    <result column="invoiceContent" jdbcType="NVARCHAR" property="invoicecontent" />
+    <result column="goodsNum" jdbcType="INTEGER" property="goodsnum" />
+    <result column="pickUpWay" jdbcType="NVARCHAR" property="pickupway" />
+    <result column="shopName" jdbcType="NVARCHAR" property="shopname" />
+    <result column="refundsState" jdbcType="NVARCHAR" property="refundsstate" />
+    <result column="bRefunds" jdbcType="BIT" property="brefunds" />
+    <result column="totalAmmount" jdbcType="DECIMAL" property="totalammount" />
+    <result column="refundsReason" jdbcType="NVARCHAR" property="refundsreason" />
+    <result column="bEvaluation" jdbcType="BIT" property="bevaluation" />
+    <result column="buyerTelephone" jdbcType="NVARCHAR" property="buyertelephone" />
+    <result column="shopImgUrl" jdbcType="NVARCHAR" property="shopimgurl" />
+    <result column="favorable" jdbcType="DECIMAL" property="favorable" />
+    <result column="payStatus" jdbcType="NVARCHAR" property="paystatus" />
+    <result column="serialNumber" jdbcType="NVARCHAR" property="serialnumber" />
+    <result column="ordersSummaryNo" jdbcType="NVARCHAR" property="orderssummaryno" />
+    <result column="actualPayOrder" jdbcType="NVARCHAR" property="actualpayorder" />
+    <result column="evaTime" jdbcType="TIMESTAMP" property="evatime" />
+    <result column="seqSeller" jdbcType="INTEGER" property="seqseller" />
+    <result column="receiveTime" jdbcType="TIMESTAMP" property="receivetime" />
+    <result column="usedRedPacket" jdbcType="DECIMAL" property="usedredpacket" />
+    <result column="isAutoTake" jdbcType="BIT" property="isautotake" />
+    <result column="waybill" jdbcType="NVARCHAR" property="waybill" />
+    <result column="carrier" jdbcType="NVARCHAR" property="carrier" />
+    <result column="deliveryWay" jdbcType="NVARCHAR" property="deliveryway" />
+    <result column="approvedTime" jdbcType="TIMESTAMP" property="approvedtime" />
+    <result column="goodsCode" jdbcType="NVARCHAR" property="goodscode" />
+    <result column="countPrimitiveFactoryPrice" jdbcType="DECIMAL" property="countprimitivefactoryprice" />
+    <result column="popMark" jdbcType="BIT" property="popmark" />
+    <result column="refundNo" jdbcType="NVARCHAR" property="refundno" />
+    <result column="isServerCenterOrder" jdbcType="BIT" property="isservercenterorder" />
+    <result column="useBalance" jdbcType="DECIMAL" property="usebalance" />
+    <result column="useCash" jdbcType="DECIMAL" property="usecash" />
+    <result column="isRollbackBalance" jdbcType="INTEGER" property="isrollbackbalance" />
+    <result column="deliveryMethod" jdbcType="INTEGER" property="deliverymethod" />
+    <result column="consignerName" jdbcType="NVARCHAR" property="consignername" />
+    <result column="sync" jdbcType="BIT" property="sync" />
+    <result column="totalAgentProfit" jdbcType="DECIMAL" property="totalagentprofit" />
+    <result column="preferentialHowMany" jdbcType="DECIMAL" property="preferentialhowmany" />
+    <result column="distrBuyAndSellStatus" jdbcType="INTEGER" property="distrbuyandsellstatus" />
+    <result column="platformProcedure" jdbcType="DECIMAL" property="platformprocedure" />
+    <result column="payProcedure" jdbcType="DECIMAL" property="payprocedure" />
+    <result column="logisticsPrice" jdbcType="DECIMAL" property="logisticsprice" />
+    <result column="profitAmount" jdbcType="DECIMAL" property="profitamount" />
+    <result column="deliverTime" jdbcType="TIMESTAMP" property="delivertime" />
+    <result column="shareSeq" jdbcType="INTEGER" property="shareseq" />
+    <result column="isLocaleRecruitOrders" jdbcType="VARCHAR" property="islocalerecruitorders" />
+    <result column="largeOrderNo" jdbcType="VARCHAR" property="largeorderno" />
+    <result column="isSubOrders" jdbcType="BIT" property="issuborders" />
+    <result column="isLogistic" jdbcType="VARCHAR" property="islogistic" />
+    <result column="isConsumptionOrder" jdbcType="BIT" property="isconsumptionorder" />
+    <result column="afterCompleteTime" jdbcType="TIMESTAMP" property="aftercompletetime" />
+    <result column="imgIdArrTime" jdbcType="TIMESTAMP" property="imgidarrtime" />
+    <result column="imgIdArr" jdbcType="VARCHAR" property="imgidarr" />
+    <result column="isContainsAmount" jdbcType="INTEGER" property="iscontainsamount" />
+    <result column="againAfterBeginTime" jdbcType="TIMESTAMP" property="againafterbegintime" />
+    <result column="afterBeginTime" jdbcType="TIMESTAMP" property="afterbegintime" />
+    <result column="afterWhy" jdbcType="VARCHAR" property="afterwhy" />
+    <result column="afterReason" jdbcType="VARCHAR" property="afterreason" />
+    <result column="lockDate" jdbcType="TIMESTAMP" property="lockdate" />
+    <result column="isSingleLock" jdbcType="BIT" property="issinglelock" />
+    <result column="afterNo" jdbcType="VARCHAR" property="afterno" />
+    <result column="afterOrderno" jdbcType="VARCHAR" property="afterorderno" />
+    <result column="refusedAfterWhy" jdbcType="VARCHAR" property="refusedafterwhy" />
+    <result column="route" jdbcType="INTEGER" property="route" />
+    <result column="reviewStatus" jdbcType="INTEGER" property="reviewstatus" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyname" />
+    <result column="supplierSeq" jdbcType="INTEGER" property="supplierseq" />
+    <result column="isComplain" jdbcType="BIT" property="iscomplain" />
+    <result column="isModifyBalanceA" jdbcType="BIT" property="ismodifybalancea" />
+    <result column="isModifyBalanceD" jdbcType="BIT" property="ismodifybalanced" />
+    <result column="returnAmount" jdbcType="DECIMAL" property="returnamount" />
+    <result column="serverTime" jdbcType="TIMESTAMP" property="servertime" />
+    <result column="distributorTime" jdbcType="TIMESTAMP" property="distributortime" />
+    <result column="distributorStatus" jdbcType="INTEGER" property="distributorstatus" />
+    <result column="serverStatus" jdbcType="INTEGER" property="serverstatus" />
+    <result column="manualAccountTime" jdbcType="TIMESTAMP" property="manualaccounttime" />
+    <result column="auditIntoAccountTime" jdbcType="TIMESTAMP" property="auditintoaccounttime" />
+    <result column="auditUser" jdbcType="VARCHAR" property="audituser" />
+    <result column="auditIntoAccount" jdbcType="INTEGER" property="auditintoaccount" />
+    <result column="distributorSeq" jdbcType="INTEGER" property="distributorseq" />
+    <result column="serviceBuyAndSellStatus" jdbcType="INTEGER" property="servicebuyandsellstatus" />
+    <result column="totalPlatformPrice" jdbcType="DECIMAL" property="totalplatformprice" />
+    <result column="PlayMoney" jdbcType="INTEGER" property="playmoney" />
+    <result column="Initiator" jdbcType="CHAR" property="initiator" />
+    <result column="expectedDeliveryTime" jdbcType="TIMESTAMP" property="expecteddeliverytime" />
+    <result column="BalanceSynState" jdbcType="INTEGER" property="balancesynstate" />
+    <result column="PlayMoneyTime" jdbcType="TIMESTAMP" property="playmoneytime" />
+    <result column="IsOpenTicket" jdbcType="INTEGER" property="isopenticket" />
+    <result column="BatchNumber" jdbcType="VARCHAR" property="batchnumber" />
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    Id, orderId, orderno, invoiceHead, userId, userName, buyersType, seq, purchaseDate, payTime, orderStatus, deliverStatus, freight, amount, payType, remark, fromType, acceptTime, rejectTime, rejectReason, invoiceType, invoiceContent, goodsNum, pickUpWay, shopName, refundsState, bRefunds, totalAmmount, refundsReason, bEvaluation, buyerTelephone, shopImgUrl, favorable, payStatus, serialNumber, ordersSummaryNo, actualPayOrder, evaTime, seqSeller, receiveTime, usedRedPacket, isAutoTake, waybill, carrier, deliveryWay, approvedTime, goodsCode, countPrimitiveFactoryPrice, popMark, refundNo, isServerCenterOrder, useBalance, useCash, isRollbackBalance, deliveryMethod, consignerName, sync, totalAgentProfit, preferentialHowMany, distrBuyAndSellStatus, platformProcedure, payProcedure, logisticsPrice, profitAmount, deliverTime, shareSeq, isLocaleRecruitOrders, largeOrderNo, isSubOrders, isLogistic, isConsumptionOrder, afterCompleteTime, imgIdArrTime, imgIdArr, isContainsAmount, againAfterBeginTime, afterBeginTime, afterWhy, afterReason, lockDate, isSingleLock, afterNo, afterOrderno, refusedAfterWhy, route, reviewStatus, companyName, supplierSeq, isComplain, isModifyBalanceA, isModifyBalanceD, returnAmount, serverTime, distributorTime, distributorStatus, serverStatus, manualAccountTime, auditIntoAccountTime, auditUser, auditIntoAccount, distributorSeq, serviceBuyAndSellStatus, totalPlatformPrice, PlayMoney, Initiator, expectedDeliveryTime, BalanceSynState, PlayMoneyTime, IsOpenTicket, BatchNumber
+  </sql>
+  <!--商品交易额统计排名  -->
+        <select id="queryCommodityTradingVolumeDataMsg" resultType="com.shq.oper.model.dto.salestatistics.CommodityStatisticsRankingDto" >
+   	SELECT  ROW_NUMBER() OVER(order by temp.amt desc) sort
+					, temp.goodsCode,temp.sellNum as sellNums 
+					,temp.amt
+					,dp.Product_Name as goodsName
+					,dp.company_name as companyName
+					,isnull(temp.testSellNum,0) testSellNums
+					,isnull(temp.testAmt,0) testAmt
+		FROM(
+	SELECT sum(
+				case
+				when patindex('测试%',tmp.address)> 0
+				then tmp.count
+				else 0 end) testSellNum,sum(tmp.count) as sellNum,tmp.goodsCode,sum(tmp.amount) amt
+				,sum(
+				case 
+				when patindex('测试%',tmp.address)> 0
+				then tmp.amount
+				else 0 end 
+				) as testAmt
+		FROM	(
+	select dtl.count,dtl.goodsCode,t.supplierSeq,dtl.amount,t.payTime,sit.address
+		from Distribution_Orders t  
+	left join Distribution_OrdersDtl dtl on t.orderno = dtl.orderno
+	LEFT JOIN Distribution_OrdersSite sit ON sit.orderno = t.orderno 
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp
+		GROUP BY tmp.goodsCode
+	) temp
+	left join DistributionProduct dp
+		on dp.Product_Code=temp.goodsCode
+		order by sort	
+  </select>
+  
+    <!--商品销量统计排名  -->
+        <select id="queryCommoditySalesDataMsg" resultType="com.shq.oper.model.dto.salestatistics.CommodityStatisticsRankingDto" >
+		SELECT  ROW_NUMBER() OVER(order by temp.sellNum desc) sort
+					, temp.goodsCode,temp.sellNum as sellNums 
+					,temp.amt
+					,dp.Product_Name as goodsName
+					,dp.company_name as companyName
+					,isnull(temp.testSellNum,0) testSellNums
+					,isnull(temp.testAmt,0) testAmt
+		FROM(
+		SELECT sum(
+				case
+				when patindex('测试%',tmp.address)> 0
+				then tmp.count
+				else 0 end) testSellNum,sum(tmp.count) as sellNum,tmp.goodsCode,sum(tmp.amount) amt
+				,sum(
+				case 
+				when patindex('测试%',tmp.address)> 0
+				then tmp.amount
+				else 0 end 
+				) as testAmt
+		FROM	(
+	select dtl.count,dtl.goodsCode,t.supplierSeq,dtl.amount,t.payTime,sit.address
+		from Distribution_Orders t  
+	left join Distribution_OrdersDtl dtl on t.orderno = dtl.orderno
+	LEFT JOIN Distribution_OrdersSite sit ON sit.orderno = t.orderno 
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp
+		GROUP BY tmp.goodsCode
+	) temp
+	left join DistributionProduct dp
+		on dp.Product_Code=temp.goodsCode
+		order by sort
+  </select>
+  
+  <!--供应商销售额统计排名  -->
+    <select id="querySupplierTradingVolumeDataMsg" resultType="com.shq.oper.model.dto.salestatistics.SupplierRankingStatisticsDto" >
+	SELECT ROW_NUMBER() OVER(order by temp.amt desc) sort,temp.amt,temp.sellNums,temp.supplierSeq as seq
+   			,isnull(temp.testAmt,0) testAmt
+   			,isnull(temp.testSellnums,0) testSellnums
+   	from(
+		select tmp.supplierSeq
+					,sum(tmp.amount)amt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(tmp.count) sellNums
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums 
+		from (
+		select  dtl.amount,dtl.count,dtl.orderno,t.supplierSeq,t.companyName as companyName,t.payTime,sit.address
+	from  Distribution_Orders t
+	left join Distribution_OrdersDtl dtl on t.orderno = dtl.orderno
+	LEFT JOIN Distribution_OrdersSite sit ON sit.orderno = t.orderno 
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp 
+		GROUP BY tmp.supplierSeq 
+	) temp
+		order by sort
+  </select>
+  <!--供应商销量统计排名  -->
+      <select id="querySupplierSalesDataMsg" resultType="com.shq.oper.model.dto.salestatistics.SupplierRankingStatisticsDto" >
+		SELECT ROW_NUMBER() OVER(order by temp.sellNums desc) sort,temp.amt,temp.sellNums,temp.supplierSeq as seq
+   			,isnull(temp.testAmt,0) testAmt
+   			,isnull(temp.testSellnums,0) testSellnums
+   	from(
+		select tmp.supplierSeq
+					,sum(tmp.amount)amt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(tmp.count) sellNums
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums 
+		from (
+		select  dtl.amount,dtl.count,dtl.orderno,t.supplierSeq,t.companyName as companyName,t.payTime,sit.address
+	from  Distribution_Orders t
+	left join Distribution_OrdersDtl dtl on t.orderno = dtl.orderno
+	LEFT JOIN Distribution_OrdersSite sit ON sit.orderno = t.orderno 
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp 
+		GROUP BY tmp.supplierSeq 
+	) temp
+		order by sort
+  </select>
+  
+  
+  <!--一级类目商品交易额统计排名  -->
+  <select id="queryCategoryIdTradeVolumeDataMsg" resultType="com.shq.oper.model.dto.salestatistics.CategoryIdStatisticsRankingDto" >
+	select temp.sort
+				,temp.sellNums
+				,temp.amt
+				,dfc.Name as categoryIdName
+				,temp.CategoryId as categoryId
+				,temp.testAmt
+				,temp.testSellnums
+	from (
+  		SELECT ROW_NUMBER() OVER(order by sum(tmp.amount)  desc) sort
+			,sum(tmp.count) sellNums
+			,sum(tmp.amount) amt
+			,tmp.CategoryId
+			,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums
+	FROM	(
+		select dtl.count,dtl.goodsCode,dtl.amount,dp.CategoryId,t.payTime,sit.address
+	from Distribution_OrdersDtl dtl  
+	right join Distribution_Orders t 
+	on t.orderno = dtl.orderno
+	left join Distribution_OrdersSite sit 
+	on sit.orderno = t.orderno 
+		left join DistributionProduct dp
+	on dp.Product_Code=dtl.goodsCode
+		left join DistrFirstCategoty dfc    
+	on dfc.id=dp.CategoryId
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp 
+	where tmp.CategoryId is not null
+	group by tmp.CategoryId
+	) temp
+	left join DistrFirstCategoty dfc
+	on dfc.id=temp.CategoryId
+	order by temp.sort
+  </select>
+    <!--一级类目商品销量统计排名  -->
+  <select id="queryCategoryIdSalesDataMsg" resultType="com.shq.oper.model.dto.salestatistics.CategoryIdStatisticsRankingDto" >
+	select temp.sort
+				,temp.sellNums
+				,temp.amt
+				,dfc.Name as categoryIdName
+				,temp.CategoryId as categoryId
+				,temp.testAmt
+				,temp.testSellnums
+	from (
+  		SELECT ROW_NUMBER() OVER(order by sum(tmp.count)  desc) sort
+			,sum(tmp.count) sellNums
+			,sum(tmp.amount) amt
+			,tmp.CategoryId
+			,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums
+	FROM	(
+		select dtl.count,dtl.goodsCode,dtl.amount,dp.CategoryId,t.payTime,sit.address
+	from Distribution_OrdersDtl dtl  
+	right join Distribution_Orders t 
+	on t.orderno = dtl.orderno
+	left join Distribution_OrdersSite sit 
+	on sit.orderno = t.orderno 
+		left join DistributionProduct dp
+	on dp.Product_Code=dtl.goodsCode
+		left join DistrFirstCategoty dfc    
+	on dfc.id=dp.CategoryId
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp 
+	where tmp.CategoryId is not null
+	group by tmp.CategoryId
+	) temp
+	left join DistrFirstCategoty dfc
+	on dfc.id=temp.CategoryId
+	order by temp.sort
+  </select>
+  
+   <!--二级类目商品交易额统计排名  -->
+  <select id="queryGenreIdTradeVolumeDataMsg" resultType="com.shq.oper.model.dto.salestatistics.GenreIdStatisticsRankingDto" >
+	select temp.sort
+			,temp.sellNums
+			,temp.amt
+			,dsc.Name as genreIdName
+			,temp.GenreId as genreId
+			,temp.testAmt
+			,temp.testSellnums
+	from (
+  		SELECT ROW_NUMBER() OVER(order by sum(tmp.amount)  desc) sort
+			,sum(tmp.count) sellNums
+			,sum(tmp.amount) amt
+			,tmp.GenreId
+			,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums
+	FROM	(
+		select dtl.count,dtl.goodsCode,dtl.amount,dp.GenreId,t.payTime,sit.address
+	from Distribution_OrdersDtl dtl  
+	right join Distribution_Orders t 
+	on t.orderno = dtl.orderno
+	left join Distribution_OrdersSite sit 
+	on sit.orderno = t.orderno 
+		left join DistributionProduct dp
+	on dp.Product_Code=dtl.goodsCode
+		left join DistrSecondCategoty dsc
+	on dsc.id=dp.GenreId
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp 
+	where tmp.GenreId is not null
+	group by tmp.GenreId
+	) temp
+	left join DistrSecondCategoty dsc
+	on dsc.id=temp.GenreId
+	order by temp.sort
+	
+  </select>
+    <!--二级类目商品销量统计排名  -->
+  <select id="queryGenreIdSalesDataMsg" resultType="com.shq.oper.model.dto.salestatistics.GenreIdStatisticsRankingDto" >
+	select temp.sort
+			,temp.sellNums
+			,temp.amt
+			,dsc.Name as genreIdName
+			,temp.GenreId as genreId
+			,temp.testAmt
+			,temp.testSellnums
+	from (
+  		SELECT ROW_NUMBER() OVER(order by sum(tmp.count)  desc) sort
+			,sum(tmp.count) sellNums
+			,sum(tmp.amount) amt
+			,tmp.GenreId
+			,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums
+	FROM	(
+		select dtl.count,dtl.goodsCode,dtl.amount,dp.GenreId,t.payTime,sit.address
+	from Distribution_OrdersDtl dtl  
+	right join Distribution_Orders t 
+	on t.orderno = dtl.orderno
+	left join Distribution_OrdersSite sit 
+	on sit.orderno = t.orderno 
+		left join DistributionProduct dp
+	on dp.Product_Code=dtl.goodsCode
+		left join DistrSecondCategoty dsc
+	on dsc.id=dp.GenreId
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp 
+	where tmp.GenreId is not null
+	group by tmp.GenreId
+	) temp
+	left join DistrSecondCategoty dsc
+	on dsc.id=temp.GenreId
+	order by temp.sort
+  </select>
+
+<!--
+	分销订单统计
+	 		date 日期
+			totalOrdersCounts    当天下单的订单总数,包括支付成功,未支付和申请退款的订单数 
+			totalOrdersMoney		当天下单的订单总金额,包括支付成功,未支付和退款的订单金额
+			totalUserSeqCounts 	当天下单人数,不同订单但是是同一个用户只算一个
+			hasPaysTotalOrdersCounts 当天已下单已支付订单数,支付成功就算，包括退款订单数 
+			hasPaysOrdersGoodsCounts 当天已下单已支付订单商品总数,支付成功就算，包括退款订单的商品
+			hasPaysOrdersTotalMoney	当天已下单已支付订单总金额，支付成功就算,包括退款订单金额
+			totalrefundOrdersCounts	当天退款订单总数,申请退款就算，不管退款是否成功
+			totalRefundAmountMoneyNotIncludesFreight 当天申请退款订单金额,不退运费(退款并退货)
+			totalRefundAmountMoneyIncludesFreight	当天申请退款订单金额,退运费(仅退款)
+			amountOfRefunds 	当天申请退款订单商品总数,只要是申请退款的订单的商品就算，不管是否退款成功
+			isnull(tmp9.totalRefundAmountMoneyNotIncludesFreight+tmp9.totalRefundAmountMoneyIncludesFreight,0) as totalRefundAmountMoney 当天退款订单金额总数,申请退款就算，不管是否退款成功 
+			isnull(tmp7.hasPaysOrdersTotalMoney,0)/isnull(tmp2.hasPaysTotalOrdersCounts,0) as averageCustomerSpending客单率，当天已支付订单总金额/当天已支付订单数
+			isnull(tmp8.totalAmountOfUnpaidOrder,0) as totalAmountOfUnpaidOrder	当天已下单未付款订单金额,未支付成功的都算 
+			isnull(tmp8.totalNumberOfUnpaidOrder,0) as totalNumberOfUnpaidOrder	当天已下单未付款订单数,未支付成功的都算
+		
+  -->
+<select id="queryCommodityOrderStatisticsMsg" resultType="com.shq.oper.model.dto.salestatistics.CommodityOrderStatisticsDto">
+		select	 tmp.date		
+				,tmp5.totalOrdersCounts as totalOrdersCounts
+				,tmp5.totalOrdersMoney as totalOrdersMoney	
+				,tmp5.totalUserSeqCounts as totalUserSeqCounts
+				,tmp5.totalRefundAmountMoneyNotIncludesFreight
+				,tmp5.totalRefundAmountMoneyIncludesFreight
+				,isnull(tmp5.totalRefundAmountMoneyNotIncludesFreight+tmp5.totalRefundAmountMoneyIncludesFreight,0) as totalRefundAmountMoney			   --当天退款订单金额总数,申请退款就算，不管是否退款成功
+				,isnull(tmp5.totalrefundOrdersCounts,0) as totalrefundOrdersCounts
+				,isnull(tmp2.hasPaysTotalOrdersCounts,0) as hasPaysTotalOrdersCounts
+				,isnull(tmp2.hasPaysOrdersTotalMoney,0) as hasPaysOrdersTotalMoney
+				,isnull(tmp3.hasPaysOrdersGoodsCounts,0)as hasPaysOrdersGoodsCounts
+				,isnull(tmp4.amountOfRefunds,0) as amountOfRefunds
+				,isnull(tmp6.totalAmountOfUnpaidOrder,0) as totalAmountOfUnpaidOrder
+				,isnull(tmp6.totalNumberOfUnpaidOrder,0) as totalNumberOfUnpaidOrder
+		from(
+		select convert(datetime,convert(varchar(10),t.purchaseDate,120)) as date
+		from Distribution_Orders t
+		group by convert(datetime,convert(varchar(10),t.purchaseDate,120))
+		) tmp
+		left join 
+		(		select count(distinct t.orderno) as hasPaysTotalOrdersCounts,convert(datetime,convert(varchar(10),t.payTime,120)) date2
+										,sum(t.totalAmmount) as hasPaysOrdersTotalMoney
+				from Distribution_Orders t
+				where	t.payStatus='支付成功' 
+				GROUP BY convert(datetime,convert(varchar(10),t.payTime,120))
+				)tmp2
+				on  tmp.date=tmp2.date2
+					left join
+		(
+			select sum(dtl.count) as hasPaysOrdersGoodsCounts,convert(datetime,convert(varchar(10),t.payTime,120)) date3
+			from Distribution_Orders t
+			left join Distribution_OrdersDtl dtl
+			on t.orderno=dtl.orderno
+			where	t.payStatus='支付成功' and dtl.States = 0 
+			GROUP BY convert(datetime,convert(varchar(10),t.payTime,120))
+		)tmp3
+		on tmp.date=tmp3.date3
+		left join
+		(
+		select sum(isnull(temp2.count,0)) amountOfRefunds,temp.purchaseDateTime as date4
+		from
+		(
+		select t.orderno,convert(datetime,convert(varchar(10),t.purchaseDate,120)) as purchaseDateTime
+		from  Distribution_Orders t
+		where	t.route=2
+					or t.route=3
+		) temp
+		left join
+		( 
+		select  dtl.orderno,sum(dtl.count) as count
+		from Distribution_OrdersDtl dtl
+		where dtl.States=0
+		group by dtl.orderno
+		) temp2 
+		on temp.orderno=temp2.orderno
+		group by temp.purchaseDateTime
+		) tmp4
+		on tmp.date=tmp4.date4
+		left join
+		(
+		select 	count(distinct t.orderno) as totalOrdersCounts
+						,sum(t.totalAmmount) as totalOrdersMoney
+						,count(distinct t.seq) as totalUserSeqCounts
+						,sum(
+								case when t.route=3
+								then  t.totalAmmount else 0 end
+								) as totalRefundAmountMoneyIncludesFreight
+					,sum(
+								case when t.route=2
+								then  t.amount else 0 end
+								) as totalRefundAmountMoneyNotIncludesFreight
+					,sum(
+							case 
+									when t.route=2 or  t.route=3 then 1
+									else 0 end
+					) as totalrefundOrdersCounts
+						,convert(datetime,convert(varchar(10),t.purchaseDate,120)) as date5
+		from Distribution_Orders t
+			group by 	convert(datetime,convert(varchar(10),t.purchaseDate,120)) 
+		)tmp5
+			on tmp.date=tmp5.date5	
+left join
+		(
+		select sum(tmp.totalAmmount) as totalAmountOfUnpaidOrder,count(distinct tmp.orderno) as totalNumberOfUnpaidOrder
+				,tmp.date as date6
+		from (
+		select  distinct dto.orderno,dto.totalAmmount,convert(datetime,convert(varchar(10),dto.purchaseDate,120)) as date
+		from Distribution_Orders dto
+		where dto.payStatus!='支付成功'
+		) tmp
+			GROUP BY tmp.date
+		)tmp6
+		on tmp.date=tmp6.date6
+		<where>
+			<if test="startTime != null">
+				<![CDATA[and tmp.date >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and tmp.date  <= #{endTime}]]>
+			</if>
+		</where>
+		order by tmp.date desc
+	</select>
+  
+    <!--商品数据统计 -->
+     <select id="queryCommodityStatisticsDataMsg" resultType="com.shq.oper.model.dto.salestatistics.CommodityStatisticsRankingDto" >
+	SELECT  ROW_NUMBER() OVER(order by temp.amt desc) sort, temp.goodsCode,temp.sellNum as sellNums ,temp.amt,dp.Product_Name as goodsName
+   			,ISNULL(dp.ExhibitCount,0) as exhibitCount,dp.company_name as companyName,temp.testAmt
+			,temp.testSellnums
+		FROM(
+	SELECT sum(tmp.count) sellNum
+				,tmp.goodsCode
+				,sum(tmp.amount) amt
+				,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.amount
+							else 0 end) testAmt
+					,sum(
+							case
+							when patindex('测试%',tmp.address)> 0
+							then tmp.count
+							else 0 end
+					) testSellnums
+		FROM	(
+	select dtl.count,dtl.goodsCode,t.supplierSeq,dtl.amount,t.payTime,sit.address
+		from Distribution_OrdersDtl dtl  
+	right join Distribution_Orders t on t.orderno = dtl.orderno
+	left join Distribution_OrdersSite sit 
+	on sit.orderno = t.orderno 
+	<where>
+		dtl.States = 0 
+		and t.payStatus='支付成功'
+		and dtl.goodsCode is not null and dtl.goodsCode !=''
+		<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+	</where>
+	)tmp
+		where tmp.goodsCode is not null
+		GROUP BY tmp.goodsCode
+	) temp
+	left join DistributionProduct dp
+		on dp.Product_Code=temp.goodsCode
+		order by sort
+		
+  </select>
+  
+   <select id="queryOrdersTotalStatisticsMsg" resultType="com.shq.oper.model.dto.salestatistics.OrderCountStatisticsDto">
+  		<!-- 全部订单统计（不包含未支付订单） -->
+		select sum(dto.totalAmmount) as totalSalesAmount,count(distinct dto.orderno) as toatalOrdersCount,sum(dtl.count) as totalSalesCount
+		from Distribution_Orders dto
+		left join Distribution_OrdersDtl dtl
+		on dto.orderno=dtl.orderno
+		where dto.payStatus='支付成功'
+		and dtl.States=0
+  </select>
+  
+  <select id="queryUnpaidOrderMsg" resultType="com.shq.oper.model.dto.salestatistics.UnpaidOrderStatisticsDto">
+		select sum(dto.totalAmmount) as totalAmountOfUnpaidOrder,count(1) as totalNumberOfUnpaidOrder
+		from Distribution_Orders dto
+		where dto.payStatus!='支付成功'
+  </select>
+  
+  
+  <sql id="queryActiveColumnMark">
+  	CASE 
+	WHEN t.isLocaleRecruitOrders ='1'  THEN '现场招商' 
+	WHEN t.isLocaleRecruitOrders ='2'  THEN '限时秒杀' 
+	WHEN t.isLocaleRecruitOrders ='3'  THEN '预售商品'
+	WHEN t.isLocaleRecruitOrders not in ('1','2','3')  and dtl.isActivityGoods=1 THEN '限时秒杀' 
+	WHEN 	t.isLocaleRecruitOrders not in ('1','2','3')
+		and  dtl.isActivityGoods!=1 	
+		and  dtl.activeColumnMark is not null and dtl.activeColumnMark!='无' and dtl.activeColumnMark!=''
+		THEN dtl.activeColumnMark
+	WHEN t.isLocaleRecruitOrders not in ('1','2','3')
+		and dtl.isActivityGoods!=1 	and dtl.activeColumnMark is  null 
+		and t.activeColumnMark is not null and  t.activeColumnMark!='无' and  t.activeColumnMark!='' 
+		THEN t.activeColumnMark
+	WHEN 	t.isLocaleRecruitOrders not in ('1','2','3')
+		and  dtl.isActivityGoods!=1 	and  dtl.activeColumnMark is not null
+		and (dtl.activeColumnMark='无' or  dtl.activeColumnMark='')
+		THEN '普通'
+	WHEN 	t.isLocaleRecruitOrders not in ('1','2','3')
+		and dtl.isActivityGoods!=1 	and dtl.activeColumnMark is  null and t.activeColumnMark is not null
+		and ( t.activeColumnMark='无'  or  t.activeColumnMark='')
+		THEN '普通' 
+	else '普通'
+	END as activeColumnMark
+  </sql>
+  
+  <!--活动订单统计
+  	activeColumnMark 活动名称
+	hasPaysTotalOrdersCounts  已下单已支付订单总数
+	totalrefundOrdersCounts  退款订单总数（包含退款成功与被拒绝退款订单数）
+	hasPaysOrdersGoodsCounts  已下单已支付订单商品总数
+	totalOrdersCounts	 总订单数
+	totalOrdersMoney 	 总订单金额
+	totalUserSeqCounts	 总购买用户数（相同用户只算一个数量）
+	hasPaysOrdersTotalMoney  已下单已支付订单总金额
+	totalRefundAmountMoneyIncludesFreight	  退款金额（包含运费）
+	totalRefundAmountMoneyNotIncludesFreight 退款金额（不退运费）
+	totalAmountOfUnpaidOrder	 未付款订单金额
+	totalNumberOfUnpaidOrder	未付款订单数
+    -->
+  <select id="queryActivityCommodityOrderStatisticsMsg" resultType="com.shq.oper.model.dto.salestatistics.ActivityCommodityOrderStatisticsDto">
+		select temp.activeColumnMark
+			,isnull(temp2.hasPaysTotalOrdersCounts,0) as hasPaysTotalOrdersCounts
+			,isnull(temp3.totalrefundOrdersCounts,0) as totalrefundOrdersCounts
+			,isnull(temp2.count,0) as hasPaysOrdersGoodsCounts
+			,isnull(temp4.totalOrdersCounts,0) as totalOrdersCounts
+			,isnull(temp4.totalOrdersMoney,0) as totalOrdersMoney
+			,isnull(temp4.totalUserSeqCounts,0) as totalUserSeqCounts	
+			,isnull(temp5.hasPaysOrdersTotalMoney,0) as hasPaysOrdersTotalMoney
+			,isnull(temp8.totalRefundAmountMoneyIncludesFreight,0) as totalRefundAmountMoneyIncludesFreight
+			,isnull(temp8.totalRefundAmountMoneyNotIncludesFreight,0) as totalRefundAmountMoneyNotIncludesFreight
+			,isnull(temp8.totalRefundAmountMoneyIncludesFreight,0)+isnull(temp8.totalRefundAmountMoneyNotIncludesFreight,0) as totalRefundAmountMoney
+			,isnull(temp6.totalAmountOfUnpaidOrder,0)	as 	totalAmountOfUnpaidOrder
+			,isnull(temp6.totalNumberOfUnpaidOrder,0) as 	totalNumberOfUnpaidOrder
+			,isnull(temp7.counts ,0)as amountOfRefunds
+	from 
+	(
+	select tmp.activeColumnMark
+	from 
+	(
+	select   t.orderno,
+	<include refid="queryActiveColumnMark"/>
+	from Distribution_OrdersDtl dtl 
+	left join Distribution_Orders t
+	on  t.orderno=dtl.orderno
+	<where>
+		<if test="startTime != null">
+				<![CDATA[and t.purchaseDate >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.purchaseDate  <= #{endTime}]]>
+			</if>
+		</where>
+	) tmp
+	GROUP BY tmp.activeColumnMark
+	)temp
+	left join 
+	(
+			select tmp.activeColumnMark,count(distinct tmp.orderno) as hasPaysTotalOrdersCounts,sum(tmp.count) as count
+			from 
+			(
+			select   dtl.orderno,dtl.count,
+	<include refid="queryActiveColumnMark"/>
+			from Distribution_OrdersDtl dtl 
+			left join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+			<where>
+				t.payStatus='支付成功'
+				and dtl.States=0
+			<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+			</where>
+			) tmp
+			GROUP BY tmp.activeColumnMark
+	)temp2
+	on temp2.activeColumnMark=temp.activeColumnMark
+	left join
+	(
+		select tmp.activeColumnMark,count(distinct tmp.orderno) as totalrefundOrdersCounts
+			from 
+			(
+			select   dtl.orderno,
+	<include refid="queryActiveColumnMark"/>
+			from Distribution_OrdersDtl dtl 
+			left join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+		<where>
+				t.route=2 
+				and dtl.States = 0 
+			<if test="startTime != null">
+				<![CDATA[and t.afterBeginTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.afterBeginTime  <= #{endTime}]]>
+			</if>
+			or 	t.route=3 
+				and dtl.States = 0 
+			<if test="startTime != null">
+				<![CDATA[and t.afterBeginTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.afterBeginTime  <= #{endTime}]]>
+			</if>
+		</where>
+			) tmp
+			GROUP BY tmp.activeColumnMark
+	)	temp3
+	on temp3.activeColumnMark=temp.activeColumnMark
+	left join
+	(
+			select tmp.activeColumnMark,count(tmp.orderno) as totalOrdersCounts
+						,sum(tmp.totalAmmount) as totalOrdersMoney,count(distinct tmp.seq) as totalUserSeqCounts
+			from 
+			(
+			select distinct t.orderno,t.totalAmmount,t.seq,
+	<include refid="queryActiveColumnMark"/>
+			from Distribution_OrdersDtl dtl 
+			right join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+		<where>
+				 dtl.States = 0 
+		<if test="startTime != null">
+				<![CDATA[and t.purchaseDate >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.purchaseDate  <= #{endTime}]]>
+			</if>
+		</where>
+			) tmp
+			GROUP BY tmp.activeColumnMark
+	)temp4
+		on temp4.activeColumnMark=temp.activeColumnMark
+	left join
+	(
+			select tmp.activeColumnMark
+			,sum(tmp.hasPaysOrdersTotalMoney) as hasPaysOrdersTotalMoney
+			from 
+			(
+			select 
+	<include refid="queryActiveColumnMark"/>,
+			case when t.payStatus ='支付成功'
+					then  t.totalAmmount 
+					else 0 end as hasPaysOrdersTotalMoney
+			from 
+			( select distinct dtl.activeColumnMark as activeColumnMark,dtl.orderno as orderno,dtl.States as States,dtl.isActivityGoods as 		isActivityGoods
+				from Distribution_OrdersDtl dtl 
+			) dtl
+			left join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+		<where>
+				 dtl.States = 0 
+			<if test="startTime != null">
+				<![CDATA[and t.payTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.payTime  <= #{endTime}]]>
+			</if>
+		</where>
+			) tmp
+			GROUP BY tmp.activeColumnMark
+	)temp5
+		on temp5.activeColumnMark=temp.activeColumnMark
+	left join
+	(
+			select tmp.activeColumnMark,sum(tmp.totalAmmount) as totalAmountOfUnpaidOrder,count(distinct tmp.orderno) as totalNumberOfUnpaidOrder
+			from 
+			(
+			select distinct  t.orderno,t.totalAmmount,
+	<include refid="queryActiveColumnMark"/>
+			from Distribution_OrdersDtl dtl 
+			left join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+		<where>
+				 dtl.States = 0 
+				 and t.payStatus!='支付成功'
+		<if test="startTime != null">
+				<![CDATA[and t.purchaseDate >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.purchaseDate  <= #{endTime}]]>
+			</if>
+		</where>
+			) tmp
+			GROUP BY tmp.activeColumnMark
+	)temp6
+		on temp6.activeColumnMark=temp.activeColumnMark
+	left join
+	(
+	select sum(temp3.count) as counts,temp3.activeColumnMark
+	from(
+	select temp2.count,temp2.activeColumnMark,temp2.orderno
+	from
+		(
+		select distinct t.orderno 
+		from  Distribution_Orders t
+		<where>
+		t.route=2 
+		<if test="startTime != null">
+				<![CDATA[and t.afterBeginTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.afterBeginTime  <= #{endTime}]]>
+			</if>
+		or t.route=3
+			<if test="startTime != null">
+				<![CDATA[and t.afterBeginTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.afterBeginTime  <= #{endTime}]]>
+			</if>
+	</where>
+		
+		) temp
+		left join
+		(
+			select distinct  dtl.orderno,dtl.count,dtl.goodsCode,
+	<include refid="queryActiveColumnMark"/>
+			from 
+				( select distinct dtl.activeColumnMark as activeColumnMark,dtl.orderno as orderno,dtl.States as States
+				,dtl.isActivityGoods as isActivityGoods,dtl.count as count,dtl.goodsCode as goodsCode
+				from Distribution_OrdersDtl dtl 
+			) dtl
+			left join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+			where  dtl.States = 0 
+		) temp2 
+		on temp.orderno=temp2.orderno
+		)temp3
+		group by temp3.activeColumnMark
+		)temp7
+		on temp7.activeColumnMark=temp.activeColumnMark
+		left join
+	(
+			select tmp.activeColumnMark,
+			sum(tmp.totalRefundAmountMoneyIncludesFreight) as totalRefundAmountMoneyIncludesFreight
+			,sum(tmp.totalRefundAmountMoneyNotIncludesFreight) as totalRefundAmountMoneyNotIncludesFreight
+			from 
+			(
+			select 
+		<include refid="queryActiveColumnMark"/>,
+			case when t.route=3
+					then  t.totalAmmount 
+					else 0 end as totalRefundAmountMoneyIncludesFreight,
+			case when t.route=2
+					then  t.amount 
+					else 0 end as totalRefundAmountMoneyNotIncludesFreight
+			from 
+			( select distinct dtl.activeColumnMark as activeColumnMark,dtl.orderno as orderno,dtl.States as States,dtl.isActivityGoods as 		isActivityGoods
+				from Distribution_OrdersDtl dtl 
+			) dtl
+			left join Distribution_Orders t
+			on  t.orderno=dtl.orderno
+			<where>
+			 dtl.States=0
+			<if test="startTime != null">
+				<![CDATA[and t.afterBeginTime >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and t.afterBeginTime  <= #{endTime}]]>
+			</if>
+			</where>
+			) tmp
+			GROUP BY tmp.activeColumnMark
+	)temp8
+		on temp8.activeColumnMark=temp.activeColumnMark		
+		<where>
+			<if test="activeColumnMark != null and activeColumnMark !=''">
+				<![CDATA[temp.activeColumnMark = #{activeColumnMark}]]>
+			</if>
+		</where>
+		order by  temp4.totalOrdersMoney desc	
+	</select>
+  <select id="queryTestStatisticsMsg" resultType="com.shq.oper.model.dto.salestatistics.OrderTestCountStatisticsDto">
+  	select count(tmp.orderno) as testToatalOrdersCount,sum(tmp.totalAmmount) as testTotalSalesAmount
+	from(
+	select distinct t.orderno,t.totalAmmount
+	from Distribution_Orders t 
+	inner join  Distribution_OrdersSite sit
+	on t.orderno=sit.orderno
+	where patindex('测试%',sit.address)> 0
+	)tmp
+  </select>
+  
+  <!--分销订单数据统计的测试订单统计（测试订单总数，测试订单总金额，购买用户数）  -->
+  <select id="queryTestCommodityStatisticsDataMsg" resultType="com.shq.oper.model.dto.salestatistics.CommodityOrderStatisticsDto">
+  	select count(tmp.orderno) testOrdersTotalCount
+  			,isnull(sum(tmp.totalAmmount),0) testOrderTotalAmmount
+  			,isnull(count(distinct tmp.seq),0) seqCounts
+  			,tmp.date
+	from(
+	select distinct t.orderno,t.totalAmmount,convert(datetime,convert(varchar(10),t.purchaseDate,120))  as date,t.seq
+	from Distribution_Orders t 
+	inner join  Distribution_OrdersSite sit
+	on t.orderno=sit.orderno
+	where	patindex('测试%',sit.address)> 0
+	)tmp
+		<where>
+				<if test="startTime != null">
+				<![CDATA[and tmp.date >= #{startTime}]]>
+			</if>
+			<if test="endTime != null">
+				<![CDATA[and tmp.date  <= #{endTime}]]>
+			</if>	
+	</where>
+	GROUP BY tmp.date 
+	order BY tmp.date desc
+  </select>
+  <!--活动订单数据统计的测试订单统计（测试订单总数，测试订单总金额，购买用户数）  -->
+  <select id="queryActivityTestCommodityStatisticsDataMsg" resultType="com.shq.oper.model.dto.salestatistics.ActivityCommodityOrderStatisticsDto">
+  	select 
+			tmp.activeColumnMark
+			,sum(tmp.totalAmmount) as testOrderTotalAmmount
+			,count(distinct tmp.seq) seqCounts
+			,count(tmp.orderno) as testOrdersTotalCount
+	from 
+	(
+	select   distinct t.orderno,t.totalAmmount,t.seq,
+	<include refid="queryActiveColumnMark"/>
+	from Distribution_OrdersDtl dtl 
+	right join Distribution_Orders t
+	on  t.orderno=dtl.orderno
+	left join  Distribution_OrdersSite sit
+	on t.orderno=sit.orderno
+	<where>
+		patindex('测试%',sit.address)> 0 and dtl.States=0
+		<if test="startTime != null">
+				<![CDATA[and t.purchaseDate >= #{startTime}]]>
+		</if>
+		<if test="endTime != null">
+				<![CDATA[and t.purchaseDate  <= #{endTime}]]>
+		</if>
+	</where>
+	) tmp
+	<where>
+	<if test="activeColumnMark != null and activeColumnMark !=''">
+				<![CDATA[tmp.activeColumnMark = #{activeColumnMark}]]>
+	</if>
+	</where>
+	GROUP BY tmp.activeColumnMark
+	order BY tmp.activeColumnMark
+  </select>
+  
+  <select id="queryTwoPurchasesOfUsers" resultType="int">
+	select count(tmp.seq) as twoPurchasesOfUsers
+		from (
+		select t.seq
+		from Distribution_Orders t
+		GROUP
+		BY t.seq
+		HAVING count( t.seq)>1
+	)tmp
+  </select>
+  
+  <!--
+  	爱之家数据统计
+  		爱之家总注册人数
+  		购买人数，统计下单并付款成功的人数
+  		二次购买，下单购买次数大于1的人数
+    -->
+  <select id="buyCountsStatistics" resultType="com.shq.oper.model.dto.salestatistics.LoveOfHomeDataCountStatisticsDto">
+	select temp.totalOrderPurchasesUser,temp2.twoPurchasesOfUsers
+		from
+	(	select count(distinct tmp.SEQ) as totalOrderPurchasesUser
+			from Distribution_Orders tmp
+			where tmp.payStatus='支付成功'
+	)temp
+	,
+	(	select count(tmp.SEQ) as twoPurchasesOfUsers
+			from (
+			select tmp.SEQ
+			from Distribution_Orders tmp
+			where tmp.payStatus='支付成功'
+			GROUP
+			BY tmp.SEQ
+			HAVING count(tmp.SEQ)>1
+			)tmp
+	)temp2
+ </select>
+ 
+</mapper>

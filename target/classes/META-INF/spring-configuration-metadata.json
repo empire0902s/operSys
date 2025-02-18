@@ -1,0 +1,126 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api",
+      "type": "com.shq.oper.model.dto.yml.ShqApi"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.net-goods-api",
+      "type": "com.shq.oper.model.dto.yml.NetGoodsApi"
+    },
+    {
+      "sourceType": "com.shq.oper.mapperds.DataSourcePrimary",
+      "name": "spring.datasource.primary",
+      "sourceMethod": "testDataSource()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.shq.oper.mapperds.DataSource_SqlServer_shq520",
+      "name": "spring.datasource.shq520",
+      "sourceMethod": "testDataSource()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.shq.oper.mapperds.DataSource_SqlServer_shq520new",
+      "name": "spring.datasource.shq520new",
+      "sourceMethod": "testDataSource()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.SystemProperties",
+      "name": "system",
+      "type": "com.shq.oper.model.dto.yml.SystemProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.get-app-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.get-banner-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.get-message-list-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.get-osbrand-square-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.image-addr-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.image-upload-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.NetGoodsApi",
+      "name": "shq-api.net-goods-api.base-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.NetGoodsApi",
+      "name": "shq-api.net-goods-api.base-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.NetGoodsApi",
+      "name": "shq-api.net-goods-api.get-goods-by-code",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.NetGoodsApi",
+      "name": "shq-api.net-goods-api.get-goods-by-code",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.send-message-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "defaultValue": 0,
+      "name": "shq-api.test-num",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.ShqApi",
+      "name": "shq-api.verification-sku",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.SystemProperties",
+      "name": "system.md5-key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.SystemProperties",
+      "name": "system.origin-list",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.SystemProperties",
+      "name": "system.test",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.shq.oper.model.dto.yml.SystemProperties",
+      "name": "system.weblog-test",
+      "type": "java.lang.Boolean"
+    }
+  ]
+}

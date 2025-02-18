@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script type="text/javascript"></script>
+<style type="text/css">
+.test {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 20px;
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+
+td {
+	width: 120px;
+}
+</style>
+</head>
+<body>
+	<div>
+		<table class="layui-table"
+			style="margin-top: 1px; margin-bottom: 1px; height: 305px;">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td style="width: 50px;" th:text="${osbrasndSquareDtoDetials.id}"></td>
+					<th>品牌商名称</th>
+					<td th:text="${osbrasndSquareDtoDetials.storesName}"></td>
+				</tr>
+				<tr>
+					<th>排序</th>
+					<td style="width: 50px;" th:text="${osbrasndSquareDtoDetials.sort}"></td>
+					<th>dealerId</th>
+					<td th:text="${osbrasndSquareDtoDetials.dealerId}"></td>
+				</tr>
+				<tr>
+					<th>品牌商seq</th>
+					<td colspan="3" th:text="${osbrasndSquareDtoDetials.contentUrl}"></td>
+				</tr>
+				<tr>
+					<th>品牌商图片</th>
+					<td colspan="3"><a th:href="${osbrasndSquareDtoDetials.strStoresUrl}"
+						target="_blank"> <img class="imgUrl"
+							style="width: 50px; height: 50px;"
+							th:src="${osbrasndSquareDtoDetials.strStoresUrl}">
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

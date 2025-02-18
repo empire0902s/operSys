@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>添加品牌推荐</title>
+<script type="text/javascript"></script>
+<style type="text/css">
+</style>
+<script th:inline="javascript">
+	var array = '[[${array}]]';
+	var sortNum = '[[${sortNum}]]';
+</script>
+</head>
+<body>
+	<div>
+		<div>
+			<form class="layui-form" enctype="multipart/form-data" method="post">
+				<input type="hidden" name="id" /> <input type="hidden"
+					name="identifyType" value="7" />
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">品牌名称：</label>
+						<div class="layui-inline">
+							<input type="text" name="brandName" maxlength="20" lay-verify="required"
+								placeholder="品牌名称长度小于20" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">图片：</label>
+						<div class="layui-input-inline">
+							<button type="button" class="layui-btn layui-btn-normal"
+								id="file">上传图片</button>
+							<a target="_blank" id="checkBigImg" href=""><img type=""
+								class="layui-upload-img" id="imgDisplay" style="display: none"></a>
+							<p id="imageText"></p>
+							<input type="hidden" style="margin-top: 5px" class="layui-input"
+								name="brandLogoImg" id="imgPath" readonly="readonly">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item" >
+					<div class="layui-inline">
+						<label class="layui-form-label">跳转地址：</label>
+						<div class="layui-input-inline">
+							<input style="margin-top: 5px" class="layui-input"
+								name="jumpTarget" lay-verify="required" placeholder="跳转路径">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">排序：</label>
+						<div class="layui-inline">
+							<input type="text" name="sortNum"
+								lay-verify="number|space|normal|required" value="1000"
+								maxlength="20" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item center">
+					<div class="layui-inline">
+						<button class="layui-btn" lay-submit lay-filter="submit">保存</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

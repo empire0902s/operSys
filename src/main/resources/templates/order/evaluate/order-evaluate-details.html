@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script th:inline="javascript">
+	var imgsResult = '[[${imgsResult}]]';orderEvaluateResult
+	var orderEvaluateResult = '[[${orderEvaluateResult}]]';
+	var MongoDistributionOrdersList = '[[${MongoDistributionOrdersList}]]';
+	var distributionOrdersDtlResult = '[[${distributionOrdersDtlResult}]]';
+	var shopperResult = '[[${shopperResult}]]';
+	var imgPath = '[[${imgPath}]]';
+	var productFlag = '[[${productFlag}]]';
+</script>
+<style type="text/css">
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 120px;
+}
+
+td {
+	width: 153px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+
+.imgDiv, .msgDiv {
+	float: left
+}
+</style>
+
+<script type="text/html" id="disabledTpl">
+</script>
+</head>
+<body>
+	<div class="layui-form" style="width: 1000px;">
+		<input type="hidden" name="id" id="id"
+			th:value="${orderEvaluateResult.id}!=null?${orderEvaluateResult.id}:''">
+		<div class="errDiv" style="display: none">
+			<div class="layui-form-item" style="margin-top: 150px;margin-left: 207px;display: none" id="productDiv">
+				<h1>
+					抱歉,CODE为【<span class="goodsCodeSpan"
+						th:text="${orderEvaluateResult.goodsCode}"></span>】的商品不存在
+					</h3>
+			</div>
+			<div class="layui-form-item " style="margin-top: 150px;margin-left: 207px;display: none" 
+				id="ordernoSpanDiv">
+				<h1>
+					抱歉,订单【<span class="ordernoSpan" th:text="${orderEvaluateResult.orderNo}"></span>】不存在
+					</h3>
+			</div>
+			<div class="layui-form-item " style="margin-top: 150px;margin-left: 207px;display: none" 
+				id="ordernoProductSpanDiv">
+				<h1>
+					抱歉，订单数据有误
+					</h3>
+			</div>
+			
+			<div class="layui-form-item " style="margin-left: 207px;">
+				<h1>
+					订单编号:<span class="ordernoSpan"
+						th:text="${orderEvaluateResult.orderNo}"></span>
+					</h3>
+			</div>
+			<div class="layui-form-item " style="margin-left: 207px;">
+				<h1>
+					商品CODE:<span class="goodsCodeSpan"
+						th:text="${orderEvaluateResult.goodsCode}"></span>
+					</h3>
+			</div>
+			<div class="layui-form-item " style="margin-left: 207px;">
+				<h1>
+					评价用户SEQ:<span class="userSeqSpan"
+						th:text="${orderEvaluateResult.userSeq}"></span>
+					</h3>
+			</div>
+		</div>
+		<fieldset class="layui-elem-field" id="showMsg" style="display: none">
+			<!-- <legend>商品信息</legend> -->
+			<div class="layui-field-box">
+				<div style="width: 1080px; height: 600px;" class="goodsDiv">
+					<div style="width: 350px; height: 100px;" class="imgDiv">
+						<img alt="" style="width: 400px; height: 478px;" id="img"
+							src="">
+					</div>
+					<div style="width: 680px; height: 350px; margin-left: 50px;"
+						class="msgDiv">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-weight: bold;">商品名称：</label>
+								<div class="layui-input-inline" style="width: 250px;">
+									<label class="layui-form-label" id="goodsName"
+										style="width: 250px; text-align:center;"></label>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-weight: bold;">商品CODE：</label>
+								<div class="layui-input-inline">
+									<label class="layui-form-label" id="goodsCode"
+										style="width: 250px;text-align:center;"></label>
+								</div>
+							</div>
+						</div>
+								<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-weight: bold;">商品sku：</label>
+								<div class="layui-input-inline">
+									<label class="layui-form-label" id="goodsSku"
+										style="width: 250px;text-align:center;"></label>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-weight: bold;color: red;">商品价格(元)：</label>
+								<div class="layui-input-inline">
+									<label class="layui-form-label" id="price"
+										style="width: 250px; text-align:center;"></label>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="font-weight: bold;color: red;" >评论图片：</label>
+							<div class="layui-carousel" id="imgs" style="margin-left: 150px;">
+								<div carousel-item id="imgsHtml"></div>
+							</div>
+							<label class="layui-form-label" id="noImg" style="width: 250px;display: none;text-align:center;">暂无评论图片哦</label>
+						</div>
+
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="font-weight: bold;color: red;">评价内容：</label>
+							<div class="layui-input-inline">
+								<textarea name="evaluateContent" maxlength="100" id="evaluateContent"
+									style="width: 550px;" readonly="readonly"
+									class="layui-textarea"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<table class="layui-table"
+					style="margin-top: -50px; margin-bottom: 0px; display: none;"
+					id="ordersTable">
+					<tbody>
+						<tr>
+							<th>订单评价编号</th>
+							<td th:text="${orderEvaluateResult.id}"></td>
+							<th>订单编号</th>
+							<td th:text="${orderEvaluateResult.orderNo}"></td>
+							<th>评价用户</th>
+							<td id="mobile"></td>
+						</tr>
+						<tr>
+							<th>评价用户SEQ</th>
+							<td th:text="${orderEvaluateResult.userSeq}"></td>
+							<th>评价时间</th>
+							<td th:text="${orderEvaluateResult.evaluateTime}"></td>
+							<th>评价等级</th>
+							<td th:text="${orderEvaluateResult.evaluateLev}"></td>
+
+						</tr>
+						<tr>
+							<th>点赞数</th>
+							<td th:text="${likesCounts}"></td>
+							<th>是否匿名</th>
+							<td th:text="${orderEvaluateResult.isAnonymous}==1?'匿名':'公开'"></td>
+							<th>是否置顶</th>
+							<td th:text="${orderEvaluateResult.isTop}==1?'置顶':'否'"></td>
+
+						</tr>
+						<tr>
+							<th>审核状态</th>
+							<td id="auditStatsTd"></td>
+							<th>审核人</th>
+							<td th:text="${orderEvaluateResult.auditAdmin}"></td>
+							<th>审核时间</th>
+							<td th:text="${orderEvaluateResult.auditTime}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div
+					style="width: 1080px; height: 200px; margin-top: 30px; display: none;"
+					id="auditDescDiv">
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="margin-left: -40px;">审核备注：</label>
+						<div class="layui-input-inline">
+							<textarea name="auditDesc" id="auditDesc" maxlength="200"
+								th:text="${orderEvaluateResult.auditDesc}"
+								placeholder="审核字数限制200内，审核通过后，订单评价显示在爱之家前端" class="layui-textarea" 
+								style="width: 990px; height: 150px;"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item center">
+						<button class="layui-btn submit" lay-submit lay-filter="submit">审核并保存</button>
+						<button class="layui-btn layui-btn-danger unExamine" lay-submit >审核不通过</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+				<div
+					style="width: 1080px; height: 200px; margin-top: 30px; display: none;"
+					id="auditReplyDiv">
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="margin-left: -40px;">回复评价：</label>
+						<div class="layui-input-inline">
+							<textarea name="auditReply" maxlength="200" id="auditReply"
+								th:text="${orderEvaluateResult.auditReply}"
+								placeholder="回复内容字数限制200字以内，回复内容显示在爱之家前端【如果未审核，保存回复默认审核通过】" class="layui-textarea"
+								style="width: 990px; height: 150px;"
+								></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item center">
+						<button class="layui-btn submitReply" lay-submit
+							lay-filter="submit">回复并保存</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</body>
+</html>

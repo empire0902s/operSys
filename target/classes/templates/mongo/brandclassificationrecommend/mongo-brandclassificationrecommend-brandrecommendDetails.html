@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+	<title>用户详情</title>
+	<script type="text/javascript"></script>
+	<style type="text/css">
+		.test {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			width: 20px;
+		}
+		th {
+			background-color: #F8F8F8;
+			color: #333;
+			width: 180px;
+		}
+
+		td {
+			width: 150px;
+		}
+	</style>
+</head>
+<body>
+<div>
+	<table class="layui-table"
+		   style="margin-top: 1px; margin-bottom: 1px; height: 305px;">
+		<tbody>
+		<tr>
+			<th>ID</th>
+			<td style="width: 50px;" th:text="${brandrecommendDetails.id}"></td>
+			<th>品牌名称</th>
+			<td th:text="${brandrecommendDetails.brandName}"></td>
+		</tr>
+		<tr>
+			<th>品牌logo图片</th>
+			<td><a th:href="${brandrecommendDetails.brandLogoImg}" target="_blank">
+				<img class="imgUrl" style="width: 50px; height: 50px;"
+					 th:src="${brandrecommendDetails.brandLogoImg}">
+			</a></td>
+			<th>跳转地址</th>
+			<td><a th:href="${brandrecommendDetails.jumpTarget}" target="_blank" id="brandrecommendDetails">
+				<span style="color: blue" >点击跳转</span>
+			</a></td>
+		</tr>
+		<tr>
+			<th>排序</th>
+			<td th:text="${brandrecommendDetails.sortNum}" colspan="3"></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>

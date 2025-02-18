@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>供应商规则详情</title>
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+
+		<form class="layui-form  layui-form-pane data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline layui-col-xs4">
+					<label class="layui-form-label">供应商seq:</label>
+					<div class="layui-input-inline ">
+						<input type="text" style="width:400px;" class="layui-input" name="seq"  id="seq"
+							>
+					</div>
+				</div>
+				<div >
+					<div class="layui-input-inline">
+						<a class="layui-btn search "  style="margin-left: 200px;" data-type="reload" id="search">搜索</a>
+					</div>
+				</div>
+			</div>
+
+		</form>
+
+		<fieldset class="layui-elem-field">
+
+			<div class="layui-field-box disabledTable data-product-form">
+				<div class="layui-row">
+					<div class="layui-inline layui-col-md6">
+						<label class="layui-form-label">供应商seq：</label>
+						<div class="layui-input-inline">
+							<div class="inline-text layui-text" ><span class="seq"></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row">
+					<div class="layui-inline layui-col-md6">
+						<label class="layui-form-label">手机号码：</label>
+						<div class="layui-input-inline">
+							<div class="inline-text layui-text" ><span class="mobile"></span></div>
+						</div>
+					</div>
+					<div class="layui-inline">
+					<label class="layui-form-label">供应商名：</label>
+					<div class="layui-input-inline">
+					<div class="inline-text layui-text" ><span class="shopname"></span></div>
+					</div>
+					</div>
+				</div>
+
+				<div class="layui-row">
+					<div class="layui-inline layui-col-md6">
+						<label class="layui-form-label">地址详情：</label>
+						<div class="layui-input-inline">
+							<div class="inline-text layui-text" ><span class="adressdetail"></span></div>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">用户名：</label>
+						<div class="layui-input-inline">
+							<div class="inline-text layui-text" ><span class="username"></span></div>
+						</div>
+					</div>
+				</div>
+
+				<!--<div class="layui-row">-->
+					<!--<div class="layui-inline layui-col-md6">-->
+						<!--<label class="layui-form-label">市场审核：</label>-->
+						<!--<div class="layui-input-inline">-->
+							<!--<div class="inline-text layui-text" ><span class="marketAudit"></span></div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="layui-inline">-->
+						<!--<label class="layui-form-label">市场审核人：</label>-->
+						<!--<div class="layui-input-inline">-->
+							<!--<div class="inline-text layui-text" ><span class="marketAuditor"></span></div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+
+				<!--<div class="layui-row">-->
+					<!--<div class="layui-inline layui-col-md6">-->
+						<!--<label class="layui-form-label">上下架状态：</label>-->
+						<!--<div class="layui-input-inline">-->
+							<!--<div class="inline-text layui-text" ><span class="is_sale"></span></div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="layui-inline">-->
+						<!--<label class="layui-form-label">上下架时间：</label>-->
+						<!--<div class="layui-input-inline">-->
+							<!--<div class="inline-text layui-text" ><span class="is_sale_date"></span></div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+
+			</div>
+		</fieldset>
+
+		<table  lay-size="sm" class="layui-hide data-list" lay-filter="data-list" ></table>
+		
+		<div class="center">
+			<button class="layui-btn submit " lay-submit lay-filter="submit">保存到列表</button>
+			<button class="layui-btn off  layui-btn-primary" lay-submit lay-filter="submit">关闭</button>
+		</div>
+	</div>
+
+
+</body>
+</html>

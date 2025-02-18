@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.CouponsTypeRuleMapper">
+
+	<select id="selectTOCouponsTypeRuleAll" resultType="couponsTypeRule">
+		select id,name,model,type,min_spend_money, type_desc,
+		is_disabled,amt_full_reduce,amt_sub,amt_discount,create_time,create_admin,update_time,update_admin
+		from t_coupons_type_rule order by id DESC
+		<where>
+			<if test="isDisabled != null">
+				and is_disabled = #{isDisabled}
+			</if>
+			<if test="name != null and name != ''">
+				and name = #{name}
+			</if>
+			<if test="model != null">
+				and model = #{model}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="fromSys != null  and fromSys != ''"> and from_sys = #{fromSys} </if>
+			<if test="fromSysCode != null  and fromSysCode != ''"> and from_sys_code = #{fromSysCode} </if>
+		</where>
+	</select>
+
+	<select id="selectToModel" resultType="couponsTypeRule">
+		select id,type from t_coupons_type_rule where id = #{id}
+	</select>
+
+	<select id="selectToType" resultType="couponsTypeRule">
+		select id,name,model,type,min_spend_money, type_desc from
+		t_coupons_type_rule where model = #{model}
+	</select>
+
+	<select id="selectToMaxId" resultType="Long">
+		select count(*) as count from t_coupons_type_rule
+	</select>
+
+	<delete id="delToCouponsTypeRule">
+		delete from t_coupons_type_rule where id=#{id}
+	</delete>
+
+	<update id="updToCouponsTypeRule">
+		update t_coupons_type_rule set id=id-1 where id>#{id}
+	</update>
+
+
+	<select id="queryLikeCouponsTypeRule" resultType="couponsTypeRule">
+		select * from t_coupons_type_rule
+		<where>
+			<if test="isDisabled != null">
+				and is_disabled = #{isDisabled}
+			</if>
+			<if test="name != null and name != ''">
+				and name LIKE concat('%',#{name},'%')
+			</if>
+			<if test="fromSys != null  and fromSys != ''"> and from_sys = #{fromSys} </if>
+			<if test="fromSysCode != null  and fromSysCode != ''"> and from_sys_code = #{fromSysCode} </if>
+			<if test="model != null">
+				and model = #{model}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+		order by id DESC
+	</select>
+
+
+</mapper>

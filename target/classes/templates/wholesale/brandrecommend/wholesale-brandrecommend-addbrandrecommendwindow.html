@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>品牌推荐页面</title>
+<script type="text/javascript"></script>
+<style type="text/css">
+.jumbotron {
+    padding: 40px 10px;
+    margin-bottom: 10px;
+    color: inherit;
+    background-color: #eee;
+    height: 220px;
+}
+.rightDiv {
+    margin-top: 0rem;
+    margin-left: 280px;
+}
+.first-slide {
+    border: 1px solid #337ab7;
+    padding: 2px 0;
+    border-radius: 50%;
+    height: 25%;
+    width: 25%;
+}
+.form-control {
+    float: right;
+    width: 60%;
+}
+.nav-pills li {
+    border: 1px solid #337ab7;
+    padding: 10px 0;
+    text-align: center;
+    width: 65px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow: #666 0px 0px 10px;
+    box-shadow: #666 0px 0px 10px;
+}
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-plus {
+    color: grey;
+}
+.btnDiv {
+    position: absolute;
+    right: 1rem;
+}
+</style>
+</head>
+<body>
+<div>
+		<div style="float: left; width: 100%;height:30px;">
+		</div>
+		<form class="layui-form" id="recommendListForm" style="margin-bottom: -30px;">
+			<div class="container">
+			<div id="addDiv">
+				<div class="jumbotron">
+				<div style="float:left;margin-left: 30px;margin-top: 15px;">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<div class="layui-input-inline">
+							<a target="_blank" id="checkBigImg" href=""><img type=""
+								class="layui-upload-img" id="imgDisplay" style="display: none;width: 210px;height: 120px;margin-top: -10px;"></a>
+							<p id="imageText"></p>
+							<input type="hidden" style="margin-top: 5px" class="layui-input" lay-verify="Imgrequired"
+								name="brandLogoImg[0]" id="imgPath" readonly="readonly">
+									<button type="button" class="layui-btn layui-btn-normal" style="margin-top: 5px;"
+								id="file">上传图片(宽：120*高：120)</button>
+						</div>
+					</div>
+				</div>
+				
+				</div>
+				<div style="margin-left: 100px;float:left;">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<div class="layui-input-inline">
+										<input type="text" name="brandName[0]" maxlength="20"
+											lay-verify="required" placeholder="品牌名称" autocomplete="off"
+											class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<div class="layui-input-inline">
+										<input type="text" name="jumpTarget[0]"
+											lay-verify="required" placeholder="跳转地址" autocomplete="off"
+											class="layui-input">
+									</div>
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<div class="layui-input-inline">
+								<!-- 	 <select lay-verify="required" name="columnId[0]"
+											th:url="@{/mongo/brandrecommend/selectValue}"
+											th:value="${brandSquareModularData}==null?'':${brandSquareModularData.id}">
+										</select> -->
+										<select lay-verify="required" name="columnId[0]" id="columnId">
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<div class="layui-input-inline">
+										<input type="text" name="sortNum[0]"
+											lay-verify="required|number|space|positiveInteger|normal"
+											maxlength="20" autocomplete="off" class="layui-input"
+											placeholder="排序编号">
+									</div>
+								</div>
+							</div>
+				</div>
+				</div>
+			</div>
+			<ul class="nav nav-pills" role="tablist" style="margin-left: 20px;">
+				<li role="presentation" id="addBtn"><a href="#" 
+					style="background-color: white;"><span
+						class="glyphicon glyphicon-plus" >添加</span>
+				</a></li>
+			</ul>
+		</div>
+			<div class="btnDiv">
+			<div class="layui-inline">
+				<button class="layui-btn" style="display: none" lay-submit lay-filter="addBtnTmp" id="addBtnTmp">校验</button>
+				<button class="layui-btn" lay-submit lay-filter="submit" id="submit">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

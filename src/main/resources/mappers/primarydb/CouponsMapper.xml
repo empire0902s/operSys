@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.CouponsMapper">
+
+
+	<select id="queryCouponsAndCouponsCategoryRuleAndCouponsTypeRule" resultType="coupons">
+		select tmp.sellNum
+		,tccr.category_name as couponsCategoryRuleName
+		,tctr.type_desc as couponsTypeDesc
+		,tcgr.name as categoryRuleName
+		,ta.name as activityName
+		,tc.*
+		from t_coupons tc 
+		left join t_activity_goods_rule tcgr on tcgr.id=tc.category_rule_id
+		left join t_activity ta on ta.id=tc.activity_id
+		left join t_coupons_category_rule tccr on tc.category_rule_id= tccr.id
+		left join t_coupons_type_rule tctr on tc.coupons_rule_id=tctr.id
+		left join t_coupons_user tcu on tc.id =tcu.coupons_id
+		left join
+			(select count(1) as sellNum,coupons_id from t_coupons_user tcu GROUP BY tcu.coupons_id) tmp on tmp.coupons_id = tc.id
+		<where>
+			<if test="isDisabled != null">
+				and tc.is_disabled = #{isDisabled}
+			</if>
+			<if test="batch != null and batch != ''">
+				and tc.batch = #{batch}
+			</if>
+			<if test="activityId != null and activityId != ''">
+				and tc.activity_id = #{activityId}
+			</if>
+			<if test="name != null and name != ''">
+				and tc.name = #{name}
+			</if>
+			<if test="sendTimeStart != null">
+				and tc.send_time_start >= #{sendTimeStart}
+			</if>
+			<if test="sendTimeEnd != null">
+				and tc.send_time_end &lt;= #{sendTimeEnd}
+			</if>
+			<if test="couponsRuleId != null and couponsRuleId != ''">
+				and tc.coupons_rule_id = #{couponsRuleId}
+			</if>
+			<if test="categoryRuleId != null and categoryRuleId != ''">
+				and tc.category_rule_id = #{categoryRuleId}
+			</if>
+			<if test="fromSys != null  and fromSys != ''"> and tc.from_sys = #{fromSys} </if>
+			<if test="fromSysCode != null  and fromSysCode != ''"> and tc.from_sys_code = #{fromSysCode} </if>
+		</where>
+		GROUP BY tc.id
+		 order by tc.id desc
+	</select>
+
+	<select id="queryName" resultType="coupons">
+		select tc.name as couponsName
+		tc.id from t_coupons
+	</select>
+
+
+	<select id="queryByActivity" resultType="coupons">
+		select ta.batch as actBatchNo, 
+		ctr.name as couponsTypeRuleName , ctr.model as couponsTypeModel,
+		ctr.type as couponsType,	ctr.min_spend_money as minSpendMoney,
+		ctr.amt_full_reduce as amtFullReduce,
+		ctr.amt_discount as amtDiscount,ctr.amt_sub as amtSub,ctr.type_desc as couponsTypeDesc,
+		t.* from t_coupons t
+		left join t_activity ta on ta.id = t.activity_id  and ta.is_disabled = false  
+		left join t_coupons_type_rule ctr on ctr.id = t.coupons_rule_id  and ctr.is_disabled = false 
+		<where>
+			 and t.finan_status=1
+			 AND ta.is_disabled = FALSE
+			 <![CDATA[ AND ctr.type >= 0 ]]>
+			<if test="id != null">
+				and t.id = #{id}
+			</if>
+			<if test="actBatchNo != null and actBatchNo != ''">
+				and ta.batch = #{actBatchNo}
+			</if>
+			<choose>
+				<when test="isDisabled != null"> and t.is_disabled = #{isDisabled} </when>
+				<otherwise> and t.is_disabled = false </otherwise>
+			</choose>
+		</where>
+		order by t.id desc
+	</select>
+
+	<select id="queryCouponsListByApi" resultType="com.shq.oper.model.dto.api.res.ResActivityCouponsListDataDto">
+		select  t.id as couponsId,
+		t.name,
+		ta.name as actName,
+		ta.batch as actBatchNo, 
+		ta.from_sys as fromSys, ta.from_sys_code as fromSysCode,
+		date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStartStr,
+		date_format(t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEndStr,
+		t.send_num,
+		t.receive_num,
+		t.receive_num_rule,
+		t.vali_day_type_detail as valiDayTypeDetail,
+		t.vali_day_type as valiDayType,
+		t.coupon_des,	
+		ctr.type as couponsType,
+		ctr.min_spend_money as minSpendMoney,
+		ctr.amt_full_reduce as amtFullReduce,
+		ctr.amt_discount as amtDiscount,
+		ctr.amt_sub as amtSub,		
+		ctr.type_desc as couponsTypeDesc,
+		t.coupons_href_url,
+		t.content_img,
+		t.content_disabled_img
+		from t_coupons t
+		left join t_activity ta on ta.id = t.activity_id  and ta.is_disabled = false  
+		left join t_coupons_type_rule ctr on ctr.id = t.coupons_rule_id  and ctr.is_disabled = false 
+		<where>
+			 AND t.finan_status=1
+			 AND ta.is_disabled = FALSE
+			 AND t.is_disabled = false 
+			 and #{nowTime} BETWEEN t.send_time_start and t.send_time_end
+			 <![CDATA[ AND ctr.type >= 0 ]]>
+			<if test="actBatch != null and actBatch != ''">
+				and t.batch = #{actBatch}
+			</if>
+			<if test="fromSys != null  and fromSys != ''">and ta.from_sys = #{fromSys}  </if>
+			<if test="fromSysCode != null  and fromSysCode != ''"> and ta.from_sys_code = #{fromSysCode} </if>
+			
+		</where>
+		order by t.send_time_start asc,t.send_time_end asc,t.id desc
+	</select>
+
+	<!-- 品牌广场优惠券 -->
+	<select id="queryCouponsListByApiBrand" resultType="com.shq.oper.model.dto.api.res.ResActivityCouponsListDataDto">
+		select  t.id as couponsId,
+		t.name,
+		ta.name as actName,
+		ta.batch as actBatchNo, 
+		ta.from_sys as fromSys, ta.from_sys_code as fromSysCode,
+		date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStartStr,
+		date_format(t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEndStr,
+		t.send_num,
+		t.receive_num,
+		t.receive_num_rule,
+		t.coupon_des,	
+		ctr.type as couponsType,
+		ctr.min_spend_money as minSpendMoney,
+		ctr.amt_full_reduce as amtFullReduce,
+		ctr.amt_discount as amtDiscount,
+		ctr.amt_sub as amtSub,		
+		ctr.type_desc as couponsTypeDesc,
+		t.coupons_href_url,
+		t.content_img,
+		t.content_disabled_img
+		from t_coupons t
+		left join t_activity ta on ta.id = t.activity_id  and ta.is_disabled = false  
+		left join t_coupons_type_rule ctr on ctr.id = t.coupons_rule_id  and ctr.is_disabled = false 
+		<where>
+			 AND t.finan_status=1
+			 AND ta.is_disabled = FALSE
+			 AND t.is_disabled = false 
+			 and #{nowTime} BETWEEN t.send_time_start and t.send_time_end
+			 <![CDATA[ AND ctr.type >= 0 ]]>
+			<if test="actBatch != null and actBatch != ''">
+				and t.batch = #{actBatch}
+			</if>
+			and ta.from_sys = #{fromSys} 
+			<if test="fromSysCode != null  and fromSysCode != ''"> and ta.from_sys_code = #{fromSysCode} </if>
+			
+		</where>
+		order by t.send_time_start asc,t.send_time_end asc,t.id desc
+	</select>
+
+	<!-- 大兵优惠券 -->
+	<select id="queryCouponsListByApiDabing" resultType="com.shq.oper.model.dto.api.res.ResActivityCouponsListDataDto">
+		select  t.id as couponsId,
+		t.name,
+		ta.name as actName,
+		ta.batch as actBatchNo,
+		ta.from_sys as fromSys, ta.from_sys_code as fromSysCode,
+		date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStartStr,
+		date_format(t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEndStr,
+		t.send_num,
+		t.receive_num,
+		t.receive_num_rule,
+		t.coupon_des,
+		ctr.type as couponsType,
+		ctr.min_spend_money as minSpendMoney,
+		ctr.amt_full_reduce as amtFullReduce,
+		ctr.amt_discount as amtDiscount,
+		ctr.amt_sub as amtSub,
+		ctr.type_desc as couponsTypeDesc,
+		t.coupons_href_url,
+		t.content_img,
+		t.content_disabled_img
+		from t_coupons t
+		left join t_activity ta on ta.id = t.activity_id  and ta.is_disabled = false
+		left join t_coupons_type_rule ctr on ctr.id = t.coupons_rule_id  and ctr.is_disabled = false
+		<where>
+			AND t.finan_status=1
+			AND ta.is_disabled = FALSE
+			AND ta.user_role_rule=2
+			AND t.is_disabled = false
+			and #{nowTime} BETWEEN t.send_time_start and t.send_time_end
+
+		</where>
+		order by t.send_time_start asc,t.send_time_end asc,t.id desc
+	</select>
+
+	<!-- 大兵优惠券 -->
+	<select id="queryCouponsList" resultType="com.shq.oper.model.domain.primarydb.Coupons">
+		select  ta.batch as actBatchNo,
+		ctr.name as couponsTypeRuleName , ctr.model as couponsTypeModel,
+		ctr.type as couponsType,	ctr.min_spend_money as minSpendMoney,
+		ctr.amt_full_reduce as amtFullReduce,
+		ctr.amt_discount as amtDiscount,ctr.amt_sub as amtSub,ctr.type_desc as couponsTypeDesc,
+		t.*
+		from t_coupons t
+		left join t_activity ta on ta.id = t.activity_id  and ta.is_disabled = false
+		left join t_coupons_type_rule ctr on ctr.id = t.coupons_rule_id  and ctr.is_disabled = false
+		<where>
+			AND t.finan_status=1
+			AND ta.is_disabled = FALSE
+			AND ta.user_role_rule=2
+			AND t.is_disabled = false
+			and #{nowTime} BETWEEN t.send_time_start and t.send_time_end
+
+		</where>
+		order by t.send_time_start asc,t.send_time_end asc,t.id desc
+	</select>
+
+
+	<select id="queryCouponsListByGoodsCode" resultType="com.shq.oper.model.dto.api.res.ResGoodsCouponsListDataDto">
+	SELECT
+		tagrd.ref_sign_value AS goodsCode,
+		ta.batch as actBatchNo,
+		ta.name as actName,
+		ta.from_sys as fromSys, ta.from_sys_code as fromSysCode,
+		tc.id AS couponsId,
+		tc.NAME,
+		tagr.NAME AS actGoodsRuleName,
+		tagr.id AS actGoodsRuleId,
+		date_format( tc.send_time_start, '%Y-%m-%d %H:%i:%s' ) AS sendTimeStartStr,
+		date_format( tc.send_time_end, '%Y-%m-%d %H:%i:%s' ) AS sendTimeEndStr,
+		tc.send_num,
+		tc.receive_num,
+		tc.receive_num_rule,
+		tc.coupon_des,
+		ctr.type AS couponsType,
+		ctr.min_spend_money AS minSpendMoney,
+		ctr.amt_full_reduce AS amtFullReduce,
+		ctr.amt_discount AS amtDiscount,
+		ctr.amt_sub AS amtSub,
+		ctr.type_desc AS couponsTypeDesc,
+		tc.coupons_href_url,
+		tc.content_img,
+		tc.content_disabled_img 
+	FROM
+		t_activity_goods_rule_details tagrd
+		LEFT JOIN t_activity_goods_rule tagr ON tagr.id = tagrd.activity_goods_rule_id 
+		AND tagr.is_disabled = FALSE LEFT JOIN t_coupons tc ON tc.category_rule_id = tagr.id
+		LEFT JOIN t_coupons_type_rule ctr ON ctr.id = tc.coupons_rule_id  AND ctr.is_disabled = FALSE 
+		left join t_activity ta on ta.id = tc.activity_id
+		<where>
+			 tc.finan_status = 1 
+			and ta.is_disabled = false
+			AND tc.is_disabled = FALSE 
+			AND tagr.is_disabled = FALSE 
+			AND ta.user_role_rule = 0 
+			and #{nowTime} BETWEEN tc.send_time_start and tc.send_time_end
+			<![CDATA[ AND ctr.type >= 0 ]]>
+			<if test="goodsCode != null and goodsCode != ''">
+			 and  ( (tagrd.ref_sign_value = #{goodsCode} and tagrd.rule_type = 0 )
+			 	<if test="categoryid != null "> or (tagrd.ref_sign_value = #{categoryid} and tagrd.rule_type = 1 )</if>
+			 	<if test="genreid != null "> or (tagrd.ref_sign_value = #{genreid} and tagrd.rule_type = 2 )</if>
+			 	<if test="threeid != null "> or (tagrd.ref_sign_value = #{threeid} and tagrd.rule_type = 3 )</if>
+			 	<if test="fourid != null "> or (tagrd.ref_sign_value = #{fourid} and tagrd.rule_type = 4 )</if>
+			 	<if test="company != null and company != '' "> or (tagrd.ref_sign_value = #{company} and tagrd.rule_type = 5 )</if>
+			 )
+			</if>
+		</where>
+	</select>
+
+
+	<select id="queryCouponsAndCouponsCategoryRuleAndCouponsTypeRuleForCheck"
+		resultType="coupons">
+		select tmp.sellNum,tc.*,tccr.category_name as
+		couponsCategoryRuleName,tctr.name as couponsTypeRuleName from
+		t_coupons tc
+		left join
+		t_coupons_category_rule tccr on
+		tc.category_rule_id= tccr.id
+		left join
+		t_coupons_type_rule tctr on
+		tc.coupons_rule_id=tctr.id
+		left join
+		t_coupons_user tcu on tc.id
+		=tcu.coupons_id
+
+		left join
+		(select count(1) as sellNum,coupons_id from
+		t_coupons_user tcu GROUP BY
+		tcu.coupons_id) tmp on tmp.coupons_id =
+		tc.id
+		<where>
+			  tc.is_disabled = false
+			<if test="name != null and name != ''">
+				and tc.name = #{name}
+			</if>
+			<if test="sendTimeStart != null">
+				and tc.send_time_start >= #{sendTimeStart}
+			</if>
+			<if test="sendTimeEnd != null">
+				and tc.send_time_end &lt;= #{sendTimeEnd}
+			</if>
+			<if test="couponsRuleId != null and couponsRuleId != ''">
+				and tc.coupons_rule_id = #{couponsRuleId}
+			</if>
+			<if test="categoryRuleId != null and categoryRuleId != ''">
+				and tc.category_rule_id = #{categoryRuleId}
+			</if>
+			<if test="finanStatus != null">
+				and tc.finan_status = #{finanStatus}
+			</if>
+		</where>
+		GROUP BY tc.id
+		order by tc.id desc
+	</select>
+
+	<update id="updateCouponsReceiveNum" >
+		<![CDATA[
+			update t_coupons set receive_num = receive_num + #{receiveNum} 
+				where id = #{id} and (receive_num + #{receiveNum} <= send_num or send_num = 0) and is_disabled = false
+				and (
+				(select count(1) from t_coupons_user cu where cu.user_seq = #{userSeq} and cu.coupons_id = #{id} ) <= receive_num_rule
+				or receive_num_rule = 0 
+				)
+		]]>
+	</update>
+
+	<update id="batchUpdateFinanStatusToOk" parameterType="java.util.List">
+		 update t_coupons 
+		 set  finan_status=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.finanStatus}
+   		 </foreach>
+		 , finan_auditor=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.finanAuditor}
+   		 </foreach>
+   		 , finan_auditTime=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.finanAuditTime}
+   		 </foreach>
+   		,  finan_audit_remark=
+    	<foreach collection="list" item="item" index="index" 
+        separator=" " open="case ID" close="end">
+        when #{item.id} then #{item.finanAuditRemark}
+   		 </foreach> 
+		   where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+	</update>
+
+	<update id="updateBath" parameterType="java.util.List">
+		update t_coupons
+		set  is_disabled=true
+		, update_time=
+		<foreach collection="list" item="item" index="index"
+				 separator=" " open="case ID" close="end">
+			when #{item.id} then #{item.updateTime}
+		</foreach>
+		, update_admin=
+		<foreach collection="list" item="item" index="index"
+				 separator=" " open="case ID" close="end">
+			when #{item.id} then #{item.updateAdmin}
+		</foreach>
+		where id in
+		<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+			#{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+
+
+	<select id="queryCouponsBrandByActive" resultType="com.shq.oper.model.dto.api.res.ResBrandCouponsListDto">
+		select  t.id,
+		t.is_disabled,
+		t.from_sys,
+		t.from_sys_code,
+		t.name,
+		t.activity_id,
+		t.coupons_rule_id,
+		t.vali_day_type,
+		t.vali_day_type_detail,
+		ta.name as actName,
+		ta.batch as actBatchNo,
+		date_format(t.send_time_start, '%Y-%m-%d %H:%i:%s') as sendTimeStart,
+		date_format(t.send_time_end, '%Y-%m-%d %H:%i:%s') as sendTimeEnd,
+		t.send_num,
+		t.receive_num,
+		t.receive_num_rule,
+		t.coupon_des,
+		ctr.type as couponsType,
+		ctr.min_spend_money as minSpendMoney,
+		ctr.amt_full_reduce as amtFullReduce,
+		ctr.amt_discount as amtDiscount,
+		ctr.amt_sub as amtSub,
+		ctr.type_desc as couponsTypeDesc,
+		t.coupons_href_url,
+		t.content_img,
+		t.content_disabled_img
+		from t_coupons t
+		left join t_activity ta on ta.id = t.activity_id  and ta.is_disabled = false
+		left join t_coupons_type_rule ctr on ctr.id = t.coupons_rule_id  and ctr.is_disabled = false
+		<where>
+			AND t.finan_status=1
+			<![CDATA[ AND ctr.type >= 0 ]]>
+			<if test="id != null and id != ''">
+				and t.activity_id = #{id}
+			</if>
+		</where>
+		order by t.send_time_start asc,t.send_time_end asc,t.id desc
+	</select>
+
+
+	<update id="updateCouponsCategoryRule" parameterType="coupons">
+		update t_coupons
+		set  category_rule_id=#{categoryRuleId}
+		, update_time=#{updateTime}
+		where id=#{id}
+
+	</update>
+
+	<update id="updateBrandCoupons" parameterType="coupons">
+		update t_coupons
+		set
+		 update_time=#{updateTime}
+		,send_num=#{sendNum}
+		,coupon_des=#{couponDes}
+		,receive_num_rule=#{receiveNumRule}
+		,coupons_href_url=#{couponsHrefUrl}
+		,update_admin=#{brandShopSeq}
+		,content_img=#{contentImg}
+		,content_disabled_img=#{contentDisabledImg}
+		,coupons_href_url=#{couponsHrefUrl}
+		where id=#{id}
+
+	</update>
+
+	<update id="batchEnbleCouponsList" parameterType="java.util.List">
+		update t_coupons
+		set  is_disabled=
+		<foreach collection="list" item="item" index="index"
+				 separator=" " open="case ID" close="end">
+		when #{item.id} then #{item.isDisabled}
+		</foreach>
+		, update_time=
+		<foreach collection="list" item="item" index="index"
+				 separator=" " open="case ID" close="end">
+			when #{item.id} then #{item.updateTime}
+		</foreach>
+		, update_admin=
+		<foreach collection="list" item="item" index="index"
+				 separator=" " open="case ID" close="end">
+			when #{item.id} then #{item.updateAdmin}
+		</foreach>
+		where id in
+		<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+			#{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+
+
+</mapper>

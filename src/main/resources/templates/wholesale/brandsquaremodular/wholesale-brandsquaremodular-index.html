@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>爱之家首页模块</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+.imgDiv, .msgDiv {
+	float: left
+}
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="modularStatusTpl">
+  <input type="checkbox" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="modularStatusFilter" {{ d.modularStatus == 2 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="editBar">
+	<!-- <a class="layui-btn layui-btn-xs" lay-event="details">详细</a> -->
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>
+</script>
+</head>
+<body>
+	
+	<div style="margin: 15px;">
+		<blockquote class="layui-elem-quote quoteBox">
+			<form class="layui-form data-list-form">
+				<div class="layui-inline">
+					<div class="layui-input-inline" style="width: 35%;margin-left: 20px;">
+						<input type="text" name="modularName" maxlength="20"
+							autocomplete="off" class="layui-input" placeholder="模块名称">
+					</div>
+				<div class="layui-input-inline"
+						style="width: 16%;margin-left: 20px;">
+						<select name="modularStatus" id="modularStatus">
+							<option value="">模块状态</option>
+							<option value="2">启用</option>
+							<option value="1">禁用</option>
+						</select>
+					</div>
+					<div class="layui-inline">
+						<div class="layui-input-block">
+							<a class="layui-btn" data-type="reload" title="搜索" id="reload">
+								<i class="layui-icon layui-icon-search "></i>搜索
+							</a> 
+							<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a> 
+						</div>
+					</div>
+				</div>
+			</form>
+		</blockquote>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	<div class="layer-open-form edit-form">
+		<form class="layui-form">
+			<input type="hidden" name="id" />
+			<!--<input type="hidden" name="industryName" value=""/>-->
+			<input type="hidden" name="associatedShopSeq" value="1000000" /> 
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">模块名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="modularName"
+							lay-verify="required" maxlength="30"
+							placeholder="模块名称" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">排序：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="sortNum" id="sortNum" value="1000" 
+							lay-verify="required|number|space|positiveInteger" maxlength="20"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">模块类型:</label>
+					<div class="layui-input-inline">
+						<select name="columnType" class="type_t" lay-filter="type_t" lay-verify="required">
+							<option value="" selected="selected">请选择</option>
+							<option
+								th:each="brandSquareModularTypeEnum: ${brandSquareModularTypeEnumMap}"
+								th:text="${brandSquareModularTypeEnum.key}"
+								th:value="${brandSquareModularTypeEnum.value}"></option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="layui-form-item">-->
+				<!--<div class="layui-inline">-->
+					<!--<label class="layui-form-label">行业类型:</label>-->
+					<!--<div class="layui-input-inline">-->
+						<!--<select name="industryId" class="type_t" lay-filter="type_t" lay-verify="required" id="select">-->
+							<!--<option value="" selected="selected">请选择</option>-->
+							<!--<option-->
+									<!--th:each="industryMap: ${industryMap}"-->
+									<!--th:text="${industryMap.value}"-->
+									<!--th:value="${industryMap.key}"></option>-->
+						<!--</select>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+
+			<div class="layui-form-item" style="display: none">
+				<div class="layui-inline">
+					<label class="layui-form-label">模块状态：</label>
+					<div class="layui-input-inline">
+						<input type="radio" name="modularStatus" value="2" title="启用" checked />
+						<input type="radio" name="modularStatus" value="1" title="禁用" />
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

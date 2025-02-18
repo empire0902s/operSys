@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>数据字典列表</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="look">详细</a>
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" maxlength="20" placeholder="请输入名称">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">创建人:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="createAdmin" maxlength="20" placeholder="请输入创建人">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">最近更新人:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="updateAdmin" maxlength="20" placeholder="请输入最近更新人">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+			<div class="layui-inline">
+					<label class="layui-form-label">是否禁用</label>
+					<div class="layui-input-inline">
+						<select name="isDisabled">
+							<option value="0"  selected="selected">未禁用</option>
+							<option value="1">已禁用</option>
+						</select>
+					</div>
+				</div> 
+				<div class="layui-inline">
+					<div class="layui-input-block">
+					<a class="layui-btn" data-type="reload">搜索</a> 
+					<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	
+<div class="layer-open-form edit-form">
+	<form class="layui-form">
+		<input type="hidden" name="id"/>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">名称：</label>
+				<div class="layui-input-inline">
+					<input type="text"  name="name" lay-verify="required|space|normal" maxlength="20"
+					placeholder="请输入名称" autocomplete="off"  class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">编码：</label>
+				<div class="layui-input-inline">
+					<input type="text"  name="code" maxlength="32"
+					placeholder="请输入编码" autocomplete="off" lay-verify="required|space|normal" class="layui-input">
+				</div>
+			</div>
+		</div>
+			<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">关键字：</label>
+				<div class="layui-input-inline">
+					<input type="text"  name="dictKey" maxlength="32"
+					placeholder="请输入关键字" autocomplete="off" lay-verify="required|space|normal" class="layui-input">
+				</div>
+			</div>
+		</div>
+			<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">值：</label>
+				<div class="layui-input-inline">
+					<input type="text"  name="dictValue" maxlength="100"
+					placeholder="请输入对应关键字的值" autocomplete="off" lay-verify="required" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">父级编号：</label>
+				<div class="layui-input-inline">
+					<input type="text"  name="parentId" maxlength="20" 
+					placeholder="请输入对应关键字的值" autocomplete="off"  class="layui-input parentId">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">是否禁用：</label>
+				<div class="layui-input-inline">
+					<input type="radio" name="isDisabled" value="0" title="否" checked/> 
+					<input type="radio" name="isDisabled" value="1" title="是"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item center">
+			<div class="layui-inline">
+				<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+</body>
+</html>

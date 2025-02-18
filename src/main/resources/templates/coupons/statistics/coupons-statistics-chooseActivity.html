@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+	<script th:inline="javascript">
+        var operSysCodeList = '[[${operSysCodeList}]]';
+        var operSysList = '[[${operSysList}]]';
+	</script>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">活动有效期:</label>
+					<div class="layui-input-inline">
+						<input type="text" name="timeRange" class="layui-input"
+							th:value="${timeRange}"
+							readonly="readonly" id="timeRange" placeholder="活动有效期范围">
+					</div>
+				</div>
+				<div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">来源系统</label>
+                    <div class="layui-input-inline">
+                    <input type="hidden" name="fromSys" value="operSys">
+                   <!--      <select name="fromSys" >
+							<option value="" style="width: 150px;"
+									th:each="operSys : ${operSysList}"
+									th:text="${operSys.key}" th:value="${operSys.value}"></option>
+                        </select> -->
+                        <!-- <select name="fromSys"  th:url="@{/coupons/activity/fromsysDict}" value="operSys" lay-search></select> -->
+                    </div>
+                </div>
+                 <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">来源系统code</label>
+                    <div class="layui-input-inline">
+                    	<input type="text" class="layui-input" name="fromSysCode" maxlength="50"
+							placeholder="请输入来源系统code">
+                    </div>
+                </div>
+					<div class="layui-inline">
+					<label class="layui-form-label">活动名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" id="name" maxlength="20"
+							placeholder="请输入活动名称">
+					</div>
+				</div>
+					<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-check">保存</a> 
+							<a href="javascript:;" class="layui-btn layui-btn-normal btn-close">关闭</a>
+					</div>
+				</div>
+			</div>
+		<!-- 	<div class="layui-form-item">
+			
+			</div> -->
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+</body>
+</html>

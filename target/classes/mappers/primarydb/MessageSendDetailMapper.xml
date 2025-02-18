@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.MessageSendDetailMapper">
+
+
+
+    <select id="queryPageSort" resultType="MessageSendDetail">
+        select t.* ,s.sending_platform as sendingPlatform,s.jump_url as jumpUrl from t_msg_send_detail t
+        left join  t_msg_send s  on t.msg_send_id=s.id
+        <where>
+            <if test="userPhone != null and userPhone != ''">and t.user_phone=#{userPhone}</if>
+            <if test="msgType != null and msgType != ''">and t.msg_type=#{msgType}</if>
+            <if test="sendStatus != null ">and t.send_status=#{sendStatus}</if>
+            <if test="sendingPlatform != null ">and s.sending_platform=#{sendingPlatform}</if>
+
+        </where>
+        order by t.send_time desc
+    </select>
+
+
+    <select id="queryMessage" resultType="MessageSendDetail">
+        select * from t_msg_send_detail t
+         where   t.send_status=0 and t.send_time between #{startTime} and #{endTime}
+        order by t.send_time desc limit 2000
+    </select>
+
+    <select id="queryHistoryMessage" resultType="MessageSendDetail">
+        select * from t_msg_send_detail t
+<![CDATA[
+         where   t.send_status=0 and t.send_time <= #{endTime}
+        order by t.send_time desc limit #{offset},2000
+  ]]>
+    </select>
+
+
+    <select id="selectHistoryCout" resultType="int">
+        select count(id) from t_msg_send_detail t
+<![CDATA[
+         where   t.send_status=0 and t.send_time <= #{endTime}
+  ]]>
+    </select>
+
+    <select id="selectCout" resultType="int">
+        select count(id) from t_msg_send_detail t
+         where   send_status=0 and send_time between #{startTime} and #{endTime}
+    </select>
+
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        update t_msg_send_detail
+        set  send_status=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case msg_id" close="end">
+            when #{item.msgId,jdbcType=BIGINT} then  #{item.sendStatus,jdbcType=SMALLINT}
+        </foreach>
+        ,finish_time=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case msg_id" close="end">
+            when #{item.msgId,jdbcType=BIGINT} then  #{item.finishTime}
+        </foreach>
+        ,remark=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case msg_id" close="end">
+            when #{item.msgId,jdbcType=BIGINT} then  #{item.remark}
+        </foreach>
+        ,message_return_type=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case msg_id" close="end">
+            when #{item.msgId,jdbcType=BIGINT} then  #{item.messageReturnType}
+        </foreach>
+        where msg_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.msgId,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.primarydb.FieldMapper">
+
+
+    <select id="queryPageSort" resultType="Field">
+        select * from t_field t
+        <where>
+            <if test="name != null and name != ''">and t.name like concat('%',#{name},'%')</if>
+            <if test="isDisabled != null">and t.is_disabled=#{isDisabled}</if>
+            <if test="addressName != null and addressName != ''">and t.address_name=#{addressName}</if>
+            <if test="status != null">and t.status=#{status}</if>
+        </where>
+        order by t.create_time desc
+    </select>
+
+
+</mapper>

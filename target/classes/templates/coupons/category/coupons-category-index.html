@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+	<title>品类规则管理</title>
+	<style type="text/css">
+		.layui-form-checkbox {
+			margin: 5px 0px 5px 10px;
+		}
+
+		#resourceTree {
+			padding: 10px;
+		}
+	</style>
+
+	<script type="text/html" id="disabledTpl">
+		{{#  if(d.isDisabled == false){ }}
+		否
+		{{#  } else { }}
+		是
+		{{#  } }}
+	</script>
+	<script type="text/html" id="editBar">
+		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+		<a class="layui-btn layui-btn-xs" lay-event="detail">详细</a>
+		{{#  if(d.isDisabled == false){ }}
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabled">禁用</a>
+		{{#  } else { }}
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabledfalse">启用</a>
+		{{#  } }}
+	</script>
+	<script type="text/html" id="editBar1">
+		<a class="layui-btn layui-btn-xs" lay-event="edit">删除</a>
+	</script>
+</head>
+<body>
+<div style="margin: 15px;">
+	<form class="layui-form data-list-form">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">品类组合名称:</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="categoryName"  maxlength="20" placeholder="品类组合名称">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">品类范围:</label>
+				<div class="layui-input-inline">
+					<select name="categoryRange" >
+						 <option value="">--请选择--</option>
+						<option value="活动商品">活动商品</option>
+						<option value="商品1级类目">商品1级类目</option>
+						<option value="商品2级类目">商品2级类目</option>
+						<option value="商品3级类目">商品3级类目</option>
+						<option value="商品4级类目">商品4级类目</option>
+						<option value="自由组合">自由组合</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">是否禁用</label>
+			<div class="layui-input-inline">
+				<select name="isDisabled" >
+					 <option value="" >--请选择--</option>
+					<option value="0" >未禁用</option>
+					<option value="1">已禁用</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<div class="layui-input-block">
+				<a class="layui-btn" data-type="reload">搜索</a>
+				<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+			</div>
+		</div>
+</div>
+</form>
+<table class="layui-hide data-list" lay-filter="data-list"></table>
+</div>
+
+<div class="layer-open-form edit-form">
+	<form class="layui-form">
+		<input type="hidden" name="id"/>
+		<div class="layui-form-item">
+			<label class="layui-form-label" id="iid">品类组合名称：</label>
+			<div class="layui-input-inline">
+				<input type="text"  name="categoryName" lay-verify="required|normal|space" placeholder="品类组合名称长度小于20" maxlength="20"
+					   autocomplete="off"  class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">品类范围：</label>
+			<div class="layui-input-inline">
+				<select name="categoryRange"  id="select_id",lay-filter="test">
+					<!-- <option value="">--请选择--</option> -->
+					<option value="活动商品">活动商品</option>
+					<option value="商品1级类目">商品1级类目</option>
+					<option value="商品2级类目">商品2级类目</option>
+					<option value="商品3级类目">商品3级类目</option>
+					<option value="商品4级类目">商品4级类目</option>
+					<option value="自由组合">自由组合</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item" style="margin-left: 150px;">
+			<div class="layui-input-inline">
+				<a href="javascript:;" class="active" id="add">添加范围明细</a>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-input-inline">
+				<table style="width: 100% ;margin-left: 120px;"  border="1px" id="added">
+					<tr><td id="fw">范围</td><td>值</td><td>操作</td></tr>
+				</table>
+			</div>
+			<input type="hidden" name="categoryRange" value="" id="categoryRange"/>
+			<input type="hidden" name="categoryRangeDetail" value="" id="categoryRangeDetail"/>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型：</label>
+			<div class="layui-input-inline">
+				<input type="radio" name="type" value="1" title="菜单" checked/>
+				<input type="radio" name="type" value="2" title="功能"/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否禁用：</label>
+				<div class="layui-input-inline">
+					<input type="radio" name="isDisabled" value="0" title="否" checked/>
+					<input type="radio" name="isDisabled" value="1" title="是"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">使用描述：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="categoryDesc" placeholder="使用描述字数限制在200字以内" maxlength="200" autocomplete="off" class="layui-input"  >
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+				<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+			</div>
+	</form>
+</div>
+<div id="childrenform">
+</div>
+</body>
+</html>

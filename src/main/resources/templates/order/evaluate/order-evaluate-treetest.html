@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="details">详情</a>
+	{{#  if(d.auditStats == 1){ }}
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabled">禁用</a>
+  	{{#  } else if(d.auditStats == 2){ }}
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="enableBy">启用</a>
+  	{{#  } }}
+</script>
+</head>
+<body>
+<div class="layui-container">
+    <br><br>
+    <a class="layui-btn layui-btn-normal" href="index.html">&lt;&lt;返回</a>
+    &nbsp;&nbsp;
+    <div class="layui-btn-group">
+        <button class="layui-btn" id="btn-expand">全部展开</button>
+        <button class="layui-btn" id="btn-fold">全部折叠</button>
+        <button class="layui-btn" id="btn-refresh">刷新表格</button>
+    </div>
+
+    <table id="table1" class="layui-table" lay-filter="table1"></table>
+</div>
+<!-- 操作列 -->
+<script type="text/html" id="oper-col">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+</body>
+</html>

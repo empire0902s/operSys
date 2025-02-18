@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script th:inline="javascript">
+	var couponsDetails = '[[${couponsDetails}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-unselect {
+	width: 125px;
+	margin-left: 25px
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+
+td {
+	width: 120px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	否
+  {{#  } else { }}
+    	是
+  {{#  } }}
+</script>
+
+</head>
+<body>
+	<div class="layui-form">
+		<table class="layui-table"
+			style="margin-top: 0.5px; margin-bottom: 0px">
+			<tbody>
+				<tr>
+					<th>优惠券编号</th>
+					<td th:text="${couponsDetails.id}"></td>
+					<th>优惠券名称</th>
+					<td th:text="${couponsDetails.name}"></td>
+				</tr>
+				<tr>
+					<th>品类规则编号</th>
+					<td th:text="${couponsDetails.categoryRuleId}"></td>
+					<th>金额规则编号</th>
+					<td th:text="${couponsDetails.couponsRuleId}"></td>
+				</tr>
+				<tr>
+					<th>优惠券批次号</th>
+					<td th:text="${couponsDetails.batch}"></td>
+					<th>活动编号</th>
+					<td th:text="${couponsDetails.activityId}"></td>
+				</tr>
+				<tr>
+					<th>有效期方式</th>
+					<td th:text="${couponsDetails.valiDayType}>0?'指定时间':'领取后天数'"></td>
+					<th>有效期详细</th>
+					<td th:text="${valiDayTypeDetail}"></td>
+				</tr>
+				<tr>
+					<th>发放数量</th>
+					<td th:text="${couponsDetails.sendNum}"></td>
+					<th>已发放数量</th>
+					<td th:text="${sellNum}"></td>
+				</tr>
+				<tr>
+					<th>发放方式</th>
+					<td th:text="${couponsDetails.sendType}>0?'用户自动领取':'系统自动发放到用户'"></td>
+					<th>用户领取次数</th>
+					<td th:text="${couponsDetails.receiveNumRule}"></td>
+				</tr>
+				<tr>
+					<th>平台编码</th>
+					<td th:text="${couponsDetails.usePlatform}"></td>
+					<th>优惠券说明</th>
+					<td th:text="${couponsDetails.couponDes}"></td>
+				</tr>
+				<tr>
+					<th>发放开始时间</th>
+					<td th:text="${couponsDetails.sendTimeStart}"></td>
+					<th>发放结束时间</th>
+					<td th:text="${couponsDetails.sendTimeEnd}"></td>
+				</tr>
+				</tr>
+				<tr>
+					<th>审核状态</th>
+					<td th:text="${couponsDetails.finanStatus}>0?'通过':'未通过'"></td>
+					<th>创建者</th>
+					<td th:text="${couponsDetails.createAdmin}"></td>
+				</tr>
+				<tr>
+					<th>创建时间</th>
+					<td th:text="${couponsDetails.createTime}"></td>
+					<th>最后修改人</th>
+					<td th:text="${couponsDetails.updateAdmin}"></td>
+				</tr>
+				<tr>
+					<th>最后修改时间</th>
+					<td th:text="${couponsDetails.updateTime}"></td>
+					<th>是否禁用</th>
+					<td th:text="${couponsDetails.isDisabled}!=true?'正常':'禁用'"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

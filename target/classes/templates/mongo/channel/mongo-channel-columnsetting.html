@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员操作日志</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/html" id="disabledTpl">
+</script>
+<script type="text/html" id="editBar">
+	<!--<a class="layui-btn layui-btn-xs" lay-event="goodssetting">商品设置</a>-->
+	<!--<a class="layui-btn layui-btn-xs" lay-event="columSetting">栏目设置</a>-->
+	<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
+	<!--<a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>-->
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<input type="hidden" name="id"  id="mid"/>
+				<div class="layui-inline">
+					<label class="layui-form-label">栏目名:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="modelName"
+							placeholder="请输入栏目名">
+					</div>
+				</div>
+					<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> <a
+							href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id"  />
+			<input type="hidden" name="mId" class="mId"  />
+			<input type="hidden" name="bannerUniqeKey"  />
+			<input type="hidden" name="goodUniqeKey"  />
+			<input type="hidden" name="createTime" />
+			<input type="hidden" name="createAdmin" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">栏目名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="modelName" lay-verify="required|space|normal"
+							   maxlength="30"
+							   class="layui-input">
+
+					</div>
+				</div>
+			</div>
+				<!--<div class="layui-inline" style="position:relative; z-index:1001;">-->
+					<!--<label class="layui-form-label">渠道号：</label>-->
+					<!--<div class="layui-input-inline">-->
+						<!--<input type="text" name="name" lay-verify="required|space|normal"-->
+							   <!--maxlength="30"-->
+							   <!--class="layui-input">-->
+					<!--</div>-->
+				<!--</div>-->
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">banner数量:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="bannerNum" maxlength="32" >
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline" >
+					<label class="layui-form-label">栏目类型：</label>
+					<div class="layui-input-inline" >
+						<select name="goodsType">
+							<option value="1">普通商品</option>
+							<option value="2">品牌广场</option>
+							<option value="3">预售商品</option>
+						</select>
+					</div>
+				</div>
+			</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">排序：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="sort" lay-verify="required|space|number"
+								   maxlength="30" id="sortNum"
+								   class="layui-input">
+						</div>
+					</div>
+				</div>
+
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">是否展示：</label>
+					<div class="layui-input-inline">
+						<select name="isShow">
+							<option value="0" >隐藏</option>
+							<option value="1" selected="selected">展示</option>
+						</select>
+					</div>
+				</div>
+			</div>
+				<div class="layui-form-item">
+					<div class="layui-form-item center">
+						<div class="layui-inline">
+							<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+							<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+						</div>
+					</div>
+				</div>
+		</form>
+	</div>
+
+</body>
+</html>

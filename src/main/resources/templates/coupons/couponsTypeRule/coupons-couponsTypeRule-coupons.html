@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>用户详情</title>
+<script th:inline="javascript">
+var coupons = '[[${coupons}]]';
+</script>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+.layui-unselect {
+	width: 125px;
+	margin-left: 25px
+}
+
+th {
+	background-color: #F8F8F8;
+	color: #333;
+	width: 80px;
+}
+td{
+width: 120px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="layui-form">
+		<table class="layui-table" style="margin-top: 0.5px; margin-bottom: 0px">
+			<tbody>
+				<tr>
+					<th>ID</th>
+					<td th:text="${coupons.id}"></td>
+					<th>金额规则名称</th>
+					<td th:text="${coupons.name}"></td>
+				</tr>
+				<tr>
+					<th>优惠券模式</th>
+					<td th:if="${coupons.model} eq '1'">固定金额</td>
+					<td th:if="${coupons.model} eq '2'">浮动金额</td>
+					<th>优惠券类型</th>
+					<td th:if="${coupons.type} eq '1'">满减</td>
+					<td th:if="${coupons.type} eq '2'">立减</td>
+					<td th:if="${coupons.type} eq '3'">折扣</td>
+				</tr>
+				<tr>
+					<th>最低消费金额</th>
+					<td th:text="${coupons.minSpendMoney}"></td>
+					<th>金额优惠</th>
+					<td th:text="${coupons.typeDesc}"></td>
+				</tr>
+				<tr>
+					<th>创建人</th>
+					<td th:text="${coupons.createAdmin}"></td>
+					<th>创建时间</th>
+					<td th:text="${coupons.createTime}"></td>
+				</tr>
+				<tr>
+					<th>最近更新人</th>
+					<td th:text="${coupons.updateAdmin}"></td>
+					<th>最后修改时间</th>
+					<td th:text="${coupons.updateTime}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

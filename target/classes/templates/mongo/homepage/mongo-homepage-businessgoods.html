@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>爱之家邀请页设置</title>
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script th:inline="javascript">
+var resultActivityGoodsRule='[[${resultActivityGoodsRule}]]'
+</script>
+
+<script type="text/html" id="disabledTpl">
+  {{#  if(d.isDisabled == false){ }}
+    	启用中
+  {{#  } else { }}
+    	禁用
+  {{#  } }}
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="reed">查看</a>
+	<a class="layui-btn  layui-btn-danger  layui-btn-xs" lay-event="delete">删除</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商品code：</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="goodsCode"
+							id="refSignValue"  maxlength="50"
+							placeholder="商品Code">
+					</div>
+				</div>
+				<div class="layui-inline" style="margin-left: 100px;">
+					<label class="layui-form-label">商品名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="productName"
+							id="refSignName" maxlength="50" placeholder="商品名称">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item " >
+
+				<div class="layui-inline">
+					<div class="layui-input-block">
+
+						<a class="layui-btn" data-type="reload" id="reload">搜索</a>
+						<a class="layui-btn layui-btn-normal btn-sync">状态同步</a>
+						<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+
+						<!--<a class="layui-btn" data-type="reload">查询</a>-->
+						<!--<a class="layui-btn sync" >信息状态同步</a>-->
+						<!--<a class="layui-btn historysync" >历史信息状态同步</a>-->
+						<!--<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">发送信息</a>-->
+						<!--<a class="layui-btn" data-type="upload">Excel导入发送</a>-->
+					</div>
+				</div>
+
+				<!--<div class="layui-inline ">-->
+					<!--<div class="layui-input-inline  center" maxlength="200" style="margin-left: 40px;">-->
+						<!--<a class="layui-btn" data-type="reload" id="reload">搜索</a>-->
+						<!--<a class="layui-btn layui-btn-normal btn-sync">状态同步</a>-->
+						<!--<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>-->
+
+					<!--</div>-->
+				</div>
+			<!--</div>-->
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<input type="hidden" name="goodsCode" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">排序：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="sortNum" lay-verify="positiveInteger"
+							   maxlength="32"  autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item center">
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+					<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

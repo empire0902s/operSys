@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shq.oper.mapper.shq520new.DistrFirstCategotyMapper">
+  <resultMap id="BaseResultMap" type="com.shq.oper.model.domain.shq520new.DistrFirstCategoty">
+    <!-- WARNING - @mbg.generated -->
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="CheckMark" jdbcType="VARCHAR" property="checkmark" />
+    <result column="Sort" jdbcType="INTEGER" property="sort" />
+    <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="CreateUser" jdbcType="VARCHAR" property="createuser" />
+    <result column="EditTime" jdbcType="TIMESTAMP" property="edittime" />
+    <result column="EditUser" jdbcType="VARCHAR" property="edituser" />
+    <!--<result column="ImgName" jdbcType="NVARCHAR" property="imgname" />-->
+    <!--<result column="ImgUrl" jdbcType="NVARCHAR" property="imgurl" />-->
+  </resultMap>
+  
+  <sql id="BaseColumns">
+    <!-- WARNING - @mbg.generated -->
+    Id, Name, Status, CheckMark, Sort, CreateTime, CreateUser, EditTime, EditUser
+  </sql>
+
+
+  <select id="queryDistrFirstCategotyList" resultType="distrFirstCategoty" >
+    select  t.Id,t.Name,t.Status,t.CheckMark, t.CreateTime,t.CreateUser,t.EditUser from DistrFirstCategoty  t
+    <where>
+
+      <if test="id != null"> and t.Id = #{id}</if>
+      <if test="name != null and name != '' "> and t.Name  LIKE  concat('%',#{name},'%')</if>
+    </where>
+    order by t.CreateTime desc
+  </select>
+  
+</mapper>

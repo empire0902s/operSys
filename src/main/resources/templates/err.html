@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>报错了</title>
+<script type="text/javascript">
+window.onload = function(){
+	if(self == top){
+		document.getElementById('logout').style.display = '';
+	}
+}
+</script>
+</head>
+<body>
+<h1>报错了：</h1>
+<p>时间：<span th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss') }"></span></p>
+<p>状态码：<span th:text="${status }"></span></p>
+<p>错误：<span th:text="${error }"></span></p>
+<p>消息：<span th:text="${message }"></span></p>
+<p>路径：<span th:text="${path }"></span></p>
+<p id="logout" style="display: none;"><a th:href="@{/logout}">退出登录</a></p>
+</body>
+</html>

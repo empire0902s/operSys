@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="tmpl :: header(~{::title},~{::style},~{::script})">
+<title>管理员列表</title>
+<script th:inline="javascript">
+	var operSysCodeList = '[[${operSysCodeList}]]';
+	var operSysList = '[[${operSysList}]]';
+</script>
+
+<style type="text/css">
+.layui-form-checkbox {
+	margin: 5px 0px 5px 10px;
+}
+
+#resourceTree {
+	padding: 10px;
+}
+</style>
+<script type="text/javascript"></script>
+<script type="text/html" id="isDisabledTpl">
+  <input type="checkbox"  value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isDisabledFilter" {{ d.isDisabled == false ? '' : 'checked' }}>
+</script>
+<script type="text/html" id="editBar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+</head>
+<body>
+	<div style="margin: 15px;">
+		<form class="layui-form data-list-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">区域名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="name" maxlength="20"
+							placeholder="请输入场次名称">
+					</div>
+				</div>
+
+          		<div class="layui-inline">
+					<label class="layui-form-label">所属场次：</label>
+					<div class="layui-input-inline">
+						<select name="fieldId" lay-verify="required" th:url="@{/stagemanagemenet/field/searchSelectValue}">
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">是否禁用</label>
+					<div class="layui-input-inline">
+						<select name="isDisabled">
+							<option value="0" selected="selected">启用中</option>
+							<option value="1">已禁用</option>
+						</select>
+					</div>
+				</div>
+					<div class="layui-inline">
+					<div class="layui-input-block">
+						<a class="layui-btn" data-type="reload">搜索</a> 
+						<a href="javascript:;" class="layui-btn layui-btn-normal btn-add">添加</a>
+							<a href="javascript:history.go(0);" class="layui-btn layui-btn-normal">刷新</a> 
+					</div>
+				</div>
+			</div>
+			
+		</form>
+		<table class="layui-hide data-list" lay-filter="data-list"></table>
+	</div>
+
+	<div class="layer-open-form edit-form">
+		<form class="layui-form ">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">区域名称：</label>
+					<div class="layui-input-inline" style="width:300px;">
+						<input type="text" name="name" lay-verify="required"
+							maxlength="20" placeholder="" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">所属场次：</label>
+					<div class="layui-input-inline" style="width:300px;">
+						<select name="fieldId" lay-verify="required" th:url="@{/stagemanagemenet/field/selectValue}">
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline" style="position: relative; z-index: 1001;">
+					<label class="layui-form-label">容纳人数：</label>
+					<div class="layui-input-inline" style="width:300px;">
+						<input type="text" name="num" lay-verify="required"
+							maxlength="6" placeholder="" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">是否禁用：</label>
+					<div class="layui-input-inline">
+						<input type="radio" name="isDisabled" value="0" title="否" checked />
+						<input type="radio" name="isDisabled" value="1" title="是" />
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">区域说明：</label>
+					<div class="layui-input-inline">
+					<textarea name="fieldAreaDesc"   style="margin-top: 5px;width: 300px;height:60px;" 
+						maxlength="200" placeholder="区域说明字数限制200以内" class="layui-textarea"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-form-item center">
+					<div class="layui-inline">
+						<button class="layui-btn" lay-submit lay-filter="submit">提交</button>
+						<button type="reset" class="layui-btn btn-close layui-btn-primary">关闭</button>
+					</div>
+				</div>
+				</div>
+		</form>
+	</div>
+</body>
+</html>
